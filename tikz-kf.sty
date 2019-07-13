@@ -1,0 +1,46 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tikz-kf}[2019/07/12 keyframe animation in LaTeX]
+
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+
+%% GLOBALS %%
+
+%% export format sepcification
+
+\newcommand\kf@fps{30}   % 30 frames per second
+\newcommand\kf@ppi{600}  % 600 pixels per inch
+\newcommand\kf@pxh{1080} % 1080p
+
+\newcommand\kf@width{16} % aspect ratio
+\newcommand\kf@height{9} % 16 : 9
+
+
+%% calculate constants derived from format specifications
+
+\newcommand{\kf@setformat}{
+  \pgfmathsetmacro\kf@scale{\kf@pxh/\kf@ppi/\kf@height}
+  \pgfmathsetmacro\kf@cx{\kf@width/2}
+  \pgfmathsetmacro\kf@cy{\kf@height/2}
+}
+\kf@setformat
+
+%% RENDERING ENVIRONMENT %%
+
+%% a series of frames of duration {#1} seconds.
+%%
+%% also sets macros \f (current frame) and \t (current time, in
+%% seconds).
+
+\newcommand{\kfframes}[2]{
+  \pgfmathsetmacro\kf@fcount{\kf@fps*#1}
+  \foreach \f in {1, ..., \kf@fcount}{
+    \pgfmathsetmacro\t{\f/\kf@fps}
+    \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
+      \clip (0, 0) rectangle (\kf@width, \kf@height);
+      #2
+    \end{tikzpicture}
+  }
+}
+
+%% UTILITIES %%
