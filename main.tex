@@ -104,7 +104,20 @@
       \pgfmathsetmacro\r\pgfmathresult
       \kfinterpolate[start=\tin+\zdt, duration=\zdt]{#3}{#5}
       \pgfmathsetmacro\th\pgfmathresult
-      \z{\r}{\th}
+
+      % render the arrow
+      \pgfmathsetmacro\kf@x@b{0.1} % angle offset for legibility
+      \pgfmathsetmacro\kf@x@a{#3+\kf@x@b}
+      % arrow is only visible if it is pointed in the correct direction
+      \pgfmathtruncatemacro\kf@x@c{abs(#3-\th) > 2*\kf@x@b ? 1 : 0}
+      \ifnum\kf@x@c=1
+      \pgfkeys{/pgf/fpu=false}
+      \draw[->,>=stealth] ({cos(\kf@x@a r)}, {sin(\kf@x@a r)}) arc (\kf@x@a r:(\th-\kf@x@b) r:1);:\relax
+      \pgfkeys{/pgf/fpu=true}
+      \fi
+      
+      % render the complex number 
+      \z{\r}{\th}    
     }
 }}
 
@@ -149,10 +162,10 @@
 % debug:
 \kfsetfps{10}
 %% SCENE 1
-\kfframes{2}{
+\kfframes{1}{
   \zgrid[in=-\zdt]{\kfox}{\kfoy}{
     %    \zin[in=0, out=0.5]{1}{1}
-    %    \zto[in=0.5, out=1.5]{1}{1}{1}{2}
+    \zto[in=0, out=1.5]{1}{1}{2}{2}
     %    \zout[in=1.5, out=2]{1}{2}
     \kftextin[start=0.5]{1}{1}{text}{text}
   }
