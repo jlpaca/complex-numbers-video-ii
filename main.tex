@@ -3,14 +3,35 @@
 
 \begin{document}
 % debug:
-\kfsetfps{10}
-%% SCENE 1
-\kfframes{1}{
+\kfsetfps{24}
+%% SCENE 2 : multiplication
+\kfframes{12}{
   \zgrid[in=-\zdt]{\kfox}{\kfoy}{
-    %    \zin[in=0, out=0.5]{1}{1}
-    \zto[in=0, out=1.5]{1}{1}{2}{0}
-    %    \zout[in=1.5, out=2]{1}{2}
-    \kftextin[start=0.5]{1}{1}{text}{text}
+
+    \def\zr{1.5}
+    \def\za{1.2}
+    \def\zend{10}
+
+    \zin[in=0, out=\zend]{1}{0}
+    \zto[in=2, out=\zend]{    1}{    0}{\zr  }{  \za}
+    \zto[in=4, out=\zend]{  \zr}{  \za}{\zr^2}{2*\za}
+    \zto[in=6, out=\zend]{\zr^2}{2*\za}{\zr^3}{3*\za}
+
+    \kftextin[start=0+2*\zdt, end=\zend-\zdt, duration=\zdt, offset radius=1, offset angle=0]{0.3}{-0.5}{$1$}
+    \kftextin[start=2+2*\zdt, end=\zend-\zdt, duration=\zdt, offset radius=\zr, offset angle=\za]{0.5}{0.1}{$z$}
+    \kftextin[start=4+2*\zdt, end=\zend-\zdt, duration=\zdt, offset radius=\zr^2, offset angle=2*\za]{0.5}{0.5}{$z^2$}
+    \kftextin[start=6+2*\zdt, end=\zend-\zdt, duration=\zdt, offset radius=\zr^3, offset angle=3*\za]{0}{0.7}{$z^3$}
+
+    \zout[in=\zend]{    1}{    0}
+    \zout[in=\zend]{  \zr}{  \za}
+    \zout[in=\zend]{\zr^2}{2*\za}
+    \zout[in=\zend]{\zr^3}{3*\za}
+
+    \kftextout[start=\zend-\zdt, duration=\zdt, offset radius=1, offset angle=0]{0.3}{-0.5}{$1$}
+    \kftextout[start=\zend-\zdt, duration=\zdt, offset radius=\zr, offset angle=\za]{0.5}{0.1}{$z$}
+    \kftextout[start=\zend-\zdt, duration=\zdt, offset radius=\zr^2, offset angle=2*\za]{0.5}{0.5}{$z^2$}
+    \kftextout[start=\zend-\zdt, duration=\zdt, offset radius=\zr^3, offset angle=3*\za]{0}{0.7}{$z^3$}    
+    
   }
 }
 \end{document}

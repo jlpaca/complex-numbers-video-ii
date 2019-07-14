@@ -1,4 +1,4 @@
-FPS=30
+FPS=24
 
 render:
 	rm -f *.mp4
