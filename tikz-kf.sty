@@ -63,6 +63,10 @@
 %% UTILITIES %%
 
 %% ! convention: /kf@x@<name> are temp registers.
+%% ! convention: /kf@l@<name> are temp legngth registers.
+\newlength{\kf@l@a}
+\newlength{\kf@l@b}
+
 
 %% cubic step function
 \newcommand\kfsmoothstep[1]{
@@ -108,11 +112,38 @@
   /kf/text/.is family, /kf/text,
   offset radius/.estore in=\kf@text@offset@radius,
   offset angle/.estore in=\kf@text@offset@angle,
+  %
+  start/.estore in=\kf@text@start,
+  end/.estore in=\kf@text@end,
+  duration/.estore in=\kf@text@duration,
+  direction/.is choice,
+  direction/left/.code={
+    \def\kf@text@hiddenx{-\kf@l@a}
+    \def\kf@text@hiddeny{0}
+  },
+  direction/right/.code={
+    \def\kf@text@hiddenx{\kf@l@a}
+    \def\kf@text@hiddeny{0}
+  },
+  direction/top/.code={
+    \def\kf@text@hiddenx{0}
+    \def\kf@text@hiddeny{\kf@l@b}
+  },
+  direction/bottom/.code={
+    \def\kf@text@hiddenx{0}
+    \def\kf@text@hiddeny{-\kf@l@b}
+  },
+  direction/.default=top,
+  %
   default/.style={
     offset radius=0,
     offset angle=0,
+    start=0,
+    end=1,
+    duration=1,
   },
 }
+
 \newcommand\kftext[4][]{
   \pgfkeys{/kf/text, default, #1}
   \node at (
@@ -120,3 +151,28 @@
         {#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
         ) {#4};
 }
+\newcommand\kftext@transition[6][]{
+  \pgfkeys{/kf/text, default, direction, #1}
+  % #1 - text x co-ordinate
+  % #2 - text y co-ordinate
+  % #3 - text body
+  \kftimemask{\kf@text@start}{\kf@text@end}{
+    % default text location
+    \pgfmathsetmacro\kf@x@a{#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)}
+    \pgfmathsetmacro\kf@x@b{#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
+
+    % figure out bounding box
+    \settowidth{\kf@l@a}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
+    \settoheight{\kf@l@b}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
+    
+    \begin{scope}[shift={(\kf@x@a, \kf@x@b)}]
+      \clip (-\kf@l@a/2, -\kf@l@b/2) rectangle (\kf@l@a/2, \kf@l@b/2);
+      \kfinterpolate[start=\kf@text@start, duration=\kf@text@duration]{#5}{#6}
+      \pgfmathsetmacro\kf@x@e\pgfmathresult
+
+      \kftext{\kf@x@e*\kf@text@hiddenx}{\kf@x@e*\kf@text@hiddeny}{#4}
+    \end{scope}
+  }
+}
+\newcommand\kftextin[4][]{\kftext@transition[#1]{#2}{#3}{#4}{1}{0}}
+\newcommand\kftextout[4][]{\kftext@transition[#1]{#2}{#3}{#4}{0}{1}}

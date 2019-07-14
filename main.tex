@@ -149,11 +149,12 @@
 % debug:
 \kfsetfps{10}
 %% SCENE 1
-\kfframes{2}{
+\kfframes{1}{
   \zgrid[in=-\zdt]{\kfox}{\kfoy}{
-    \zin[in=0, out=0.5]{1}{1}
-    \zto[in=0.5, out=1.5]{1}{1}{1}{2}
-    \zout[in=1.5, out=2]{1}{2}
+    %    \zin[in=0, out=0.5]{1}{1}
+    %    \zto[in=0.5, out=1.5]{1}{1}{1}{2}
+    %    \zout[in=1.5, out=2]{1}{2}
+    \kftextin[direction=right, duration=0.5, end=1]{1}{1}{text}
   }
 }
 \end{document}
