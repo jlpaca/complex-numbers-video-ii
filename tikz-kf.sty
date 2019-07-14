@@ -46,18 +46,18 @@
 %% also sets macros \f (current frame) and \t (current time, in
 %% seconds).
 
-\newcommand{\kfframes}[2]{
-  \pgfmathsetmacro\kf@fcount{max(1, \kf@fps*#1)}
-  \foreach \f in {1, ..., \kf@fcount}{
-    \pgfmathsetmacro\t{\f/\kf@fps}
-    \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
-      \clip (0, 0) rectangle (\kf@width, \kf@height);
-      % debug: timestamp centre bottom
-      \node at (\kfox ,1) {\footnotesize \t};
-      #2
-    \end{tikzpicture}
-  }
-}
+\newcommand{\kfframes}[2]{{
+    \pgfmathsetmacro\kf@fcount{max(1, \kf@fps*#1)}
+    \foreach \f in {1, ..., \kf@fcount}{
+      \pgfmathsetmacro\t{\f/\kf@fps}
+      \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
+        \clip (0, 0) rectangle (\kf@width, \kf@height);
+        % debug: timestamp centre bottom
+        \node at (\kfox ,1) {\footnotesize \t};
+        #2
+      \end{tikzpicture}
+    }
+}}
 
 
 %% UTILITIES %%
@@ -100,10 +100,10 @@
 }
 
 %% conditional rendering
-\newcommand\kftimemask[3]{
-  \pgfmathtruncatemacro\kf@x@a{((#1) <= \t && \t < (#2)) ? 1 : 0}
-  \ifnum\kf@x@a=1{#3}\fi
-}
+\newcommand\kftimemask[3]{{
+    \pgfmathtruncatemacro\kf@x@a{((#1) <= \t && \t < (#2)) ? 1 : 0}
+    \ifnum\kf@x@a=1{#3}\fi
+}}
 
 
 
@@ -114,7 +114,7 @@
   offset angle/.estore in=\kf@text@offset@angle,
   %
   start/.estore in=\kf@text@start,
-  end/.estore in=\kf@text@end,
+  end/.store in=\kf@text@end, % ! don't expand; default depends on start & duration
   duration/.estore in=\kf@text@duration,
   direction/.is choice,
   direction/left/.code={
@@ -139,40 +139,42 @@
     offset radius=0,
     offset angle=0,
     start=0,
-    end=1,
     duration=1,
+    end=\kf@text@start+\kf@text@duration,
   },
 }
 
-\newcommand\kftext[4][]{
-  \pgfkeys{/kf/text, default, #1}
-  \node at (
-        {#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)},
-        {#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
-        ) {#4};
-}
-\newcommand\kftext@transition[6][]{
-  \pgfkeys{/kf/text, default, direction, #1}
-  % #1 - text x co-ordinate
-  % #2 - text y co-ordinate
-  % #3 - text body
-  \kftimemask{\kf@text@start}{\kf@text@end}{
-    % default text location
-    \pgfmathsetmacro\kf@x@a{#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)}
-    \pgfmathsetmacro\kf@x@b{#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
+\newcommand\kftext[4][]{{
+    \pgfkeys{/kf/text, default, #1}
+    \node at (
+          {#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)},
+          {#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
+          ) {#4};
+}}
+\newcommand\kftext@transition[6][]{{
+    \pgfkeys{/kf/text, default, direction, #1}
+    % #1 - text x co-ordinate
+    % #2 - text y co-ordinate
+    % #3 - text body
+    \kftimemask{\kf@text@start}{\kf@text@end}{
+      % default text location
+      \pgfmathsetmacro\kf@x@a{#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)}
+      \pgfmathsetmacro\kf@x@b{#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
 
-    % figure out bounding box
-    \settowidth{\kf@l@a}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
-    \settoheight{\kf@l@b}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
-    
-    \begin{scope}[shift={(\kf@x@a, \kf@x@b)}]
-      \clip (-\kf@l@a/2, -\kf@l@b/2) rectangle (\kf@l@a/2, \kf@l@b/2);
-      \kfinterpolate[start=\kf@text@start, duration=\kf@text@duration]{#5}{#6}
-      \pgfmathsetmacro\kf@x@e\pgfmathresult
-
-      \kftext{\kf@x@e*\kf@text@hiddenx}{\kf@x@e*\kf@text@hiddeny}{#4}
-    \end{scope}
-  }
-}
+      % figure out bounding box
+      \settowidth{\kf@l@a}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
+      \settoheight{\kf@l@b}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
+      
+      \begin{scope}[shift={(\kf@x@a, \kf@x@b)}]
+        % hack so that outros have the correct timing
+        \ifnum#5=0 \pgfmathsetmacro\kf@text@start{\kf@text@end-\kf@text@duration} \fi
+        \kfinterpolate[start=\kf@text@start, duration=\kf@text@duration]{#5}{#6}
+        \pgfmathsetmacro\kf@x@e\pgfmathresult
+        % render text, offset but clipped to bounding box
+        \clip (-\kf@l@a/2, -\kf@l@b/2) rectangle (\kf@l@a/2, \kf@l@b/2);
+        \kftext{\kf@x@e*\kf@text@hiddenx}{\kf@x@e*\kf@text@hiddeny}{#4}
+      \end{scope}
+    }
+}}
 \newcommand\kftextin[4][]{\kftext@transition[#1]{#2}{#3}{#4}{1}{0}}
 \newcommand\kftextout[4][]{\kftext@transition[#1]{#2}{#3}{#4}{0}{1}}
