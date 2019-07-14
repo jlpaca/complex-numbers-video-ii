@@ -4,6 +4,10 @@
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
 
+% use fpu for everything
+\usetikzlibrary{fpu}
+\pgfkeys{/pgf/fpu=true, /pgf/fpu/output format=fixed}
+
 %% GLOBALS %%
 
 %% export format sepcification
@@ -15,32 +19,104 @@
 \newcommand\kf@width{16} % aspect ratio
 \newcommand\kf@height{9} % 16 : 9
 
+%% setter functions
+\newcommand\kfsetfps[1]{\renewcommand\kf@fps{#1} \kf@setformat}
 
-%% calculate constants derived from format specifications
+%% exposed constants
+\newcommand\kfwidth{\kf@width}
+\newcommand\kfheight{\kf@height}
 
+%% some constants have to be recalculated from format specs.
 \newcommand{\kf@setformat}{
   \pgfmathsetmacro\kf@scale{\kf@pxh/\kf@ppi/\kf@height}
-  \pgfmathsetmacro\kf@cx{\kf@width/2}
-  \pgfmathsetmacro\kf@cy{\kf@height/2}
+  % x-centre and y-centre.
+  \pgfmathsetmacro\kfox{\kf@width/2}
+  \pgfmathsetmacro\kfoy{\kf@height/2}
 }
 \kf@setformat
 
+%% set up pgfkeys
+\pgfkeys{/kf/.is family}
+
+
 %% RENDERING ENVIRONMENT %%
 
-%% a series of frames of duration {#1} seconds.
+%% a sequence of frames of duration {#1} seconds.
 %%
 %% also sets macros \f (current frame) and \t (current time, in
 %% seconds).
 
 \newcommand{\kfframes}[2]{
-  \pgfmathsetmacro\kf@fcount{\kf@fps*#1}
+  \pgfmathsetmacro\kf@fcount{max(1, \kf@fps*#1)}
   \foreach \f in {1, ..., \kf@fcount}{
     \pgfmathsetmacro\t{\f/\kf@fps}
     \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
       \clip (0, 0) rectangle (\kf@width, \kf@height);
+      % debug: timestamp centre bottom
+      \node at (\kfox ,1) {\footnotesize \t};
       #2
     \end{tikzpicture}
   }
 }
 
+
 %% UTILITIES %%
+
+%% ! convention: /kf@x@<name> are temp registers.
+
+%% cubic step function
+\newcommand\kfsmoothstep[1]{
+  \pgfmathsetmacro\kf@x@a{#1}
+  \pgfmathtruncatemacro\kf@x@b{\kf@x@a < 0 || \kf@x@a > 1 ? 0 : 1}
+  \ifnum\kf@x@b=1
+  \pgfmathparse{3*\kf@x@a^2-2*\kf@x@a^3}
+  \else
+  \pgfmathparse{\kf@x@a < 0 ? 0 : 1}
+  \fi
+}
+
+%% interpolation
+\pgfkeys{
+  /kf/interpolate/.is family, /kf/interpolate,
+  start/.estore in=\kf@interpolate@start,
+  duration/.estore in=\kf@interpolate@duration,
+  default/.style={
+    start=0,
+    duration=1,
+  },
+}
+
+\newcommand\kfinterpolate[3][]{
+  % #1 - args
+  % #2 - start value
+  % #3 - end value
+  \pgfkeys{/kf/interpolate, default, #1}
+  \kfsmoothstep{(\t - (\kf@interpolate@start))/(\kf@interpolate@duration)}
+  \pgfmathparse{(#2)*(1-\pgfmathresult) + (#3)*\pgfmathresult}
+}
+
+%% conditional rendering
+\newcommand\kftimemask[3]{
+  \pgfmathtruncatemacro\kf@x@a{((#1) <= \t && \t < (#2)) ? 1 : 0}
+  \ifnum\kf@x@a=1{#3}\fi
+}
+
+
+
+%% drawing text
+\pgfkeys{
+  /kf/text/.is family, /kf/text,
+  offset radius/.estore in=\kf@text@offset@radius,
+  offset angle/.estore in=\kf@text@offset@angle,
+  default/.style={
+    offset radius=0,
+    offset angle=0,
+  },
+}
+\newcommand\kftext[4][]{
+  \pgfkeys{/kf/text, default, #1}
+  \node at (
+        {#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)},
+        {#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
+        ) {#4};
+}
