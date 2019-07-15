@@ -72,7 +72,7 @@
 \newcommand\zarg[2][]{{
     \pgfkeys{/z/arg, default, #1}
     % render the arrow
-    \pgfmathsetmacro\kf@x@b{((#2) > (\z@arg@origin) ? 1 : 1)*\z@arg@offset} % offset with correct sign
+    \pgfmathsetmacro\kf@x@b{((#2) > (\z@arg@origin) ? 1 : -1)*\z@arg@offset} % offset with correct sign
     \pgfmathsetmacro\kf@x@a{(\z@arg@origin)+\kf@x@b}
     % arrow is only visible if it is pointed in the correct direction
     \pgfmathtruncatemacro\kf@x@c{abs((#2)-(\z@arg@origin)) > 2*\z@arg@offset) ? 1 : 0}

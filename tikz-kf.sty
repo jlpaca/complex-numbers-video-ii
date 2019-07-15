@@ -53,7 +53,7 @@
       \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
         \clip (0, 0) rectangle (\kf@width, \kf@height);
         % debug: timestamp centre bottom
-        \node at (\kfox ,1) {\footnotesize \t};
+        % \node at (\kfox ,1) {\footnotesize \t};
         #2
       \end{tikzpicture}
     }
@@ -116,6 +116,7 @@
   start/.estore in=\kf@text@start,
   end/.store in=\kf@text@end, % ! don't expand; default depends on start & duration
   duration/.estore in=\kf@text@duration,
+  clip margin/.estore in=\kf@text@clipmargin,
   direction/.is choice,
   direction/left/.code={
     \def\kf@text@hiddenx{-\kf@l@a}
@@ -140,6 +141,7 @@
     offset angle=0,
     start=0,
     duration=1,
+    clip margin=0.1,
     end=\kf@text@start+\kf@text@duration,
   },
 }
@@ -162,8 +164,13 @@
       \pgfmathsetmacro\kf@x@b{#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
 
       % figure out bounding box
+      \pgfmathsetmacro{\kf@x@c}{\kf@text@clipmargin*\kf@scale}
+      
       \settowidth{\kf@l@a}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
       \settoheight{\kf@l@b}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
+
+      \addtolength{\kf@l@a}{\kf@x@c in}
+      \addtolength{\kf@l@b}{\kf@x@c in}
       
       \begin{scope}[shift={(\kf@x@a, \kf@x@b)}]
         % hack so that outros have the correct timing
