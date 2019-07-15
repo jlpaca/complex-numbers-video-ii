@@ -57,6 +57,78 @@
     \fill (\zre, \zim) circle (0.12);
 }}
 
+% draw the argument of a complex number as an arrow
+\pgfkeys{
+  /z/arg/.is family, /z/arg,
+  origin/.estore in=\z@arg@origin,
+  radius/.estore in=\z@arg@radius,
+  offset/.estore in=\z@arg@offset,
+  default/.style={
+    origin=0,
+    radius=1,
+    offset=0.1
+  }
+}
+\newcommand\zarg[2][]{{
+    \pgfkeys{/z/arg, default, #1}
+    % render the arrow
+    \pgfmathsetmacro\kf@x@b{((#2) > (\z@arg@origin) ? 1 : 1)*\z@arg@offset} % offset with correct sign
+    \pgfmathsetmacro\kf@x@a{(\z@arg@origin)+\kf@x@b}
+    % arrow is only visible if it is pointed in the correct direction
+    \pgfmathtruncatemacro\kf@x@c{abs((#2)-(\z@arg@origin)) > 2*\z@arg@offset) ? 1 : 0}
+    \ifnum\kf@x@c=1
+    \pgfkeys{/pgf/fpu=false}
+    \draw[->,>=stealth] (
+         {\z@arg@radius*cos(\kf@x@a r)},
+         {\z@arg@radius*sin(\kf@x@a r)}
+         ) arc (\kf@x@a r:((#2)-\kf@x@b) r:1);:\relax
+         \pgfkeys{/pgf/fpu=true}
+         \fi
+}}
+
+\pgfkeys{
+  /z/arg/in/.is family, /z/arg/in,
+  origin/.estore in=\z@arg@origin,
+  in/.estore in=\z@arg@in,
+  out/.estore in=\z@arg@out,
+  default/.style={
+    origin=0,
+    in=0,
+    out=(\z@arg@in+\zdt),
+  }
+}
+\newcommand\zargin[2][]{{
+    \pgfkeys{/z/arg/in, default, #1}
+    \kftimemask{\z@arg@in}{\z@arg@out}{
+      \kfinterpolate[start=\z@arg@in, duration=\zdt]{\z@arg@origin}{#2}
+      \pgfmathsetmacro\z@th\pgfmathresult
+      \zarg[origin=\z@arg@origin]{\z@th}
+    }
+}}
+
+\pgfkeys{
+  /z/arg/out/.is family, /z/arg/out,
+  origin/.estore in=\z@arg@origin,
+  in/.estore in=\z@arg@in,
+  out/.store in=\z@arg@out,
+  default/.style={
+    origin=0,
+    in=0,
+    out=(\z@arg@in+\zdt/2),
+  }
+}
+
+\newcommand\zargout[2][]{{
+    \pgfkeys{/z/arg/out, default, #1}
+    \kftimemask{\z@arg@in}{\z@arg@out}{
+      \kfinterpolate[start=\z@arg@out-\zdt/2, duration=\zdt/2]{\z@arg@origin}{#2}
+      \pgfmathsetmacro\z@th\pgfmathresult
+
+      % render the arrow & the complex number
+      \zarg[origin=\z@th]{#2}
+    }
+}}
+
 % draw a complex number being extruded from the origin
 \pgfkeys{
   /z/in/.is family, /z/in,
@@ -92,7 +164,7 @@
   out/.store in=\tout,
   default/.style={
     in=0,
-    out=(\tin+\zdt),
+    out=(\tin+2*\zdt),
   }
 }
 \newcommand\zto[5][]{{
@@ -105,18 +177,8 @@
       \kfinterpolate[start=\tin+\zdt, duration=\zdt]{#3}{#5}
       \pgfmathsetmacro\th\pgfmathresult
 
-      % render the arrow
-      \pgfmathsetmacro\kf@x@b{(#5) > (#3) ? 0.1 : -0.1} % angle offset for legibility
-      \pgfmathsetmacro\kf@x@a{(#3)+\kf@x@b}
-      % arrow is only visible if it is pointed in the correct direction
-      \pgfmathtruncatemacro\kf@x@c{abs((#3)-\th) > 2*abs(\kf@x@b) ? 1 : 0}
-      \ifnum\kf@x@c=1
-      \pgfkeys{/pgf/fpu=false}
-      \draw[->,>=stealth] ({cos(\kf@x@a r)}, {sin(\kf@x@a r)}) arc (\kf@x@a r:(\th-\kf@x@b) r:1);:\relax
-      \pgfkeys{/pgf/fpu=true}
-      \fi
-      
-      % render the complex number 
+      % render the arrow & the complex number
+      \zarg[origin=#3]{\th}
       \z{\r}{\th}    
     }
 }}

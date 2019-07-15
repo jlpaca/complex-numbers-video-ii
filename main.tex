@@ -3,10 +3,17 @@
 
 \begin{document}
 % debug:
-\kfsetfps{1}
+\kfsetfps{24}
 
 %\input{scenes/2-multiplication}
-\input{scenes/3-scale}
-\input{scenes/4-third-roots}
+%\input{scenes/3-scale}
+%\input{scenes/4-third-roots}
+\kfframes{1}{
+  \zgrid[in=-\zdt]{\kfox}{\kfoy}{
+    %\zto{1}{0}{2}{pi}
+    \zargin{pi}
+    \zargout[in=\zdt,out=1]{pi}
 
+  }
+}
 \end{document}
