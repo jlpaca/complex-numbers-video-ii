@@ -17,200 +17,204 @@
 \pagecolor{bg-a}
 \color{fg-a}
 
-
-
 %% COMPLEX NUMBERS %%
 % set up pgfkeys and default transition arguments
-\newcommand\zdt{0.4}
+\newcommand\z@dt{0.5}
 
 % grid
 \pgfkeys{
   /z/grid/.is family, /z/grid,
-  in/.store in=\tin,
+  in/.store in=\z@in,
+  origin x/.store in=\z@origin@x,
+  origin y/.store in=\z@origin@y,
+  out/.store in=\z@out,
+  unit/.store in=\zunit,
   default/.style={
-    in=0
+    in=-\z@dt,
+    origin x=\halfwidth,
+    origin y=\halfheight,
+    out=\tend+\z@dt,
+    unit=1,
   }
 }
-\newcommand\zgrid[4][]{{
+\newcommand\zgrid[2][]{{
     \pgfkeys{/z/grid, default, #1}
-    
-    \begin{scope}[shift={(#2, #3)}]
+    \draw[thin, fg-b] (0, {\z@origin@y}) -- (2*\halfwidth, {\z@origin@y});
+    \draw[thin, fg-b] ({\z@origin@x}, 0) -- ({\z@origin@x}, {2*\halfheight});
+    \kftext[polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
+    \kftext[polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
 
-      \kfinterpolate[start=\tin, duration=\zdt]{-#2}{\kfwidth-#2}
-      \pgfmathsetmacro\x\pgfmathresult
-      \kfinterpolate[start=\tin, duration=\zdt]{-#3}{\kfheight-#3}
-      \pgfmathsetmacro\y\pgfmathresult
 
-      \draw[bg-b] (-#2, 0) -- (\x, 0);
-      \draw[bg-b] (0, -#3) -- (0, \y);
-      
-      #4    
+    \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
+      #2
     \end{scope}
+}}
+\newcommand\zgridtween[8][]{{
+    % ugly-overwrite some default options. a also ignores pgfkeys in
+    % favour of required positional arguments.
+    \pgfkeys{/z/grid, default, in=0, #1}
+    \kftween[in=\z@in, duration=\z@dt]{#2}{#5}
+    \pgfmathsetmacro\z@xa\pgfmathresult
+    \kftween[in=\z@in, duration=\z@dt]{#3}{#6}
+    \pgfmathsetmacro\z@xb\pgfmathresult
+    \kftween[in=\z@in, duration=\z@dt]{#4}{#7}
+    \pgfmathsetmacro\z@xc\pgfmathresult
+
+    \zgrid[in=0, #1, origin x=\z@xa, origin y=\z@xb, unit=\z@xc]{
+      #8
+    }
 }}
 
 % draw a complex number
+\newif\ifz@arg@visible
+\newif\ifz@stagger
+\pgfkeys{
+  /z/.is family, /z,
+  arg origin/.store in=\z@arg@origin,
+  arg offset/.store in=\z@arg@offset,
+  arg radius/.store in=\z@arg@radius,
+  arg visible/.is if=z@arg@visible,
+  duration/.store in=\z@duration,
+  in/.store in=\z@in,
+  out/.store in=\z@out,
+  stagger/.is if=z@stagger,
+  default/.style={
+    arg origin=0,
+    arg offset=0.05,
+    arg radius=1,
+    arg visible=true,
+    duration=\z@dt,
+    in=0,
+    out=\tend,
+    stagger=true,
+  }  
+}
 \newcommand\z[3][]{{
-    \pgfmathsetmacro\zre{(#2)*cos(#3 r)}
-    \pgfmathsetmacro\zim{(#2)*sin(#3 r)}
+    \pgfkeys{/z, default, #1}
+    
+    \pgfmathsetmacro\re{\zunit*(#2)*cos(#3 r)}
+    \pgfmathsetmacro\im{\zunit*(#2)*sin(#3 r)}
 
-    \draw (0, 0) -- (\zre, \zim);
-    \fill (\zre, \zim) circle (0.12);
+    \ifz@arg@visible
+    \zarg[#1]{#3}
+    \fi
+    
+    \draw (0, 0) -- (\re, \im);
+    \fill (\re, \im) circle (0.12);
 }}
 
-% draw the argument of a complex number as an arrow
-\pgfkeys{
-  /z/arg/.is family, /z/arg,
-  origin/.estore in=\z@arg@origin,
-  radius/.estore in=\z@arg@radius,
-  offset/.estore in=\z@arg@offset,
-  default/.style={
-    origin=0,
-    radius=1,
-    offset=0.1
-  }
-}
-\newcommand\zarg[2][]{{
-    \pgfkeys{/z/arg, default, #1}
-    % render the arrow
-    \pgfmathsetmacro\kf@x@b{((#2) > (\z@arg@origin) ? 1 : -1)*\z@arg@offset} % offset with correct sign
-    \pgfmathsetmacro\kf@x@a{(\z@arg@origin)+\kf@x@b}
-    % arrow is only visible if it is pointed in the correct direction
-    \pgfmathtruncatemacro\kf@x@c{abs((#2)-(\z@arg@origin)) > 2*\z@arg@offset) ? 1 : 0}
-    \ifnum\kf@x@c=1
-    \pgfkeys{/pgf/fpu=false}
-    \draw[->,>=stealth] (
-         {\z@arg@radius*cos(\kf@x@a r)},
-         {\z@arg@radius*sin(\kf@x@a r)}
-         ) arc (\kf@x@a r:((#2)-\kf@x@b) r:1);:\relax
-         \pgfkeys{/pgf/fpu=true}
-         \fi
-}}
-
-\pgfkeys{
-  /z/arg/in/.is family, /z/arg/in,
-  origin/.estore in=\z@arg@origin,
-  in/.estore in=\z@arg@in,
-  out/.estore in=\z@arg@out,
-  default/.style={
-    origin=0,
-    in=0,
-    out=(\z@arg@in+\zdt),
-  }
-}
-\newcommand\zargin[2][]{{
-    \pgfkeys{/z/arg/in, default, #1}
-    \kftimemask{\z@arg@in}{\z@arg@out}{
-      \kfinterpolate[start=\z@arg@in, duration=\zdt]{\z@arg@origin}{#2}
-      \pgfmathsetmacro\z@th\pgfmathresult
-      \zarg[origin=\z@arg@origin]{\z@th}
-    }
-}}
-
-\pgfkeys{
-  /z/arg/out/.is family, /z/arg/out,
-  origin/.estore in=\z@arg@origin,
-  in/.estore in=\z@arg@in,
-  out/.store in=\z@arg@out,
-  default/.style={
-    origin=0,
-    in=0,
-    out=(\z@arg@in+\zdt/2),
-  }
-}
-
-\newcommand\zargout[2][]{{
-    \pgfkeys{/z/arg/out, default, #1}
-    \kftimemask{\z@arg@in}{\z@arg@out}{
-      \kfinterpolate[start=\z@arg@out-\zdt/2, duration=\zdt/2]{\z@arg@origin}{#2}
-      \pgfmathsetmacro\z@th\pgfmathresult
-
-      % render the arrow & the complex number
-      \zarg[origin=\z@th]{#2}
-    }
-}}
-
-% draw a complex number being extruded from the origin
-\pgfkeys{
-  /z/in/.is family, /z/in,
-  in/.store in=\tin,
-  out/.store in=\tout,
-  default/.style={
-    in=0,
-    out=(\tin+\zdt),
-  }
-}
 \newcommand\zin[3][]{{
-    \pgfkeys{/z/in, default, #1}
-    % #2 - modulus
-    % #3 - argument
-    \kftimemask{\tin}{\tout}{
-      \kfinterpolate[start=\tin, duration=\zdt/2]{0}{#2}
-      \pgfmathsetmacro\zr\pgfmathresult
+    \pgfkeys{/z, default, #1}
+    \kfclip{\z@in}{\z@out}{
+      
+      \pgfmathsetmacro\re{\zunit*(#2)*cos(#3 r)}
+      \pgfmathsetmacro\im{\zunit*(#2)*sin(#3 r)}
+      
+      \kftween[in=(\z@in), duration=((\z@duration/2)]{0}{1}
+      \pgfmathsetmacro\z@xa\pgfmathresult
+      \draw (0, 0) -- (\re*\z@xa, \im*\z@xa);
 
-      \kfinterpolate[start=\tin+\zdt/2, duration=\zdt/2]{0}{0.12}
-      \pgfmathsetmacro\d\pgfmathresult
-
-      \pgfmathsetmacro\re{\zr*cos(#3 r)}
-      \pgfmathsetmacro\im{\zr*sin(#3 r)}
-      \draw (0, 0) -- (\re, \im);
-      \fill (\re, \im) circle (\d);
-      %  \kftext[offset radius=0]{\re}{\im}{oof}
+      \kftween[in=((\z@in)+(\z@duration)/2), duration=((\z@duration)/2)]{0}{1}
+      \pgfmathsetmacro\z@xa\pgfmathresult
+      \fill (\re, \im) circle (0.12*\z@xa);
+      
+      \ifz@arg@visible
+      \zargin[#1]{#3}
+      \fi
     }
 }}
-
-\pgfkeys{
-  /z/to/.is family, /z/to,
-  in/.store in=\tin,
-  out/.store in=\tout,
-  default/.style={
-    in=0,
-    out=(\tin+2*\zdt),
-  }
-}
-\newcommand\zto[5][]{{
-    \pgfkeys{/z/to, default, #1}
-    % #2 / #4 - start / end modulus
-    % #3 / #5 - start / end argument
-    \kftimemask{\tin}{\tout}{
-      \kfinterpolate[start=\tin, duration=\zdt]{#2}{#4}
-      \pgfmathsetmacro\r\pgfmathresult
-      \kfinterpolate[start=\tin+\zdt, duration=\zdt]{#3}{#5}
-      \pgfmathsetmacro\th\pgfmathresult
-
-      % render the arrow & the complex number
-      \zarg[origin=#3]{\th}
-      \z{\r}{\th}    
-    }
-}}
-
-\pgfkeys{
-  /z/out/.is family, /z/out,
-  in/.store in=\tin,
-  out/.store in=\tout,
-  default/.style={
-    in=0,
-    out=(\tin+\zdt),
-  }
-}
 
 \newcommand\zout[3][]{{
-    \pgfkeys{/z/out, default, #1}
-    % #2 - modulus
-    % #3 - argument
-    \kftimemask{\tin}{\tout}{
-      \kfinterpolate[start=\tout-\zdt, duration=\zdt/2]{0}{#2}
-      \pgfmathsetmacro\r\pgfmathresult
+    \pgfkeys{/z, default, #1}
+    \kfclip{\z@in}{\z@out}{
+      \pgfmathsetmacro\re{\zunit*(#2)*cos(#3 r)}
+      \pgfmathsetmacro\im{\zunit*(#2)*sin(#3 r)}
+      
+      \kftween[in=(\z@out-\z@duration), duration=(\z@duration/2)]{0}{1}
+      \pgfmathsetmacro\z@xa\pgfmathresult
+      \draw (\re*\z@xa, \im*\z@xa) -- (\re, \im);
 
-      \kfinterpolate[start=\tout-\zdt/2, duration=\zdt/2]{0.12}{0}
-      \pgfmathsetmacro\d\pgfmathresult
-
-      \pgfmathsetmacro\re{\r*cos(#3 r)}
-      \pgfmathsetmacro\im{\r*sin(#3 r)}
-      \pgfmathsetmacro\ro{(#2)*cos(#3 r)}
-      \pgfmathsetmacro\io{(#2)*sin(#3 r)}
-
-      \draw (\re, \im) -- (\ro, \io);
-      \fill (\ro, \io) circle (\d);
-
+      \kftween[in=(\z@out-\z@duration/2), duration=(\z@duration/2)]{0.12}{0}
+      \pgfmathsetmacro\z@xb\pgfmathresult
+      \fill (\re, \im) circle (\z@xb);
     }
+    \ifz@arg@visible
+    \zargout[#1]{#3}
+    \fi
+}}
+
+
+% draw only the argument of a complex number.
+\newcommand\zarg[2][]{{
+    \pgfkeys{/z, default, #1}
+
+    % make sure the offset is pointed the right way.
+    \pgfmathsetmacro\z@arg@offset{((#2) - \z@arg@origin > 0 ? 1 : -1)*\z@arg@offset}
+    \pgfmathsetmacro\z@xa{\z@arg@origin+\z@arg@offset}
+    \pgfmathsetmacro\z@xb{(#2)-\z@arg@offset}
+
+    \pgfmathsetmacro\re{\z@arg@radius*cos(\z@xa r)}
+    \pgfmathsetmacro\im{\z@arg@radius*sin(\z@xa r)}
+
+    % only draw if legible.
+    \pgfmathtruncatemacro\z@xc{abs(\z@xa - \z@xb) > 2*abs(\z@arg@offset)}
+    \ifnum\z@xc=1
+    \pgfkeys{/pgf/fpu=false}
+    \draw[->,>=stealth] (\re, \im) arc (\z@xa r:\z@xb r:\z@arg@radius);
+    \pgfkeys{/pgf/fpu=true}
+    \fi
+}}
+\newcommand\zargin[2][]{{
+    \pgfkeys{/z, default, #1}
+
+    \kfclip{\z@in}{\z@out}{
+      \kftween[in=\z@in, duration=\z@duration]{\z@arg@origin}{#2}
+      \pgfmathsetmacro\z@xc\pgfmathresult
+      \zarg[#1]{\z@xc}
+    }
+}}
+\newcommand\zargout[2][]{{
+    \pgfkeys{/z, default, #1}
+    \kfclip{\z@in}{\z@out}{
+      \kftween[in=\z@out-\z@duration, duration=\z@duration]{\z@arg@origin}{#2}
+      \pgfmathsetmacro\z@xc\pgfmathresult
+      \zarg[#1, arg origin=\z@xc]{#2}
+    }
+}}
+
+
+\newcommand\ztween[5][]{{
+    \pgfkeys{/z, default, #1}
+    
+    \kfclip{\z@in}{\z@out}{
+      \kftween[in=\z@in, duration=\z@duration]{#2}{#4}
+      \pgfmathsetmacro\r\pgfmathresult
+      % optionally stagger the modulus & argument tweens
+      \ifz@stagger \pgfmathsetmacro\z@in{\z@in+\z@duration} \fi
+      \kftween[in=\z@in, duration=\z@duration]{#3}{#5}
+      \pgfmathsetmacro\th\pgfmathresult
+
+      \z[#1]{\r}{\th}
+    }
+}}
+
+%% TITLE CARD
+\newlength\z@la
+\newlength\z@lb
+\newcommand\ztitle[1]{{
+    % for title cards, invert palette.
+    \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+
+    \begin{scope}[shift={(\halfwidth, \halfheight+0.5)}, color=bg-a]
+
+      \settowidth{\z@la}{\begin{pgfinterruptpicture}#1\end{pgfinterruptpicture}}
+      \settoheight{\z@lb}{\begin{pgfinterruptpicture}#1\end{pgfinterruptpicture}}
+
+      \kftween[in=0, out=2*\z@dt]{-0.5}{0.5}
+      \pgfmathsetmacro\w\pgfmathresult
+      \draw  (-\z@la/2, -\z@lb/2-0.5) -- (\w*\z@la, -\z@lb/2-0.5);
+
+      \kftext[polar=false]{0}{0}{\textcolor{bg-a}{\contour{white}{#1}}}
+
+    \end{scope}
 }}

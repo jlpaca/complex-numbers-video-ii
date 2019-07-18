@@ -1,43 +1,64 @@
 \documentclass[tikz]{standalone}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{contour}
 \usepackage{kf-complex}
 
 \begin{document}
+
+\pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{8}
+\kfsetfps{4}
+%% \kfframes{4}{}                                    %% : 18 - : 22
+%% \input{scenes/2a-in-the-real-numbers}             %% : 22 - : 35
+%% \input{scenes/2c-therefore-we-are-looking-for}    %% : 35 - : 45
+%% \kfframes{1}{                                     %% : 45 - : 46
+%%   \zgridtween{\halfwidth}{\halfheight}{1.2}{\halfwidth}{\halfheight}{3}{
+%%     \z{1}{0}
+%%     \kftext[offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$};
+%%   }
+%% }
+\input{scenes/2d-we-can-find-two-more}               %% : 46 - : 00
+%% \input{scenes/2e-remember-that-two}               %% : 00 - : 12
+%% \input{scenes/2f-it-is-not-a-coincidence}         %%
 
-%\input{scenes/2-multiplication}
-%\input{scenes/3-scale}
-%\input{scenes/4-third-roots}
-\kfframes{2}{
-  \zgrid[in=-\zdt]{\kfox}{\kfoy}{
-    %draw[dashed, bg-b] (0, 0) circle (2.5);
-    \z{2.5}{0}
-    \kftext[offset radius=2.5, offset angle=0]{0.3}{-0.5}{$1$}
 
-    \z{2.5}{2*pi/3}
-    \z{2.5}{-2*pi/3}
+%% \kfframes{8}{ % 2:2
+%%   \newcommand\ngon[3]{{
+%%       \pgfmathtruncatemacro\zn{##1 - 1}
+%%       \foreach \k in {0,...,\zn}{
 
-    \pgfmathsetmacro{\zx}{2.5*cos(2*pi/3 r)}
-    \pgfmathsetmacro{\zy}{2.5*sin(2*pi/3 r)}
+%%         \pgfmathsetmacro\tdelay{\dt/(##1)}
 
-    \kfinterpolate[start=0, duration=\zdt/3]{2.5}{\zx}
-    \pgfmathsetmacro\zxa\pgfmathresult
-    \kfinterpolate[start=0, duration=\zdt/3]{0}{\zy}
-    \pgfmathsetmacro\zya\pgfmathresult
+%%         \pgfmathsetmacro\tha{2*pi*\k/(##1)}
+%%         \pgfmathsetmacro\thb{2*pi*(\k+1)/(##1)}
+%%         \zin[in=(##2 + \tdelay*\k), out=(##3), arg visible=false]{1}{\tha}
 
-    \kfinterpolate[start=\zdt/3, duration=2*\zdt/3]{\zy}{-\zy}
-    \pgfmathsetmacro\zyb\pgfmathresult
+%%         \pgfmathsetmacro\xa{\zunit*cos(\tha r)}
+%%         \pgfmathsetmacro\ya{\zunit*sin(\tha r)}
 
-    \kfinterpolate[start=2*\zdt/3, duration=\zdt]{\zx}{2.5}
-    \pgfmathsetmacro\zxc\pgfmathresult
-    \kfinterpolate[start=2*\zdt/3, duration=\zdt]{-\zy}{0}
-    \pgfmathsetmacro\zyc\pgfmathresult
+%%         \pgfmathsetmacro\xb{\zunit*cos(\thb r)}
+%%         \pgfmathsetmacro\yb{\zunit*sin(\thb r)}
 
-    
-    \draw[dash dot] (2.5, 0) -- (\zxa, \zya);
-    \draw[dash dot] (\zx, \zy) -- (\zx, \zyb);
-    \draw[dash dot] (\zx, -\zy) -- (\zxc, \zyc);
+%%         \pgfmathtruncatemacro\m{\t > ##3}
+%%         \kftween[in=(\m ? ##3 - \dt : ##2)+\dt+(\k*\tdelay), duration=\tdelay]{\xa}{\xb}
+%%         \pgfmathsetmacro\xc\pgfmathresult
 
-  }
-}
+%%         \kftween[in=(\m ? ##3 - \dt : ##2)+\dt+(\k*\tdelay), duration=\tdelay]{\ya}{\yb}
+%%         \pgfmathsetmacro\yc\pgfmathresult
+
+%%         \ifnum\m=1
+%%         \draw[dashed] (\xc, \yc) -- (\xb, \yb);
+%%         \else
+%%         \draw[dashed] (\xa, \ya) -- (\xc, \yc);
+%%         \fi
+%%       }
+%%   }}
+%%   \zgrid[unit=3]{
+%%     \ngon{5}{0}{3}
+%%     \ngon{6}{5}{8}
+%%   }
+%%}
+
+
 \end{document}

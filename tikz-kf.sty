@@ -10,7 +10,7 @@
 
 %% GLOBALS %%
 
-%% export format sepcification
+%% export format sepcification%
 
 \newcommand\kf@fps{30}   % 30 frames per second
 \newcommand\kf@ppi{600}  % 600 pixels per inch
@@ -20,168 +20,149 @@
 \newcommand\kf@height{9} % 16 : 9
 
 %% setter functions
-\newcommand\kfsetfps[1]{\renewcommand\kf@fps{#1} \kf@setformat}
-
-%% exposed constants
-\newcommand\kfwidth{\kf@width}
-\newcommand\kfheight{\kf@height}
-
-%% some constants have to be recalculated from format specs.
-\newcommand{\kf@setformat}{
-  \pgfmathsetmacro\kf@scale{\kf@pxh/\kf@ppi/\kf@height}
-  % x-centre and y-centre.
-  \pgfmathsetmacro\kfox{\kf@width/2}
-  \pgfmathsetmacro\kfoy{\kf@height/2}
-}
-\kf@setformat
-
-%% set up pgfkeys
-\pgfkeys{/kf/.is family}
-
-
-%% RENDERING ENVIRONMENT %%
+\newcommand\kfsetfps[1]{\renewcommand\kf@fps{#1}}
 
 %% a sequence of frames of duration {#1} seconds.
 %%
-%% also sets macros \f (current frame) and \t (current time, in
-%% seconds).
+%% defines the following macros:
+%% \f                      - current frame, indexed from 1.
+%% \t                      - current time, in seconds.
+%% \tend                   - time of final frame.
+%% \halfwidth, \halfheight - co-ordinates of centre frame.
+\newcommand{\kfframes}[2]{
+  \begingroup
+  % calculate some format parameters
+  \pgfmathsetmacro\kf@scale{\kf@pxh/\kf@ppi/\kf@height}
+  \pgfmathsetmacro\halfheight{\kf@height/2}
+  \pgfmathsetmacro\halfwidth{\kf@width/2}
+  
+  % calculate the number of frames. \kfframes{0}{<content>} renders
+  % a single frame.
+  \pgfmathsetmacro\kf@n{max(1, \kf@fps*#1)}
+  \pgfmathsetmacro\tend{#1}
 
-\newcommand{\kfframes}[2]{{
-    \pgfmathsetmacro\kf@fcount{max(1, \kf@fps*#1)}
-    \foreach \f in {1, ..., \kf@fcount}{
-      \pgfmathsetmacro\t{\f/\kf@fps}
-      \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
-        \clip (0, 0) rectangle (\kf@width, \kf@height);
-        % debug: timestamp centre bottom
-        % \node at (\kfox ,1) {\footnotesize \t};
-        #2
-      \end{tikzpicture}
-    }
-}}
+  \foreach \f in {1, ..., \kf@n}{
+    
+    % calculate current time.
+    \pgfmathsetmacro\t{\f/\kf@fps}
 
-
-%% UTILITIES %%
-
-%% ! convention: /kf@x@<name> are temp registers.
-%% ! convention: /kf@l@<name> are temp legngth registers.
-\newlength{\kf@l@a}
-\newlength{\kf@l@b}
+    % each frame is a tikz picture with the appropriate scale and
+    % clipped to the viewport.
+    \begin{tikzpicture}[x=\kf@scale in,y=\kf@scale in]
+      \clip (0, 0) rectangle (\kf@width, \kf@height);
+      #2
+    \end{tikzpicture}
+    
+  }
+  \endgroup
+}
 
 
 %% cubic step function
-\newcommand\kfsmoothstep[1]{
-  \pgfmathsetmacro\kf@x@a{#1}
-  \pgfmathtruncatemacro\kf@x@b{\kf@x@a < 0 || \kf@x@a > 1 ? 0 : 1}
-  \ifnum\kf@x@b=1
-  \pgfmathparse{3*\kf@x@a^2-2*\kf@x@a^3}
+\newcommand\kf@smoothstep[1]{
+  \pgfmathsetmacro\kf@xa{#1}
+  \pgfmathtruncatemacro\kf@xb{\kf@xa < 0 || 1 < \kf@xa ? 0 : 1}
+  \ifnum\kf@xb=1
+  \pgfmathparse{3*\kf@xa^2-2*\kf@xa^3}
   \else
-  \pgfmathparse{\kf@x@a < 0 ? 0 : 1}
+  \pgfmathparse{\kf@xa < 0 ? 0 : 1}
   \fi
 }
 
-%% interpolation
-\pgfkeys{
-  /kf/interpolate/.is family, /kf/interpolate,
-  start/.estore in=\kf@interpolate@start,
-  duration/.estore in=\kf@interpolate@duration,
-  default/.style={
-    start=0,
-    duration=1,
-  },
+%% linear interpolation
+\newcommand\kf@lerp[3]{
+  % #1 / #2 - start / end value
+  % #3      - progress
+  \pgfmathsetmacro\kf@xa{#3}
+  \pgfmathparse{(#1)*(1-\kf@xa)+(#2)*\kf@xa}
 }
 
-\newcommand\kfinterpolate[3][]{
-  % #1 - args
-  % #2 - start value
-  % #3 - end value
-  \pgfkeys{/kf/interpolate, default, #1}
-  \kfsmoothstep{(\t - (\kf@interpolate@start))/(\kf@interpolate@duration)}
-  \pgfmathparse{(#2)*(1-\pgfmathresult) + (#3)*\pgfmathresult}
+%% tween
+\pgfkeys{
+  /kf/tween/.is family, /kf/tween,
+  duration/.store in=\kf@tween@duration,
+  in/.store in=\kf@tween@in,
+  out/.store in=\kf@tween@out,
+  default/.style={
+    duration=(\kf@tween@out-\kf@tween@in),
+    in=0,
+    out=\tend,
+  }
 }
+\newcommand\kftween[3][]{
+  \pgfkeys{/kf/tween, default, #1}
+  % #2 / #3 - start / end value
+  \kf@smoothstep{(\t-(\kf@tween@in))/\kf@tween@duration}
+  \kf@lerp{#2}{#3}{\pgfmathresult}
+}
+
 
 %% conditional rendering
-\newcommand\kftimemask[3]{{
-    \pgfmathtruncatemacro\kf@x@a{((#1) <= \t && \t < (#2)) ? 1 : 0}
-    \ifnum\kf@x@a=1{#3}\fi
-}}
-
-
-
-%% drawing text
-\pgfkeys{
-  /kf/text/.is family, /kf/text,
-  offset radius/.estore in=\kf@text@offset@radius,
-  offset angle/.estore in=\kf@text@offset@angle,
-  %
-  start/.estore in=\kf@text@start,
-  end/.store in=\kf@text@end, % ! don't expand; default depends on start & duration
-  duration/.estore in=\kf@text@duration,
-  clip margin/.estore in=\kf@text@clipmargin,
-  direction/.is choice,
-  direction/left/.code={
-    \def\kf@text@hiddenx{-\kf@l@a}
-    \def\kf@text@hiddeny{0}
-  },
-  direction/right/.code={
-    \def\kf@text@hiddenx{\kf@l@a}
-    \def\kf@text@hiddeny{0}
-  },
-  direction/top/.code={
-    \def\kf@text@hiddenx{0}
-    \def\kf@text@hiddeny{\kf@l@b}
-  },
-  direction/bottom/.code={
-    \def\kf@text@hiddenx{0}
-    \def\kf@text@hiddeny{-\kf@l@b}
-  },
-  direction/.default=bottom,
-  %
-  default/.style={
-    offset radius=0,
-    offset angle=0,
-    start=0,
-    duration=1,
-    clip margin=0.1,
-    end=\kf@text@start+\kf@text@duration,
-  },
+\newcommand\kfclip[3]{
+  \pgfmathtruncatemacro\kf@xa{(#1) <= \t && \t < (#2)}
+  \ifnum\kf@xa=1\relax #3 \fi
 }
 
+%% text
+\newif\ifkf@text@polar
+\pgfkeys{
+  /kf/text/.is family, /kf/text,
+  duration/.store in=\kf@text@duration,
+  in/.store in=\kf@text@in,
+  offset fst/.store in=\kf@text@offset@fst,
+  offset snd/.store in=\kf@text@offset@snd,
+  out/.store in=\kf@text@out,
+  polar/.is if=kf@text@polar,
+  default/.style={
+    duration=(\kf@text@out-\kf@text@in),
+    in=0,
+    offset fst=0,
+    offset snd=0,
+    out=\tend,
+    polar=true,
+  }
+}
 \newcommand\kftext[4][]{{
-    \pgfkeys{/kf/text, default, #1}
-    \node at (
-          {#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)},
-          {#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
-          ) {#4};
+  \pgfkeys{/kf/text, default, #1}
+  \ifkf@text@polar
+  \pgfmathsetmacro\kf@xa{(#2)*cos(#3 r)+(\kf@text@offset@fst)*cos((\kf@text@offset@snd) r)}
+  \pgfmathsetmacro\kf@xb{(#2)*sin(#3 r)+(\kf@text@offset@fst)*sin((\kf@text@offset@snd) r)}
+  \else
+  \pgfmathsetmacro\kf@xa{(#2)+(\kf@text@offset@fst)}
+  \pgfmathsetmacro\kf@xb{(#3)+(\kf@text@offset@snd)}
+  \fi
+  \node at (\kf@xa, \kf@xb) {#4};
 }}
-\newcommand\kftext@transition[6][]{{
-    \pgfkeys{/kf/text, default, direction, #1}
-    % #1 - text x co-ordinate
-    % #2 - text y co-ordinate
-    % #3 - text body
-    \kftimemask{\kf@text@start}{\kf@text@end}{
-      % default text location
-      \pgfmathsetmacro\kf@x@a{#2+(\kf@text@offset@radius)*cos(\kf@text@offset@angle r)}
-      \pgfmathsetmacro\kf@x@b{#3+(\kf@text@offset@radius)*sin(\kf@text@offset@angle r)}
 
-      % figure out bounding box
-      \pgfmathsetmacro{\kf@x@c}{\kf@text@clipmargin*\kf@scale}
-      
-      \settowidth{\kf@l@a}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
-      \settoheight{\kf@l@b}{\pgfinterruptpicture #4 \endpgfinterruptpicture}
-
-      \addtolength{\kf@l@a}{\kf@x@c in}
-      \addtolength{\kf@l@b}{\kf@x@c in}
-      
-      \begin{scope}[shift={(\kf@x@a, \kf@x@b)}]
-        % hack so that outros have the correct timing
-        \ifnum#5=0 \pgfmathsetmacro\kf@text@start{\kf@text@end-\kf@text@duration} \fi
-        \kfinterpolate[start=\kf@text@start, duration=\kf@text@duration]{#5}{#6}
-        \pgfmathsetmacro\kf@x@e\pgfmathresult
-        % render text, offset but clipped to bounding box
-        \clip (-\kf@l@a/2, -\kf@l@b/2) rectangle (\kf@l@a/2, \kf@l@b/2);
-        \kftext{\kf@x@e*\kf@text@hiddenx}{\kf@x@e*\kf@text@hiddeny}{#4}
-      \end{scope}
-    }
+%% text transitions
+\newcommand\kftextin[4][]{{
+  \pgfkeys{/kf/text, default, #1}
+  \kfclip{\kf@text@in}{\kf@text@out}{
+    \kftween[in=\kf@text@in, duration=\kf@text@duration]{0}{1}
+    \pgfmathsetmacro\kf@xa\pgfmathresult
+    \begin{scope}[opacity=\kf@xa]
+      \kftext[#1]{#2}{#3}{#4}
+    \end{scope}
+  }
 }}
-\newcommand\kftextin[4][]{\kftext@transition[#1]{#2}{#3}{#4}{1}{0}}
-\newcommand\kftextout[4][]{\kftext@transition[#1]{#2}{#3}{#4}{0}{1}}
+
+\newcommand\kftextout[4][]{{
+  \pgfkeys{/kf/text, default, #1}
+  \kfclip{\kf@text@in}{\kf@text@out}{
+    \kftween[in=(\kf@text@out-\kf@text@duration), duration=(\kf@text@duration)]{1}{0}
+    \pgfmathsetmacro\kf@xa\pgfmathresult
+    \begin{scope}[opacity=\kf@xa]
+      \kftext[#1]{#2}{#3}{#4}
+    \end{scope}
+  }
+}}
+
+\newcommand\kftexttween[7][]{{
+  \pgfkeys{/kf/text, default, #1}
+  \kfclip{\kf@text@in}{\kf@text@out}{
+    \kftextout[#1, out=(\kf@text@in+\kf@text@duration)]{#2}{#3}{#4}
+    \kftextin[#1]{#5}{#6}{#7}
+  }
+}}
+
+
