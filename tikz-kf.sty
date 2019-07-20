@@ -158,9 +158,9 @@
 }}
 
 \newcommand\kftexttween[7][]{{
-  \pgfkeys{/kf/text, default, #1}
-  \kfclip{\kf@text@in}{\kf@text@out}{
-    \kftextout[#1, out=(\kf@text@in+\kf@text@duration)]{#2}{#3}{#4}
+    \pgfkeys{/kf/text, default, #1}
+    \kfclip{\kf@text@in}{\kf@text@out}{
+    \kftextout[#1, out=\kf@text@in+\kf@text@duration]{#2}{#3}{#4}
     \kftextin[#1]{#5}{#6}{#7}
   }
 }}

@@ -39,29 +39,27 @@
 }
 \newcommand\zgrid[2][]{{
     \pgfkeys{/z/grid, default, #1}
-    \draw[thin, fg-b] (0, {\z@origin@y}) -- (2*\halfwidth, {\z@origin@y});
-    \draw[thin, fg-b] ({\z@origin@x}, 0) -- ({\z@origin@x}, {2*\halfheight});
-    \kftext[polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
-    \kftext[polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
 
+    \kfclip{\z@in}{\z@out}{
+      \kftween[in=\z@in, out=\z@in+\z@dt]{0}{2}
+      \pgfmathsetmacro\z@xa\pgfmathresult
 
-    \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
-      #2
-    \end{scope}
-}}
-\newcommand\zgridtween[8][]{{
-    % ugly-overwrite some default options. a also ignores pgfkeys in
-    % favour of required positional arguments.
-    \pgfkeys{/z/grid, default, in=0, #1}
-    \kftween[in=\z@in, duration=\z@dt]{#2}{#5}
-    \pgfmathsetmacro\z@xa\pgfmathresult
-    \kftween[in=\z@in, duration=\z@dt]{#3}{#6}
-    \pgfmathsetmacro\z@xb\pgfmathresult
-    \kftween[in=\z@in, duration=\z@dt]{#4}{#7}
-    \pgfmathsetmacro\z@xc\pgfmathresult
+      \kftween[in=\z@out-\z@dt, out=\z@out]{0}{2}
+      \pgfmathsetmacro\z@xb\pgfmathresult
 
-    \zgrid[in=0, #1, origin x=\z@xa, origin y=\z@xb, unit=\z@xc]{
-      #8
+      
+      \draw[thin, bg-b] (\z@xb*\halfwidth, {\z@origin@y}) -- (\z@xa*\halfwidth, {\z@origin@y});
+      \draw[thin, bg-b] ({\z@origin@x}, \z@xb*\halfwidth) -- ({\z@origin@x}, {\z@xa*\halfheight});
+      \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
+      \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
+
+      \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
+      \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
+
+      
+      \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
+        #2
+      \end{scope}
     }
 }}
 
@@ -176,7 +174,7 @@
 \newcommand\zargout[2][]{{
     \pgfkeys{/z, default, #1}
     \kfclip{\z@in}{\z@out}{
-      \kftween[in=\z@out-\z@duration, duration=\z@duration]{\z@arg@origin}{#2}
+      \kftween[in=(\z@out-\z@duration), duration=\z@duration]{\z@arg@origin}{#2}
       \pgfmathsetmacro\z@xc\pgfmathresult
       \zarg[#1, arg origin=\z@xc]{#2}
     }
@@ -188,13 +186,13 @@
     
     \kfclip{\z@in}{\z@out}{
       \kftween[in=\z@in, duration=\z@duration]{#2}{#4}
-      \pgfmathsetmacro\r\pgfmathresult
+      \pgfmathsetmacro\z@xa\pgfmathresult
       % optionally stagger the modulus & argument tweens
       \ifz@stagger \pgfmathsetmacro\z@in{\z@in+\z@duration} \fi
       \kftween[in=\z@in, duration=\z@duration]{#3}{#5}
-      \pgfmathsetmacro\th\pgfmathresult
+      \pgfmathsetmacro\z@xb\pgfmathresult
 
-      \z[#1]{\r}{\th}
+      \z[#1]{\z@xa}{\z@xb}
     }
 }}
 
