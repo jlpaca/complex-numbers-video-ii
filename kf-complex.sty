@@ -40,11 +40,11 @@
 \newcommand\zgrid[2][]{{
     \pgfkeys{/z/grid, default, #1}
 
-    \kfclip{\z@in}{\z@out}{
+    %\kfclip{\z@in}{\z@out}{
       \kftween[in=\z@in, out=\z@in+\z@dt]{0}{2}
       \pgfmathsetmacro\z@xa\pgfmathresult
 
-      \kftween[in=\z@out-\z@dt, out=\z@out]{0}{2}
+      \kftween[in=(\z@out-\z@dt), out=\z@out]{0}{2}
       \pgfmathsetmacro\z@xb\pgfmathresult
 
       
@@ -60,7 +60,7 @@
       \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
         #2
       \end{scope}
-    }
+    %}
 }}
 
 % draw a complex number
@@ -124,6 +124,7 @@
 
 \newcommand\zout[3][]{{
     \pgfkeys{/z, default, #1}
+    %\ifz@stagger \pgfmathsetmacro\zout{\zout-\z@dt} \fi
     \kfclip{\z@in}{\z@out}{
       \pgfmathsetmacro\re{\zunit*(#2)*cos(#3 r)}
       \pgfmathsetmacro\im{\zunit*(#2)*sin(#3 r)}
@@ -145,7 +146,7 @@
 % draw only the argument of a complex number.
 \newcommand\zarg[2][]{{
     \pgfkeys{/z, default, #1}
-
+    \kfclip{\z@in}{\z@out}{
     % make sure the offset is pointed the right way.
     \pgfmathsetmacro\z@arg@offset{((#2) - \z@arg@origin > 0 ? 1 : -1)*\z@arg@offset}
     \pgfmathsetmacro\z@xa{\z@arg@origin+\z@arg@offset}
@@ -161,6 +162,7 @@
     \draw[->,>=stealth] (\re, \im) arc (\z@xa r:\z@xb r:\z@arg@radius);
     \pgfkeys{/pgf/fpu=true}
     \fi
+    }
 }}
 \newcommand\zargin[2][]{{
     \pgfkeys{/z, default, #1}
@@ -208,7 +210,7 @@
       \settowidth{\z@la}{\begin{pgfinterruptpicture}#1\end{pgfinterruptpicture}}
       \settoheight{\z@lb}{\begin{pgfinterruptpicture}#1\end{pgfinterruptpicture}}
 
-      \kftween[in=0, out=2*\z@dt]{-0.5}{0.5}
+      \kftween[in=0, out=\z@dt]{-0.5}{0.5}
       \pgfmathsetmacro\w\pgfmathresult
       \draw  (-\z@la/2, -\z@lb/2-0.5) -- (\w*\z@la, -\z@lb/2-0.5);
 

@@ -8,39 +8,14 @@
 
 \pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{8}
+\kfsetfps{4}
 
 %% 0.2 ROOTS OF UNITY
-\kfframes{2}{\ztitle{Roots of Unity}}
-\input{scenes/2}
+%\kfframes{2}{\ztitle{Roots of Unity}}
+%\input{scenes/2}
 
 %% 0.5 RETURN OF THE EXPONENTIAL
-%% \kfframes{2}{\ztitle{The Return of the Exponential}}
-
-%% \kfframes{8}{
-%%   \pgfmathsetmacro\za{2.5}
-%%   \pgfmathsetmacro\zb{4}
-  
-%%   \newcommand\ta{1} % begin first rotation
-%%   \newcommand\tb{4}
-
-%%   \zgrid[unit=3]{
-%%     \zin[out=\ta]{1}{0}
-%%     %% \kftextin[in=\dt, duration=\dt, out=\ta, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
-
-
-%%     %% \kftween[in=\ta, duration=\dt]{0}{\za}
-%%     %% \pgfmathsetmacro\zth\pgfmathresult
-%%     \kftween[in=\ta, duration=\dt]{-pi/4}{pi/4}
-%%     \pgfmathsetmacro\zpsi\pgfmathresult
-
-%%     %% \kftext[in=\ta, duration=\dt, out=\tb, offset fst=0.6, offset snd=\zpsi]{\zunit}{\zth}{$1$}
-%%     %% \z[in=\ta, duration=\dt, out=\tb]{1}{\zth}
-%%     \ztween[in=\ta, out=\tb, stagger=false]{1}{0}{1}{\za}
-%%     \kftexttween[in=\ta, duration=\dt, out=\tend]{\zunit}{0}{$1$}{\zunit}{\za}{$e^{i\alpha}$}
-
-%%   }
-%}
-
+\kfframes{2}{\ztitle{The Return of the Exponential}}
+\input{scenes/5b-the-geometric-statement}
 
 \end{document}
