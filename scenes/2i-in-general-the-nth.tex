@@ -1,0 +1,17 @@
+\kfframes{7}{
+  \newcommand\tdelay{2.5}
+
+  \pgfmathtruncatemacro\dn{\t / \tdelay}
+  \pgfmathtruncatemacro\n{5+\dn}
+  \pgfmathtruncatemacro\m{\n-1}
+  \pgfmathsetmacro\ta{\tdelay*\dn}
+  \pgfmathsetmacro\tb{\tdelay*(\dn+1)}
+
+  \zgrid[unit=3]{
+    \foreach \j in {0, ..., \m}{
+      \zin[in=(\ta+\j*\dt/\n), out=(\tb-\dt), arg visible=false]{1}{\j*2*pi/\n}
+      \zout[in=(\tb-\dt), out=\tb, arg visible=false]{1}{\j*2*pi/\n}
+    }
+    \zngon[in=\ta+\dt, out=\tb]{\n}
+  }
+}

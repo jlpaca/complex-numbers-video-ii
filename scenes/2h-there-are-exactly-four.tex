@@ -1,0 +1,42 @@
+\kfframes{11}{
+  \newcommand\ta{0} % fourth roots in
+  \newcommand\tb{3} % quadrilateral in
+  \newcommand\tc{5} % labels in
+  \newcommand\tdelay{1}
+  \newcommand\td{10} % everything out
+  
+  \zgrid[unit=3]{
+    \zin[out=\td, arg visible=false]{1}{0}
+    \zin[in=(\dt/4),   out=\td, arg visible=false]{1}{pi/2}
+    \zin[in=(\dt/2),   out=\td, arg visible=false]{1}{pi}
+    \zin[in=(3*\dt/4), out=\td, arg visible=false]{1}{3*pi/2}
+
+    \kftween[in=(\tb-2*\dt), duration=\dt]{0}{2*pi}
+    \pgfmathsetmacro\tha\pgfmathresult
+    
+    \kftween[in=(\tb-\dt), duration=\dt]{0}{2*pi}
+    \pgfmathsetmacro\thb\pgfmathresult
+    
+    \pgfkeys{/pgf/fpu=false}
+    \draw[dashed] ({\zunit*cos(\thb r)}, {\zunit*sin(\thb r)}) arc (\thb r:\tha r:\zunit);
+    \pgfkeys{/pgf/fpu=true}
+
+    % labels
+    \kftextin[in=\tc,             out=\td, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    \kftextin[in=(\tc+\tdelay),   out=\td, duration=\dt, offset fst=0.6, offset snd=3*pi/4]{\zunit}{pi/2}{$i$}
+    \kftextin[in=(\tc+2*\tdelay), out=\td, duration=\dt, offset fst=0.8, offset snd=2.6]{\zunit}{pi}{$-1$}
+    \kftextin[in=(\tc+3*\tdelay), out=\td, duration=\dt, offset fst=0.7, offset snd=-0.5]{\zunit}{-pi/2}{$-i$}
+
+    \zout[in=\td, out=(\td+\dt), arg visible=false]{1}{pi/2}
+    \zout[in=\td, out=(\td+\dt), arg visible=false]{1}{pi}
+    \zout[in=\td, out=(\td+\dt), arg visible=false]{1}{3*pi/2}
+    
+    \kftextout[in=\td, out=(\td+\dt), offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    \kftextout[in=\td, out=(\td+\dt), offset fst=0.6, offset snd=3*pi/4]{\zunit}{pi/2}{$i$}
+    \kftextout[in=\td, out=(\td+\dt), offset fst=0.8, offset snd=2.6]{\zunit}{pi}{$-1$}
+    \kftextout[in=\td, out=(\td+\dt), offset fst=0.7, offset snd=-0.5]{\zunit}{-pi/2}{$-i$}
+
+    
+    \zngon[in=\tb, out=(\td-\dt)]{4}
+  }
+}

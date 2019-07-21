@@ -1,0 +1,32 @@
+\kfframes{8}{                                     %% : 19 - : 27
+  \newcommand\ta{2}
+  \newcommand\tb{4}
+  \newcommand\tc{6}
+
+  \zgrid[unit=3]{
+    \zin[arg visible=false, out=\tend+1]{1}{0}
+    \zin[arg visible=false, in=\dt, out=\tend+1]{1}{2*pi/3}
+    \zin[arg visible=false, in=2*\dt, out=\tend+1]{1}{-2*pi/3}
+
+
+    \kftween[in=\dt, duration=\dt]{0}{2*pi}
+    \pgfmathsetmacro\th\pgfmathresult
+    \pgfkeys{/pgf/fpu=false}
+    \draw[dashed] (\zunit, 0) arc (0:\th r:\zunit);
+    \pgfkeys{/pgf/fpu=true}
+
+    % 3 roots in
+    \kftextin[in=\ta, duration=\dt, out=\tc]{1}{pi/2}{\colorbox{bg-a}{\phantom{Third roots of unity.}}}
+    \kftextin[in=\tb, duration=\dt, out=\tc, polar=false]{-2.6}{0.45}{\colorbox{bg-a}{\phantom{\scriptsize (resp. $n$-th)}}}
+
+    \kftextin[in=(\ta+\dt), duration=\dt, out=(\tc-\dt)]{1}{pi/2}{Third roots of unity.}
+    \kftextin[in=(\tb+\dt), duration=\dt, out=(\tc-\dt), polar=false]{-2.6}{0.45}{\footnotesize (resp. $n$-th)}
+
+    % out
+    \kftextout[in=\tc, duration=\dt, out=\tc+\dt]{1}{pi/2}{\colorbox{bg-a}{\phantom{Third roots of unity.}}}
+    \kftextout[in=\tc, duration=\dt, out=\tc+\dt, polar=false]{-2.6}{0.45}{\colorbox{bg-a}{\phantom{\scriptsize (resp. $n$-th)}}}
+
+    \kftextout[in=(\tc-\dt), duration=\dt, out=\tc]{1}{pi/2}{Third roots of unity.}
+    \kftextout[in=(\tc-\dt), duration=\dt, out=\tc, polar=false]{-2.6}{0.45}{\footnotesize (resp. $n$-th)}   
+  }
+}

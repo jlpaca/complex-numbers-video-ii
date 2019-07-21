@@ -17,20 +17,10 @@
 
 \input{scenes/2e-remember-that-two}               %% : 00 - : 19
 
-\kfframes{8}{                                     %% : 19 - : 27
-  \zgrid[unit=3]{
-    \zin[arg visible=false]{1}{0}
-    \zin[arg visible=false, in=\dt]{1}{2*pi/3}
-    \zin[arg visible=false, in=2*\dt]{1}{-2*pi/3}
+\input{scenes/2f-we-call-these-solutions}         %% : 19 - : 27
 
+\input{scenes/2g-it-is-not-a-coincidence}
 
-    \kftween[in=\dt, duration=\dt]{0}{2*pi}
-    \pgfmathsetmacro\th\pgfmathresult
-    \pgfkeys{/pgf/fpu=false}
-    \draw (\zunit, 0) arc (0:\th r:\zunit);
-    \pgfkeys{/pgf/fpu=true}
+\input{scenes/2h-there-are-exactly-four}
 
-    \kftextin[in=2, duration=\dt, out=\tend]{1}{pi/2}{\color{white}{\colorbox{black}{\phantom{Third roots of unity.}}}}
-    \kftextin[in=2, duration=\dt, out=\tend]{1}{pi/2}{\color{white}{Third roots of unity.}}
-  }
-}
+\input{scenes/2i-in-general-the-nth}

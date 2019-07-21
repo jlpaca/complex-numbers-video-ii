@@ -41,25 +41,25 @@
     \pgfkeys{/z/grid, default, #1}
 
     %\kfclip{\z@in}{\z@out}{
-      \kftween[in=\z@in, out=\z@in+\z@dt]{0}{2}
-      \pgfmathsetmacro\z@xa\pgfmathresult
+    \kftween[in=\z@in, out=\z@in+\z@dt]{0}{2}
+    \pgfmathsetmacro\z@xa\pgfmathresult
 
-      \kftween[in=(\z@out-\z@dt), out=\z@out]{0}{2}
-      \pgfmathsetmacro\z@xb\pgfmathresult
+    \kftween[in=(\z@out-\z@dt), out=\z@out]{0}{2}
+    \pgfmathsetmacro\z@xb\pgfmathresult
 
-      
-      \draw[thin, bg-b] (\z@xb*\halfwidth, {\z@origin@y}) -- (\z@xa*\halfwidth, {\z@origin@y});
-      \draw[thin, bg-b] ({\z@origin@x}, \z@xb*\halfwidth) -- ({\z@origin@x}, {\z@xa*\halfheight});
-      \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
-      \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
+    
+    \draw[thin, bg-b] (\z@xb*\halfwidth, {\z@origin@y}) -- (\z@xa*\halfwidth, {\z@origin@y});
+    \draw[thin, bg-b] ({\z@origin@x}, \z@xb*\halfwidth) -- ({\z@origin@x}, {\z@xa*\halfheight});
+    \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
+    \kftextin[in=\z@in+\z@dt, out=\z@in+\z@dt, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
 
-      \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
-      \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
+    \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\halfwidth*2-0.6}{\z@origin@y+0.5}{\textcolor{bg-b}{$\operatorname{Re}$}}
+    \kftextout[in=\z@in+\z@dt, duration=\z@dt, out=\z@out, polar=false]{\z@origin@x+0.6}{\halfheight*2-0.4}{\textcolor{bg-b}{$\operatorname{Im}$}}
 
-      
-      \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
-        #2
-      \end{scope}
+    
+    \begin{scope}[shift={({\z@origin@x}, {\z@origin@y})}]
+      #2
+    \end{scope}
     %}
 }}
 
@@ -147,21 +147,21 @@
 \newcommand\zarg[2][]{{
     \pgfkeys{/z, default, #1}
     \kfclip{\z@in}{\z@out}{
-    % make sure the offset is pointed the right way.
-    \pgfmathsetmacro\z@arg@offset{((#2) - \z@arg@origin > 0 ? 1 : -1)*\z@arg@offset}
-    \pgfmathsetmacro\z@xa{\z@arg@origin+\z@arg@offset}
-    \pgfmathsetmacro\z@xb{(#2)-\z@arg@offset}
+      % make sure the offset is pointed the right way.
+      \pgfmathsetmacro\z@arg@offset{((#2) - \z@arg@origin > 0 ? 1 : -1)*\z@arg@offset}
+      \pgfmathsetmacro\z@xa{\z@arg@origin+\z@arg@offset}
+      \pgfmathsetmacro\z@xb{(#2)-\z@arg@offset}
 
-    \pgfmathsetmacro\re{\z@arg@radius*cos(\z@xa r)}
-    \pgfmathsetmacro\im{\z@arg@radius*sin(\z@xa r)}
+      \pgfmathsetmacro\re{\z@arg@radius*cos(\z@xa r)}
+      \pgfmathsetmacro\im{\z@arg@radius*sin(\z@xa r)}
 
-    % only draw if legible.
-    \pgfmathtruncatemacro\z@xc{abs(\z@xa - \z@xb) > 2*abs(\z@arg@offset)}
-    \ifnum\z@xc=1
-    \pgfkeys{/pgf/fpu=false}
-    \draw[->,>=stealth] (\re, \im) arc (\z@xa r:\z@xb r:\z@arg@radius);
-    \pgfkeys{/pgf/fpu=true}
-    \fi
+      % only draw if legible.
+      \pgfmathtruncatemacro\z@xc{abs(\z@xa - \z@xb) > 2*abs(\z@arg@offset)}
+      \ifnum\z@xc=1
+      \pgfkeys{/pgf/fpu=false}
+      \draw[->,>=stealth] (\re, \im) arc (\z@xa r:\z@xb r:\z@arg@radius);
+      \pgfkeys{/pgf/fpu=true}
+      \fi
     }
 }}
 \newcommand\zargin[2][]{{
@@ -196,6 +196,39 @@
 
       \z[#1]{\z@xa}{\z@xb}
     }
+}}
+
+\newcommand\zngon[2][]{{
+    \pgfkeys{/z, default, #1}
+    \kfclip{\z@in}{\z@out}{
+      \pgfmathsetmacro{\z@out}{\z@out-\dt}
+      \pgfmathtruncatemacro\n{#2}
+      \pgfmathtruncatemacro\m{#2-1}
+
+      \foreach \i in {0,...,\m}{
+        \pgfmathsetmacro\xa{\zunit*cos(2*\i*pi/\n r)}
+        \pgfmathsetmacro\xb{\zunit*cos(2*(\i+1)*pi/\n r)}
+
+        \pgfmathsetmacro\ya{\zunit*sin(2*\i*pi/\n r)}
+        \pgfmathsetmacro\yb{\zunit*sin(2*(\i+1)*pi/\n r)}
+
+        \kftween[in=(\z@in+\i*\dt/\n), duration=(\dt/\n)]{\xa}{\xb}
+        \pgfmathsetmacro\xx\pgfmathresult
+
+        \kftween[in=(\z@in+\i*\dt/\n), duration=(\dt/\n)]{\ya}{\yb}
+        \pgfmathsetmacro\yx\pgfmathresult
+
+        
+        \kftween[in=(\z@out+\i*\dt/\n), duration=(\dt/\n)]{\xa}{\xb}
+        \pgfmathsetmacro\xy\pgfmathresult
+
+        \kftween[in=(\z@out+\i*\dt/\n), duration=(\dt/\n)]{\ya}{\yb}
+        \pgfmathsetmacro\yy\pgfmathresult
+
+        \draw[dashed] (\xx, \yx) -- (\xy, \yy);      
+      }
+    }
+
 }}
 
 %% TITLE CARD

@@ -1,0 +1,44 @@
+\kfframes{5}{
+  \newcommand\ta{2} % replace circle with triangle
+  \newcommand\tdelay{0.5}
+  \newcommand\tb{4} % triangle goes.
+  \zgrid[unit=3]{
+    \zout[out=\tb+\dt, arg visible=false]{1}{0}
+    \zout[out=\tb+\dt, arg visible=false]{1}{2*pi/3}
+    \zout[out=\tb+\dt, arg visible=false]{1}{-2*pi/3}
+
+
+    \kftween[in=\ta, duration=\dt]{0}{2*pi}
+    \pgfmathsetmacro\th\pgfmathresult
+    
+    \pgfkeys{/pgf/fpu=false}
+    \draw[dashed] ({\zunit*cos(\th r)}, {\zunit*sin(\th r)}) arc (\th r:2*pi r:\zunit);
+    \pgfkeys{/pgf/fpu=true}
+
+    \pgfmathsetmacro\ta{\ta+\tdelay}
+
+    \zngon[in=\ta, out=(\tb+\dt)]{3}
+    %% \foreach \i in {0,...,2}{
+    %%   \pgfmathsetmacro\xa{\zunit*cos(2*\i*pi/3 r)}
+    %%   \pgfmathsetmacro\xb{\zunit*cos(2*(\i+1)*pi/3 r)}
+
+    %%   \pgfmathsetmacro\ya{\zunit*sin(2*\i*pi/3 r)}
+    %%   \pgfmathsetmacro\yb{\zunit*sin(2*(\i+1)*pi/3 r)}
+
+    %%   \kftween[in=(\ta+\i*\dt/3), duration=(\dt/3)]{\xa}{\xb}
+    %%   \pgfmathsetmacro\xx\pgfmathresult
+
+    %%   \kftween[in=(\ta+\i*\dt/3), duration=(\dt/3)]{\ya}{\yb}
+    %%   \pgfmathsetmacro\yx\pgfmathresult
+
+      
+    %%   \kftween[in=(\tb+\i*\dt/3), duration=(\dt/3)]{\xa}{\xb}
+    %%   \pgfmathsetmacro\xy\pgfmathresult
+
+    %%   \kftween[in=(\tb+\i*\dt/3), duration=(\dt/3)]{\ya}{\yb}
+    %%   \pgfmathsetmacro\yy\pgfmathresult
+
+    %%   \draw[dashed] (\xx, \yx) -- (\xy, \yy);      
+    %% }
+  }
+}
