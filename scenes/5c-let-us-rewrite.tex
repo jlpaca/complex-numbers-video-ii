@@ -1,0 +1,31 @@
+\kfframes{6}{
+  \newcommand\ta{0}
+  \newcommand\tb{1} % fade in sin/cos
+  \newcommand\tc{4} % move row down
+  \newcommand\td{4.5} % expand
+  
+
+  \pgfmathsetmacro\tx{\halfwidth+3*cos(2.2 r)+0.6*cos(pi/3 r)}
+  \pgfmathsetmacro\ty{2+3*sin(2.2 r)+0.6*sin(pi/3 r)}
+  
+  \kftween[in=\ta, duration=\dt]{\ty}{6.1}
+  \pgfmathsetmacro\ya\pgfmathresult
+
+  \kftween[in=\tb, duration=\dt]{0}{(4-\tx)}
+  \pgfmathsetmacro\xb\pgfmathresult
+
+  \kftween[in=\tc-\dt, duration=\dt]{4.8}{3.8}
+  \pgfmathsetmacro\yb\pgfmathresult
+  
+  \kftextout[duration=\dt, out=\tb, polar=false]{\tx}{\ya}{$e^{i\alpha} \cdot e^{i\beta}\;\phantom{ = e^{i\alpha + \beta}}$}
+  \kftextout[duration=\dt, out=(\tb+\dt), polar=false]{(\xb+\tx)}{\ty}{$\phantom{e^{i\alpha} \cdot e^{i\beta}}= e^{i\alpha + \beta}$}
+
+  \kftextin[duration=\dt, in=(\tb-\dt), out=\td, polar=false]{9}{6}{$(\cos \alpha + i \sin \alpha) \cdot (\cos \beta + i \sin \beta)$}
+  \kftextout[in=\td, duration=\dt, out=(\td+\dt), polar=false]{9}{6}{$(\cos \alpha + i \sin \alpha) \cdot (\cos \beta + i \sin \beta)$}
+
+  \kftextin[duration=\dt, in=\tb, polar=false]{(4.2+\tx+\xb)}{\yb}{$= \cos (\alpha + \beta) + i \sin (\alpha + \beta)$}
+
+  \kftextin[duration=\dt, in=\td, polar=false]{7.84}{6}{$(\cos \alpha \cos \beta - \sin \alpha \sin \beta)$}
+  \kftextin[duration=\dt, in=\td, polar=false]{9}{5}{$+\;i\:(\cos \alpha \sin \beta + \sin \alpha \cos \beta)$}
+
+}

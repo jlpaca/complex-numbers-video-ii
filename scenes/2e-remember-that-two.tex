@@ -1,0 +1,72 @@
+\kfframes{19}{ % : 00 - : 19
+\newcommand\ta{4} % REMEMBER THAT ...
+
+\newcommand\tb{7} % first z out
+\newcommand\tc{8}
+
+\newcommand\td{11} % second arg in
+\newcommand\targdelay{1}
+\newcommand\te{14} % r in
+\newcommand\tf{16}
+\newcommand\tg{18.5}
+
+
+\newcommand\zr{1}
+\newcommand\za{1}
+%% \newcommand\tc{6}
+%% \newcommand\td{9}
+
+\zgrid[unit=3]{
+\pgfmathsetmacro\zx{\zunit*\zr*cos(\za r)}
+\pgfmathsetmacro\zy{\zunit*\zr*sin(\za r)}
+
+
+\zargin[in=\ta+\dt, out=(\tb)]{\za}
+\zin[in=\ta, out=\tb, arg visible=false]{\zr}{\za}
+
+\kfclip{\tb}{\tend}{
+\fill[bg-b] (\zx, \zy) circle (0.12);
+}
+
+\zout[in=\tb, out=\tc, arg visible=false]{\zr}{\za}
+\zargout[in=\tb, out=\tc)]{\za}
+
+\kftextin [in=\ta+\dt, duration=\dt, out=\tb, offset fst=0.3, offset snd=(\zr+pi/2)]{0.7*\zunit}{\za}{$r$}
+\kftextin [in=\ta+2*\dt, duration=\dt, out=\tb]{1.5}{0.4}{$\theta$}
+
+\kftextout[in=\tb, duration=\dt, out=\tb+\dt, offset fst=0.3, offset snd=(\zr+pi/2)]{0.7*\zunit}{\za}{$r$}
+\kftextout[in=\tb, duration=\dt, out=\tb+\dt]{1.5}{0.4}{$\theta$}
+
+\kftextin[in=\tb, duration=\dt, out=\tf, offset fst=1.7, offset snd=0.2]{\zr*\zunit}{\za}{$e^{i\theta\phantom{(2\pi+\theta)}}$}
+
+
+\kftexttween[in=\tf, duration=\dt, out=\tg, offset fst=1.7, offset snd=0.2]
+{\zr*\zunit}{\za}{$e^{i\theta\phantom{(2\pi+\theta)}}$}
+{\zr*\zunit}{\za}{$e^{i(2\pi+\theta)\phantom{\theta}}$}
+
+\kftextout[in=\tg, duration=\dt, out=\tg+\dt, offset fst=1.7, offset snd=0.2]{\zr*\zunit}{\za}{$e^{i(2\pi+\theta)\phantom{\theta}}$}
+
+% second z
+\zargin[in=\td, out=\tf]{2*pi}
+\zargin[in=\td+\targdelay, out=\tf, arg radius=1.3]{\za}
+
+%\kftextin [in=\td, duration=\dt, out=\te, offset fst=0.3, offset snd=(\zr+pi/2)]{0.5*\zunit}{\za}{$r$}
+\kftextin [in=\td+\dt, duration=\dt, out=\tf]{1.6}{2.9}{$2\pi$}
+\kftextin [in=\td+\targdelay+\dt, duration=\dt, out=\tf]{1.8}{0.4}{$\theta$}
+
+\zargout[in=\tf, out=\tf+\dt)]{2*pi}
+\zargout[in=\tf, out=\tf+\dt), arg radius=1.3]{\za}
+
+
+\kftextout[in=\tf, duration=\dt, out=\tf+\dt]{1.6}{2.9}{$2\pi$}
+\kftextout[in=\tf, duration=\dt, out=\tf+\dt]{1.8}{0.4}{$\theta$}
+
+
+\zin[in=\te, out=\tg, arg visible=false]{\zr}{\za}
+\zout[in=\tg, out=\tg+\dt, arg visible=false]{\zr}{\za}
+
+\kftextin [in=\te, duration=\dt, out=\tf, offset fst=0.3, offset snd=(\zr+pi/2)]{0.7*\zunit}{\za}{$r$}
+\kftextout[in=\tf, duration=\dt, out=\tf+\dt, offset fst=0.3, offset snd=(\zr+pi/2)]{0.7*\zunit}{\za}{$r$}
+
+}
+}

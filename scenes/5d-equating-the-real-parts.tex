@@ -1,0 +1,42 @@
+% fix textcolor.
+\makeatletter
+\renewcommand*{\@textcolor}[3]{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+
+\kfframes{8}{
+  \newcommand\ta{0} % highlight cos
+  \newcommand\tb{4} % highlight sin
+
+  \newcommand\tc{6} % fade out
+
+  
+  \kftween[in=\ta, duration=\dt]{100}{0}
+  \colorlet{xc}{fg-a!\pgfmathresult!bg-b}
+
+  \kftween[in=\tb, duration=\dt]{100}{0}
+  \colorlet{xcc}{fg-a!\pgfmathresult!bg-b}
+
+  \kftween[in=\tb, duration=\dt]{100}{0}
+  \colorlet{xcs}{xc!\pgfmathresult!fg-a}
+
+  \kftween[in=\tc, duration=\dt]{100}{0}
+  \colorlet{xcc}{xcc!\pgfmathresult!bg-b}
+  \colorlet{xcs}{xcs!\pgfmathresult!bg-b}
+
+  % fadeout
+  \kftween[in=\tc+\dt, duration=\dt]{100}{0}
+  \colorlet{xcc}{xcc!\pgfmathresult!bg-a}
+  \colorlet{xcs}{xcs!\pgfmathresult!bg-a}
+  \colorlet{xc}{xc!\pgfmathresult!bg-a}  
+  
+    \kftext[polar=false]{7.84}{6}{$\textcolor{xc}{(}\textcolor{xcc}{\cos \alpha \cos \beta - \sin \alpha \sin \beta}\textcolor{xc}{)}$}
+    \kftext[polar=false]{9}{5}{$\textcolor{xc}{+\;i\:(}\textcolor{xcs}{\cos \alpha \sin \beta + \sin \alpha \cos \beta}\textcolor{xc}{)}$}
+
+    \kftext[polar=false]{8.2}{3.8}{$\textcolor{xc}{=}\textcolor{xcc}{\cos (\alpha + \beta)}\textcolor{xc}{+ i }\textcolor{xcs}{\sin (\alpha + \beta)}$}
+
+}

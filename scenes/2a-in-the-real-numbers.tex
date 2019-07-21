@@ -1,0 +1,66 @@
+\kfframes{13}{
+\newcommand\ta{4} % ONE CUBED ...
+\newcommand\tb{11} % OVER THE COMPLEX ...
+\newcommand\tc{13} % fadeout
+\newcommand\tz{14} % end
+
+\begin{scope}[shift={(\halfwidth, \halfheight)}]
+
+% draw the real line and the origin
+
+% labelled origin - in
+\kftween[in=0,duration=\dt]{0}{0.12}
+\pgfmathsetmacro\r\pgfmathresult
+\kftween[in=\tb,duration=\dt]{0.12}{0}
+\pgfmathsetmacro\r{\t < \tb ? \r : \pgfmathresult}
+
+\fill (0, 0) circle (\r);
+\kftextin[in=0, duration=\dt, out=\tb]{0.6}{-pi/4}{$0$};
+\kftextout[in=\tb, out=\tb+\dt]{0.6}{-pi/4}{$0$};
+
+
+% 1 - this should look as if it was drawn by a \zin, but we're not in
+% a \zgrid yet, so fake it
+\kftween[in=\ta,duration=(\dt/2)]{0}{2}
+\pgfmathsetmacro\l\pgfmathresult
+\kftween[in=(\ta+\dt/2),duration=(\dt/2)]{0}{0.12}
+\pgfmathsetmacro\r\pgfmathresult
+\draw (0, 0) -- (\l, 0);
+\fill (2, 0) circle (\r);
+\kftextin[in=\ta+\dt, duration=\dt, offset fst=0.6, offset snd=-pi/4]{2}{0}{$1$};
+
+%% % opacity tween to fake the grey 0.5
+\kftween[in=\tc, duration=\dt]{1}{0.5}
+\pgfmathsetmacro\o\pgfmathresult
+
+\kftextin   [polar=false, in=\dt, duration=\dt, out=\tb+\dt]{\halfwidth-0.5}{0.5}{$\mathbb{R}$}
+\kftexttween[polar=false, in=(\tb+\dt), duration=\dt, out=\tz]
+ {\halfwidth-0.5}{+0.5}{$\mathbb{R}$}
+ {\halfwidth-0.6}{+0.5}{$\operatorname{Re}$}
+\kftextin   [polar=false, in=\tb+\dt, duration=\dt, out=\tz]{+0.6}{\halfheight-0.4}{$\operatorname{Im}$}
+
+
+\kftween[in=0,duration=\dt]{-\halfwidth}{\halfwidth}
+\pgfmathsetmacro\l\pgfmathresult
+\draw[opacity=\o] (-\halfwidth, 0) -- (\l, 0);
+
+\kftween[in=\tb,duration=\dt]{0}{\halfheight}
+\pgfmathsetmacro\l\pgfmathresult
+\draw[opacity=\o] (0, -\l) -- (0, \l);
+
+%% % x^3 - 1 = 0 -> z^3 - 1 = 0
+\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{\colorbox{black}{\Large $\phantom{x^3 - 1 = 0}$}}
+\kftextout[polar=false, in=\tc, out=\tc+2*\dt]{0}{+2}{\colorbox{black}{\Large $\phantom{x^3 - 1 = 0}$}}
+
+\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{\Large $\phantom{x}^3 - 1 = 0$}
+\kftextout[polar=false, in=\tc, out=\tc+\dt]{0}{+2}{\Large $\phantom{x}^3 - 1 = 0$}
+
+
+\kftextin[polar=false, in=2.0, duration=\dt, out=\tb]{0}{+2}{\Large $x\phantom{^3 - 1 = 0}$}
+%  \kftextout[polar=false, in=\tb, duration=\dt]{\halfwidth}{\halfheight+2}{\Large $x\phantom{^3 - 1 = 0}$}
+%  \kftextin[polar=false, in=\tb, duration=\dt, out=\tc]{\halfwidth}{\halfheight+2}{\Large $z\phantom{^3 - 1 = 0}$}
+\kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]
+{0}{+2}{\Large $x\phantom{^3 - 1 = 0}$}
+{0}{+2}{\Large $z\phantom{^3 - 1 = 0}$}
+\end{scope}
+}

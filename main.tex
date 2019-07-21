@@ -1,4 +1,4 @@
- \documentclass[tikz]{standalone}
+\documentclass[tikz]{standalone}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{contour}
@@ -8,14 +8,57 @@
 
 \pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{4}
+\kfsetfps{8}
 
 %% 0.2 ROOTS OF UNITY
-%\kfframes{2}{\ztitle{Roots of Unity}}
-%\input{scenes/2}
+% \kfframes{2}{\ztitle{Roots of Unity}}
+% \input{scenes/2}
 
 %% 0.5 RETURN OF THE EXPONENTIAL
-\kfframes{2}{\ztitle{The Return of the Exponential}}
-\input{scenes/5b-the-geometric-statement}
+% \kfframes{2}{\ztitle{The Return of the Exponential}}
+% \input{scenes/5b-the-geometric-statement}
+% \input{scenes/5c-let-us-rewrite}
+% \input{scenes/5d-equating-the-real-parts}
+
+
+
+
+
+%% \newenvironment{polarshift}[2]{
+%%   \begin{scope}[shift={({\zunit*(#1)*cos(#2 r)}, {\zunit*(#1)*sin(#2 r)})}]
+%% }{
+%%   \end{scope}
+%% }
+
+%% \kfframes{2}{
+%%   \kftween[in=0, duration=2]{1.5}{-1.5}
+%%   \pgfmathsetmacro\za{\pgfmathresult}
+%%   \pgfmathsetmacro\zr{sqrt(2)}
+%%   \pgfmathsetmacro\aa{-2}
+%%   \pgfmathsetmacro\ab{4}
+%%   \pgfmathsetmacro\ac{-3}
+%%   \pgfmathsetmacro\ad{1}
+
+
+%%   \zgrid[unit=0.7]{
+
+%%     \z[arg visible=false]{\zr}{\za}
+
+%%     \z[arg visible=false]{\aa}{0}
+%%     \begin{polarshift}{\aa}{0}
+%%       \z[arg visible=false]{\ab*\zr}{\za}
+%%       \begin{polarshift}{\ab*\zr}{\za}
+
+%%         \z[arg visible=false]{\ac*\zr^2}{2*\za}
+%%         \begin{polarshift}{\ac*\zr^2}{2*\za}
+
+%%           \z[arg visible=false]{\ad*\zr^3}{3*\za}
+%%         \end{polarshift}    
+%%       \end{polarshift}    
+%%     \end{polarshift}
+
+%%   }
+
+%% }
 
 \end{document}

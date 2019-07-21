@@ -1,0 +1,82 @@
+\kfframes{15}{
+  \pgfmathsetmacro\za{1}
+  \pgfmathsetmacro\zb{1.2}
+  
+  \newcommand\ta{2} % begin first rotation
+  \newcommand\tdelay{1.5}
+  \newcommand\tb{5}
+%  \newcommand\tc{8} % a-followed-by-b end
+  \newcommand\td{9} % a + b start - 1 appears
+  \newcommand\te{10} % a + b rotation start
+  \newcommand\tf{14} % a + b z out
+  \newcommand\tg{15} % grid out
+
+  
+  
+  \kftween[in=\ta, duration=\dt]{0}{\za}
+  \pgfmathsetmacro\zat\pgfmathresult
+  \kftween[in=\tb, duration=\dt]{0}{\zb}
+  \pgfmathsetmacro\zad{\pgfmathresult}
+  \pgfmathsetmacro\zat{\zat+\zad}
+  
+  
+  \zgrid[origin y=2, unit=3, out=\tg]{
+
+    % for beta label
+    \kftextin[in=\tb, duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{\colorbox{bg-a}{\phantom{$\beta$}}}
+    \kftextout[in=(\tb+\tdelay), duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{\colorbox{bg-a}{\phantom{$\beta$}}}
+    \kftextin[in=(\te+\tdelay-\dt), duration=\dt, out=\tend, offset fst=0.6, offset snd=pi/3]
+             {\zunit}{\zat}{\colorbox{bg-a}{\phantom{$e^{i\alpha} \cdot e^{i\beta} = e^{i\alpha + \beta}$}}}
+
+    % ghost circle
+    \kfclip{(\tb+\tdelay)}{\te+\tdelay+\dt}{
+      \fill[bg-b] ({\zunit*cos(\zat r)}, {\zunit*sin(\zat r)}) circle (0.12);
+    }
+
+    % stuff.
+    \zin[arg visible=false, out=\tb+\tdelay]{1}{\zat}
+
+    \kftextin[duration=\dt, out=\ta-\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    \kftextout[in=(\ta-\dt), out=\ta, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+
+    \zargout[out=\ta+\tdelay+\dt]{\zat}
+    \kftextin[in=\ta, duration=\dt, out=(\ta+\tdelay)]{1.6}{\za/2}{$\alpha$}
+    \kftextout[in=(\ta+\tdelay), duration=\dt, out=(\ta+\tdelay+\dt)]{1.6}{\za/2}{$\alpha$}
+
+    \kftextin[in=(\ta+\tdelay), duration=\dt, out=(\tb-\dt), offset fst=0.8, offset snd=pi/8]{\zunit}{\zat}{$e^{i\alpha}$}
+    \kftextout[in=(\tb-\dt), duration=\dt, out=\tb,      offset fst=0.8, offset snd=pi/8]{\zunit}{\zat}{$e^{i\alpha}$}
+
+    \zargout[in=\tb, out=(\tb+\tdelay), arg origin=\za]{\zat}
+
+    \kftextin[in=\tb, duration=\dt, out=(\tb+\tdelay)]{1.6}{(\za+\zb/2)}{$\beta$}
+    \kftextout[in=(\tb+\tdelay), duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{$\beta$}
+
+    \kftextin[in=(\tb+\tdelay), duration=\dt, out=\te+\tdelay, offset fst=0.6, offset snd=pi/3]
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i\alpha + \beta}}$}
+
+    \zout[in=\tb, out=\tb+\tdelay+\dt, arg visible=false]{1}{\zat}
+
+
+    % SECOND BIT.
+    \zin[in=\td, out=\te]{1}{0}
+    \kftextin[in=\td, duration=\dt, out=\te-\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    \kftextout[in=(\te-\dt), out=\te, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+
+    \kftween[in=\te, duration=\dt]{0}{(\za+\zb)}
+    \pgfmathsetmacro\zat\pgfmathresult
+
+    \zout[in=\te, out=(\te+\tdelay+\dt), arg visible=false]{1}{\zat}
+    \zargout[in=\te, out=\te+\tdelay+\dt]{\zat}
+
+    \kftextin[in=\te, duration=\dt, out=(\te+\tdelay)]{2}{(\za+\zb)/3}{$\alpha+\beta$}
+    \kftextout[in=(\te+\tdelay), duration=\dt, out=(\te+\tdelay+\dt)]{2}{(\za+\zb)/3}{$\alpha+\beta$}
+
+    \kftexttween[in=(\te+\tdelay), duration=\dt, out=\tend+1, offset fst=0.6, offset snd=pi/3]
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i\alpha + \beta}}$}
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} = e^{i\alpha + \beta}$}
+
+    
+    %% \zargout[in=\te, arg visible=false, out=\te+\tdelay]{1}{\zat}
+    
+  }
+}

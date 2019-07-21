@@ -1,0 +1,49 @@
+\kfframes{14}{ % : 46 - :00
+
+  \newcommand\ta{0} %% BOTH WITH MODULUS ...
+  \newcommand\tb{3} %% THEIR ARGUMETNS ARE ...
+  \newcommand\tdelay{1.5}
+  \newcommand\td{13}
+  \zgrid[unit=3]{
+    \zout[in=0, out=\td+\dt]{1}{0}
+    \kftextout[out=\td+\dt, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$};
+
+    \kftween[in=\ta, duration=\dt]{0}{2*pi}
+    \pgfmathsetmacro\th\pgfmathresult
+    \kftween[in=\td, duration=\dt]{2*pi}{0}
+    \pgfmathsetmacro\thb\pgfmathresult
+    \pgfmathsetmacro\th{\t > \td ? \pgfmathresult : \th}
+
+    
+    \pgfkeys{/pgf/fpu=false}
+    \draw[dashed] (\zunit, 0) arc (0:\th r:\zunit);
+    \pgfkeys{/pgf/fpu=true}
+
+    \zin[in=\ta+\dt, out=\td, arg visible=false]{1}{2*pi/3}
+    \zin[in=\ta+2*\dt, out=\td, arg visible=false]{1}{-2*pi/3}
+
+    \zargin[in=\tb, out=(\tb+\tdelay)]{2*pi/3}
+    \zargout[in=(\tb+\tdelay), out=(\tb+\tdelay+\dt)]{2*pi/3}
+    \kftextin[duration=\dt, in=(\tb+\dt), out=(\tb+\tdelay)]{1.8}{pi/4}{$\frac{2}{3}\pi$}
+    \kftextout[duration=\dt, in=(\tb+\tdelay), out=(\tb+\tdelay+\dt)]{1.8}{pi/4}{$\frac{2}{3}\pi$}
+
+    \kftextin[duration=\dt, in=\tb+\tdelay, out=\td, offset fst=1, offset snd=0.9*pi]{\zunit}{2*pi/3}{$e^{i\frac{2}{3}\pi}$}
+
+    
+    \pgfmathsetmacro\tb{\tb+3}
+    \zargin[in=\tb, out=(\tb+\tdelay)]{-2*pi/3}
+    \zargout[in=(\tb+\tdelay), out=(\tb+\tdelay+\dt)]{-2*pi/3}
+    \kftextin[duration=\dt, in=(\tb+\dt), out=(\tb+\tdelay)]{1.8}{-pi/4}{$-\frac{2}{3}\pi$}
+    \kftextout[duration=\dt, in=(\tb+\tdelay), out=(\tb+\tdelay+\dt)]{1.8}{-pi/4}{$-\frac{2}{3}\pi$}
+
+    \kftextin[duration=\dt, in=\tb+\tdelay, out=\td, offset fst=1.3, offset snd=1.1*pi]{\zunit}{-2*pi/3}{$e^{-i\frac{2}{3}\pi}$}
+
+    \kftextout[duration=\dt, in=\td, out=\td+\dt, offset fst=1, offset snd=0.9*pi]{\zunit}{2*pi/3}{$e^{i\frac{2}{3}\pi}$}
+    \kftextout[duration=\dt, in=\td, out=\td+\dt, offset fst=1.3, offset snd=1.1*pi]{\zunit}{-2*pi/3}{$e^{-i\frac{2}{3}\pi}$}
+
+    \zout[in=\td, out=\td+\dt, arg visible=false]{1}{2*pi/3}
+    \zout[in=\td, out=\td+\dt, arg visible=false]{1}{-2*pi/3}
+
+    
+  }
+}

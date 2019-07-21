@@ -1,0 +1,28 @@
+\kfframes{10}{
+  \newcommand\md{1.5}
+  \newcommand\ar{0.98}
+  \newcommand\delay{2.5}
+  \newcommand\ta{9}
+  \zgrid[unit=1.2]{
+
+    \z{1}{0}
+    \kftext[offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$};
+
+    \ztween[out=\ta]{1}{0}{\md}{\ar}
+    \ztween[in=\delay, out=\ta, arg origin=\ar]{\md}{\ar}{\md^2}{2*\ar}
+    \ztween[in=2*\delay, out=\ta, arg origin=2*\ar]{\md^2}{2*\ar}{\md^3}{3*\ar}
+
+    \kftextin[in=2*\dt, duration=\dt, out=\ta, offset fst=0.5, offset snd=0]{\zunit*\md}{\ar}{$z$};
+    \kftextin[in=\delay+2*\dt, duration=\dt, out=\ta, offset fst=0.7, offset snd=pi/4]{\zunit*\md^2}{2*\ar}{$z^2$};
+    \kftextin[in=2*\delay+2*\dt, duration=\dt, out=\ta, offset fst=0.6, offset snd=pi/2]{\zunit*\md^3}{3*\ar}{$z^3$};
+
+    % outros
+    \zout[in=\ta, out=\ta+\dt]{\md}{\ar}
+    \zout[in=\ta, out=\ta+\dt, arg origin=\ar]{\md^2}{2*\ar}
+    \zout[in=\ta, out=\ta+\dt, arg origin=2*\ar]{\md^3}{3*\ar}
+
+    \kftextout[in=\ta, out=\ta+\dt, duration=\dt/2, offset fst=0.5, offset snd=0]{\zunit*\md}{\ar}{$z$};
+    \kftextout[in=\ta, out=\ta+\dt, duration=\dt/2, offset fst=0.7, offset snd=pi/4]{\zunit*\md^2}{2*\ar}{$z^2$};
+    \kftextout[in=\ta, out=\ta+\dt, duration=\dt/2, offset fst=0.6, offset snd=pi/2]{\zunit*\md^3}{3*\ar}{$z^3$};    
+  }
+}
