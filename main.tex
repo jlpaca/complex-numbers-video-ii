@@ -12,8 +12,9 @@
 \kfsetfps{4}
 
 %% 0.2 ROOTS OF UNITY
-% \kfframes{4}{\ztitle{Roots of Unity}}
-% \input{scenes/2}
+%\kfframes{4}{\ztitle{Roots of Unity}}
+%\input{scenes/2}
+
 
 %% 0.3 WE ARE GOING TO PROVE A THEOREM
 % \kfframes{4}{\ztitle{We Are Going to Prove a Theorem}
@@ -21,67 +22,107 @@
 
 
 %% 0.4 BUT WHAT ABOUT THE CRAB, THOUGH?
+% \kfframes{4}{\ztitle{But What About the Crab, Though?}}
 % \input{scenes/4b-consider-the-ivp}
-% \input{scenes/4c-if-c-is-positive}
+\input{scenes/4c-if-c-is-positive}
 % \input{scenes/4d-the-particle-speeds-off}
 % \input{scenes/4e-if-c-is-negative}
 % \input{scenes/4f-if-c-is-negative-cont}
-
-\kfframes{8}{
-
-  \newcommand\ta{0} % show timer
-  \newcommand\tb{1} % start moving
-  \newcommand\tc{7} % fade out
-  
-  % phantom spaghetti
-  \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
-  \kftext[polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
+% \input{scenes/4g-the-particle-moves-slower}
+% \input{scenes/4h-what-if-c-is-imaginary}
 
 
-  \pgfmathsetmacro\tt{max(0, \t-\tb-\dt)}
-  \kftextin[in=\ta, duration=\dt, out=\tc, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
-  \kftextout[in=\tc, out=\tc+\dt, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
+%% \kfframes{11}{
 
+%%   \newcommand\ta{0} % rescale axes
+%%   \newcommand\tb{2} % imaginary!
+%%   \newcommand\tc{0} % fill f
+
+%%   \newcommand\td{4} % copy f
+%%   \newcommand\te{6} % arg in
+%%   \newcommand\tf{7.5} % arg out
+%%   \newcommand\tg{9} % df/dt
 
   
-  \begin{scope}[shift={({\halfwidth-6}, {\halfheight-2})}]
+%%   % phantom spaghetti
+%%   \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+%%   \kftextout[in=0, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
+%%   \kftextin[in=\tb, duration=\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} = i$}
 
-    \pgfmathsetmacro\zunit{12}
+%% %  \kftextin[in=\tb+\dt, duration=\dt, polar=false]{\halfwidth+2}{6.4}{$(?)$}
 
-    % axis & leftovers
-    \draw[bg-b] (-\halfwidth+6, 0) -- ({\halfwidth+6}, 0);
+  
+%%   \kftween[in=\ta, duration=\dt]{6}{0}
+%%   \pgfmathsetmacro\sxh\pgfmathresult
+%%   \kftween[in=\ta, duration=\dt]{pi/4}{-pi/4}
+%%   \pgfmathsetmacro\ola\pgfmathresult
+ 
+  
+%%   \begin{scope}[shift={({\halfwidth-\sxh}, {\halfheight-2})}]
 
-    \pgfmathsetmacro\xfo{0.16}
+%%       \kftween[in=\ta, duration=\dt]{12}{3}
+%%     \pgfmathsetmacro\zunit\pgfmathresult
+
+%%     % axis & leftovers
+%%     \draw[bg-b] (-\halfwidth+\sxh, 0) -- ({\halfwidth+\sxh}, 0);
+
     
-    \fill[bg-b] (\zunit, 0) circle (0.12);
-
-    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
-
-    \kftext[offset fst=0.6, offset snd=pi/4]{\zunit}{0}{$1$}
-
-    \pgfmathsetmacro\xx{\zunit*e^(-\tt)}
-    \pgfmathsetmacro\xas{-0.4}
-
-    % displacement arrow
-    \draw (\xfo, 0) -- (\xx-\xfo, 0);
-
-    % velocity arrow
-    \draw[line width=1mm, line cap=round, bg-a] (\xx, 0) -- (\xx+\xx*\xas, 0);
-    \kfclip{0}{\tb+4}{      
-      \draw[->,>=stealth] (\xx, 0) -- (\xx+\xx*\xas, 0);
-    }
-    \kftween[in=\tc, duration=\dt]{0.12}{0}
-    \pgfmathsetmacro\xd\pgfmathresult
-    \fill (\xx, 0) circle (\xd);
+%%     \fill[bg-b] (\zunit, 0) circle (0.12);
+%%     \fill (0, 0) circle (0.12);
     
-    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx/2}{-0.6}{$f$}
-    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx+\xx*\xas/2}{+0.7}{$\frac{df}{dt}$}
+%%     \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+%%     \kftext[offset fst=0.6, offset snd=\ola]{\zunit}{0}{$1$}
 
-    % zero on top layer
-    \fill (0, 0) circle (0.12);
+%%     % displacement arrow
+%%     \kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
+%%     \pgfmathsetmacro\xl\pgfmathresult
     
-  \end{scope}
-}
+%%     \kftween[in=\tc, duration=\dt]{0}{0.12}
+%%     \pgfmathsetmacro\xd\pgfmathresult
+    
+%%     \pgfmathsetmacro\xfo{0.16}
+
+%%     \draw[->, >=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
+%%     \fill (\zunit, 0) circle (\xd);
+
+%%     \kftextin[in=\tc+\dt, duration=\dt, polar=false]{\zunit/2}{-0.6}{$f$}
+
+%%     % copy of displacement arrow
+%%     \kfclip{\td}{\tend+1}{
+%%       \kftween[in=\td, duration=\dt]{pi}{0}
+%%       \pgfmathsetmacro\fadth\pgfmathresult
+%%       \pgfmathsetmacro\fadx{\zunit*cos(\fadth r)/2}
+%%       \pgfmathsetmacro\fady{\zunit*sin(\fadth r)/2}
+
+%%       \kftween[in=\te, duration=\dt]{0}{pi/2}
+%%       \pgfmathsetmacro\faeth\pgfmathresult
+%%       \pgfmathsetmacro\faex{\zunit*cos(\faeth r)}
+%%       \pgfmathsetmacro\faey{\zunit*sin(\faeth r)}
+      
+%%       \draw[->, >=stealth] (\zunit/2+\fadx, \fady) -- (\zunit/2+\fadx+\faex, \fady+\faey);
+
+%%       \kftextin[in=\td+\dt, duration=\dt, out=\te-\dt, polar=false]{\zunit*1.5}{-0.6}{$f$}
+%%       \kftextout[in=\te-\dt, duration=\dt, out=\te, polar=false]{\zunit*1.5}{-0.6}{$f$}
+
+%%       % stealth
+%%       \begin{scope}[shift={(\zunit, 0)}]
+%%         \zargin[in=\te, out=\tf]{pi/2}
+%%         \zargout[in=\tf, out=\tf+\dt]{pi/2}
+%%         \kftextin[in=\te, duration=\dt, out=\tf]{1.6}{pi/5}{$\frac{\pi}{2}$}
+%%         \kftextout[in=\tf, out=\tf+\dt]{1.6}{pi/5}{$\frac{\pi}{2}$}
+
+%%         \kftextin[in=\tf+\dt, duration=\dt, out=\tg, polar=false]{-0.6}{\zunit/2}{$if$}
+%%         \kftextout[in=\tg, out=\tg+\dt, polar=false]{-0.6}{\zunit/2}{$if$}
+
+%%         \kftextin[in=\tg+\dt, duration=\dt, polar=false]{0.6}{\zunit/2}{$\frac{df}{dt}$}
+
+        
+%%       \end{scope}
+
+%%    }
+    
+%%   \end{scope}
+%% }
 
 %% 0.5 RETURN OF THE EXPONENTIAL
 % \kfframes{4}{\ztitle{The Return of the Exponential}}
