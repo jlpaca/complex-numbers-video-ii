@@ -1,6 +1,7 @@
 \documentclass[tikz]{standalone}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{mathtools}
 \usepackage{contour}
 \usepackage{kf-complex}
 
@@ -8,54 +9,85 @@
 
 \pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{1}
+\kfsetfps{4}
 
 %% 0.2 ROOTS OF UNITY
-% \kfframes{2}{\ztitle{Roots of Unity}}
+% \kfframes{4}{\ztitle{Roots of Unity}}
 % \input{scenes/2}
 
+%% 0.3 WE ARE GOING TO PROVE A THEOREM
+% \kfframes{4}{\ztitle{We Are Going to Prove a Theorem}
+% \input{scenes/3a-given-P-a-polynomial}
+
+
+%% 0.4 BUT WHAT ABOUT THE CRAB, THOUGH?
+% \input{scenes/4b-consider-the-ivp}
+% \input{scenes/4c-if-c-is-positive}
+% \input{scenes/4d-the-particle-speeds-off}
+% \input{scenes/4e-if-c-is-negative}
+% \input{scenes/4f-if-c-is-negative-cont}
+
+\kfframes{8}{
+
+  \newcommand\ta{0} % show timer
+  \newcommand\tb{1} % start moving
+  \newcommand\tc{7} % fade out
+  
+  % phantom spaghetti
+  \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+  \kftext[polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
+
+
+  \pgfmathsetmacro\tt{max(0, \t-\tb-\dt)}
+  \kftextin[in=\ta, duration=\dt, out=\tc, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
+  \kftextout[in=\tc, out=\tc+\dt, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
+
+
+  
+  \begin{scope}[shift={({\halfwidth-6}, {\halfheight-2})}]
+
+    \pgfmathsetmacro\zunit{12}
+
+    % axis & leftovers
+    \draw[bg-b] (-\halfwidth+6, 0) -- ({\halfwidth+6}, 0);
+
+    \pgfmathsetmacro\xfo{0.16}
+    
+    \fill[bg-b] (\zunit, 0) circle (0.12);
+
+    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+
+    \kftext[offset fst=0.6, offset snd=pi/4]{\zunit}{0}{$1$}
+
+    \pgfmathsetmacro\xx{\zunit*e^(-\tt)}
+    \pgfmathsetmacro\xas{-0.4}
+
+    % displacement arrow
+    \draw (\xfo, 0) -- (\xx-\xfo, 0);
+
+    % velocity arrow
+    \draw[line width=1mm, line cap=round, bg-a] (\xx, 0) -- (\xx+\xx*\xas, 0);
+    \kfclip{0}{\tb+4}{      
+      \draw[->,>=stealth] (\xx, 0) -- (\xx+\xx*\xas, 0);
+    }
+    \kftween[in=\tc, duration=\dt]{0.12}{0}
+    \pgfmathsetmacro\xd\pgfmathresult
+    \fill (\xx, 0) circle (\xd);
+    
+    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx/2}{-0.6}{$f$}
+    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx+\xx*\xas/2}{+0.7}{$\frac{df}{dt}$}
+
+    % zero on top layer
+    \fill (0, 0) circle (0.12);
+    
+  \end{scope}
+}
+
 %% 0.5 RETURN OF THE EXPONENTIAL
-% \kfframes{2}{\ztitle{The Return of the Exponential}}
+% \kfframes{4}{\ztitle{The Return of the Exponential}}
 % \input{scenes/5b-the-geometric-statement}
 % \input{scenes/5c-let-us-rewrite}
 % \input{scenes/5d-equating-the-real-parts}
-
-
-%% \newenvironment{polarshift}[2]{
-%%   \begin{scope}[shift={({\zunit*(#1)*cos(#2 r)}, {\zunit*(#1)*sin(#2 r)})}]
-%% }{
-%%   \end{scope}
-%% }
-
-%% \kfframes{2}{
-%%   \kftween[in=0, duration=2]{1.5}{-1.5}
-%%   \pgfmathsetmacro\za{\pgfmathresult}
-%%   \pgfmathsetmacro\zr{sqrt(2)}
-%%   \pgfmathsetmacro\aa{-2}
-%%   \pgfmathsetmacro\ab{4}
-%%   \pgfmathsetmacro\ac{-3}
-%%   \pgfmathsetmacro\ad{1}
-
-
-%%   \zgrid[unit=0.7]{
-
-%%     \z[arg visible=false]{\zr}{\za}
-
-%%     \z[arg visible=false]{\aa}{0}
-%%     \begin{polarshift}{\aa}{0}
-%%       \z[arg visible=false]{\ab*\zr}{\za}
-%%       \begin{polarshift}{\ab*\zr}{\za}
-
-%%         \z[arg visible=false]{\ac*\zr^2}{2*\za}
-%%         \begin{polarshift}{\ac*\zr^2}{2*\za}
-
-%%           \z[arg visible=false]{\ad*\zr^3}{3*\za}
-%%         \end{polarshift}    
-%%       \end{polarshift}    
-%%     \end{polarshift}
-
-%%   }
-
-%% }
+% \input{scenes/5f-rotation-in-the-complex-plane-by-n-theta}
 
 \end{document}

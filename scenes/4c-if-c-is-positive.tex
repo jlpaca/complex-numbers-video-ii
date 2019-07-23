@@ -1,0 +1,59 @@
+\kfframes{9}{
+
+  \newcommand\ta{0}
+  \newcommand\tb{2} % lift arrow
+  \newcommand\tc{4}
+  \newcommand\td{6}
+
+  \kftween[in=\ta, duration=\dt]{\halfwidth}{\halfwidth-1.6}
+  \pgfmathsetmacro\xh\pgfmathresult
+
+  % phantom spaghetti
+  \kftext[polar=false]{\xh}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+  \kftextin[in=(\ta+\dt/2), out=\tend+1, duration=\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} > 0$}
+
+  \begin{scope}[shift={({\halfwidth-3}, {\halfheight-2})}]
+    \pgfmathsetmacro\zunit{3}
+
+    % axis & leftovers
+    \draw[bg-b] (-\halfwidth+3, 0) -- ({\halfwidth+3}, 0);
+
+    \fill (0, 0) circle (0.12);
+    \fill (\zunit, 0) circle (0.12);
+
+    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+    
+    \pgfmathsetmacro\xfo{0.16}
+    \draw[->, >=stealth] (\xfo, 0) -- (\zunit-\xfo, 0);    
+    \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{$f$}
+
+    % actual animation
+    \kfclip{\tb}{\tend+1}{
+      \pgfmathsetmacro\dxl{\zunit/4}
+      
+      \kftween[in=\tb, duration=\dt]{0}{\zunit/2}
+      \pgfmathsetmacro\xax\pgfmathresult
+      \kftween[in=\td, duration=\dt]{0}{\zunit/2+\dxl}
+      \pgfmathsetmacro\xax{\xax+\pgfmathresult}
+      
+      \kftween[in=\tb, duration=\dt]{0}{2}
+      \pgfmathsetmacro\xay\pgfmathresult
+      \kftween[in=\td, duration=\dt]{0}{-2}
+      \pgfmathsetmacro\xay{\xay+\pgfmathresult}
+      
+      \kftween[in=\tc, duration=\dt]{0}{\dxl}
+      \pgfmathsetmacro\dxh\pgfmathresult
+      
+      
+      \draw[->, >=stealth] (\xax+\xfo-\dxh, \xay) -- (\xax+\zunit+\dxh-\xfo, \xay);
+      \kftextin[in=\tb+\dt, duration=\dt, out=\tc, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$f$}
+      \kftextout[in=\tc, out=\tc+\dt, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$f$}
+      
+      \kftextin[in=\tc+\dt, out=\td, duration=\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c f$}
+      \kftextout[in=\td, duration=\dt, out=\td+2*\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c f$}
+      \kftextin[in=\td+\dt, out=\tend+1, duration=\dt, polar=false]{\zunit/2+\xax}{0.8+\xay}{$\frac{df}{dt}$}
+    }
+
+    
+  \end{scope}
+}

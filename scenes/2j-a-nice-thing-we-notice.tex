@@ -1,0 +1,28 @@
+\kfframes{8}{
+  \newcommand\ta{0} % fade out the 7-gon
+  \newcommand\tb{4}
+  \newcommand\tc{6}
+
+  
+  \zgrid[unit=3]{
+    \kftween[in=\ta, duration=\dt]{100}{0}
+    \colorlet{xc}{fg-a!\pgfmathresult!bg-b}
+    
+    \begin{scope}[color=xc]
+      \foreach \j in {0,..., 6}{ % feckit, hardcode this.
+        \fill ({\zunit*cos(\j*2*pi/7 r)}, {\zunit*sin(\j*2*pi/7 r)}) circle (0.12);
+        \zout[out=\ta, arg visible=false]{1}{\j*2*pi/7}
+      }
+
+      \zngon[in=-\dt, out=\tend+\dt]{7}
+    \end{scope}
+
+    \zin[in=\tb, arg visible=false]{1}{2*pi/7}
+    \kftextin[in=\tb, duration=\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+
+    \zin[in=\tc, arg visible=false]{1}{-2*pi/7}
+    \kftextin[in=\tc, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{-2*pi/7}{$\bar{z}$}
+
+  }
+
+}

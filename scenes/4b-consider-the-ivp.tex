@@ -1,0 +1,66 @@
+\kfframes{14}{
+  \newcommand\ta{0} % line in
+  \newcommand\tb{2} % 1 in
+  \newcommand\tc{5} % displacement
+  \newcommand\td{8} % velocity
+  \newcommand\tdelay{1.5}
+  \newcommand\te{12} % disappear
+
+  
+  \kftextout[polar=false, duration=\dt, out=(\te+\dt)]{\halfwidth}{6}{$\begin{aligned}\frac{df}{dt} &= c f\\f(0) &= 1\end{aligned}$}
+  \kftext[in=(\te+\dt), polar=false]{\halfwidth}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+
+  \begin{scope}[shift={({\halfwidth-3}, {\halfheight-2})}]
+    \pgfmathsetmacro\zunit{3}
+
+    %  \kftext[polar=false]{0}{3.5}{$\begin{aligned}\frac{df}{dt} = c f\\f(0) = 1\end{aligned}$}
+
+    \kftween[in=\ta, duration=\dt]{0}{1} 
+    \pgfmathsetmacro\lx\pgfmathresult
+    \kftween[in=(\tb+\dt), duration=\dt]{0}{1} 
+    \pgfmathsetmacro\lxp\pgfmathresult
+
+    % axis
+    \draw[bg-b] (-\halfwidth+3, 0) -- ({(-0.5+\lx)*2*\halfwidth+3}, 0);
+
+    \fill (0, 0) circle ({0.12*\lx});
+    \fill (\zunit, 0) circle ({0.12*\lxp});
+    %  \fill[hl-a] (\zunit, 0.5) circle ({0.12*\lxpp});
+    
+    \kftextin[in=\ta, duration=\dt, out=\tend+1, offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+    %  \kftextin[in=(\ta+\dt), duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+
+    % draw displacement & velocity
+    \newcommand\xvc{1.2*\zunit}
+    \kftween[in=\tc, duration=\dt]{0}{\zunit}
+    \pgfmathsetmacro\xf\pgfmathresult
+    \kftween[in=\td, duration=\dt]{0}{\xvc}
+    \pgfmathsetmacro\xv\pgfmathresult
+
+    \kftween[in=\te, duration=\dt]{0}{1}
+    \pgfmathsetmacro\xd\pgfmathresult
+    
+    \pgfmathsetmacro\xfo{0.16}
+    \kfclip{\tc}{\tend+1}{ %{\te+\dt}{
+%      \draw[->, >=stealth] (\xfo+\xf*\xd, 0) -- (\xf-\xfo, 0);
+      \draw[->, >=stealth] (\xfo, 0) -- (\xf-\xfo, 0);
+    }
+
+    \kfclip{\td}{\te+\dt}{
+      \draw[->, >=stealth] (\zunit, 0) -- ({\xvc+(1-\xd)*\xv}, 0);
+    }
+
+    \kftextin[in=\tc, duration=\dt, out=(\tc+\tdelay), offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}
+    \kftexttween[in=(\tc+\tdelay), duration=\dt, out=\tend+1, offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}{0.5*\zunit}{0}{$f$}
+
+    % \kftexttween[in=(\tc+\tdelay), duration=\dt, out=\te, offset fst=0.8, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}{0.5*\zunit}{0}{$f$}
+    %\kftextout[in=\te, out=(\te+\dt), offset fst=0.6, offset snd=pi/2]{0.5*\zunit}{0}{$f$}
+
+    \kftextin[in=\td, duration=\dt, out=(\td+\tdelay), offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{\scriptsize velocity}
+    \kftexttween[in=(\td+\tdelay), duration=\dt, out=\te,  offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{\scriptsize velocity}{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}
+    \kftextout[in=\te, out=(\te+\dt), offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}
+
+
+    
+  \end{scope}
+}

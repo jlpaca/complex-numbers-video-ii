@@ -1,0 +1,63 @@
+\kfframes{16}{
+  \newcommand\ta{1} % 1 in
+  \newcommand\tb{3} % rotate by n-theta
+  \newcommand\tc{4} % n-theta out
+
+  \newcommand\td{5}
+  \newcommand\tdelay{1.5}
+  
+  \newcommand\tf{15}
+
+  \pgfmathsetmacro\th{0.75}
+  \pgfmathsetmacro\n{3}
+  \pgfmathsetmacro\m{\n-1}
+
+  \pgfmathsetmacro\te{\td+(\n+1)*\tdelay}
+
+  
+  \zgrid[in=0, origin y=2.5, unit=3]{
+
+    % backgroudn stuff
+    \kftextin[in=(\te), duration=\dt, offset fst=1.5, offset snd=0.4]{\zunit}{\n*\th}{\colorbox{bg-a}{\phantom{$e^{in\theta} = (e^{i\theta})^n$}}}
+    
+    \kfclip{\tc}{\tend}{
+      \fill[bg-b] ({\zunit*cos(\n*\th r)}, {\zunit*sin(\n*\th r)}) circle (0.12);
+    }
+    
+    \zin[in=\ta, out=\tb]{1}{0}
+    \kftextin[in=\ta, duration=\dt, out=\tb, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    \kftextout[in=\tb, out=\tb+\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+    
+
+    \kftextin[in=\tb, duration=\dt, out=\tc]{1.7}{pi/4}{$n\theta$}
+    \kftextout[in=\tc, out=\tc+\dt]{1.7}{pi/4}{$n\theta$}
+
+    \ztween[in=\tb, out=\tc, stagger=false]{1}{0}{1}{\n*\th}
+
+    \zout[in=\tc, out=\tc+\dt]{1}{\n*\th}
+
+    \kftextin[in=\tc, duration=\dt, offset fst=1.5, offset snd=0.4]{\zunit}{\n*\th}{$e^{in\theta} \phantom{ = (e^{i\theta})^n}$}
+
+
+    % n-times-theta
+    \zin[in=\td, out=(\td+\tdelay)]{1}{0}
+    
+    \foreach \j in {1, ..., \n}{
+      \pgfmathsetmacro\ta{\td+\j*\tdelay}     % beginning of this
+      \pgfmathsetmacro\tb{\td+(\j+1)*\tdelay} % beginning of next
+
+      \ztween[in=\ta, out=\tb, stagger=false, arg visible=false]{1}{\th*(\j-1)}{1}{\th*\j}
+      
+      \kftextin[in=\ta, duration=\dt, out=(\tb-\dt)]{1.5}{\th*(\j-0.5)}{$\theta$}
+      \kftextout[in=(\tb-\dt), duration=\dt, out=\tb]{1.5}{\th*(\j-0.5)}{$\theta$}
+      
+      \zargin[in=\ta, out=\tb-\dt, arg origin=(\th*(\j-1))]{\th*\j}
+      \zargout[in=\tb-\dt, out=\tb, arg origin=(\th*(\j-1))]{\th*\j}
+
+    }
+
+    \z[in=\te, arg visible=false]{1}{\n*\th}
+    \kftextin[in=(\te+\dt), duration=\dt, offset fst=1.5, offset snd=0.4]{\zunit}{\n*\th}{$\phantom{e^{in\theta}} = (e^{i\theta})^n$}
+    
+  }
+}

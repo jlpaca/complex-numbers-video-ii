@@ -1,0 +1,63 @@
+\kfframes{7}{
+
+  \newcommand\taa{0} % scale
+  \newcommand\ta{1} % scale& show t counter
+  \newcommand\tb{2} % particle moves
+  \newcommand\tc{5} % clip
+  \newcommand\td{6} % fadeout
+  
+  % phantom spaghetti
+  \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+  \kftext[polar=false]{\halfwidth}{6.5}{$\phantom{c} > 0$}
+
+  \pgfmathsetmacro\tt{max(0, \t-\tb-\dt)}
+  \kftextin[in=\ta, duration=\dt, out=\td, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
+  \kftextout[in=\td, out=\td+\dt, polar=false]{\halfwidth}{5.5}{$t = \pgfmathprintnumber[fixed,precision=3, fixed zerofill=true]{\tt}$}
+
+
+  \kftween[in=\taa, duration=\dt]{3}{6}
+  \pgfmathsetmacro\ssx\pgfmathresult
+  \begin{scope}[shift={({\halfwidth-\ssx}, {\halfheight-2})}]
+
+    % zoom out yo
+    \kftween[in=\taa, duration=\dt]{3}{1}
+    \pgfmathsetmacro\zunit{\pgfmathresult}
+
+    % axis & leftovers
+    \draw[bg-b] (-\halfwidth+\ssx, 0) -- ({\halfwidth+\ssx}, 0);
+
+    \pgfmathsetmacro\xfo{0.16}
+
+    % fade out the line too
+    \fill[bg-b] (\zunit, 0) circle (0.12);
+
+    \kfclip{\tc}{\tend+1}{
+      \kftween[in=\td, duration=\dt]{100}{0}
+      \pgfmathsetmacro\cxc\pgfmathresult
+      \draw[fg-a!\cxc!bg-b] (0, 0) -- ({\halfwidth+\ssx}, 0);
+    }
+
+    \fill (0, 0) circle (0.12);
+
+    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+    \kftextin[in=\ta, duration=\dt, out=\tend+1, offset fst=0.6, offset snd=3*pi/4]{\zunit}{0}{$1$}
+    
+    % position & velocity vectors & marker
+    \kfclip{0}{\tc}{
+      \pgfmathsetmacro\xx{\zunit*e^(1.8*\tt)}
+
+      \fill (\xx, 0) circle (0.12);
+      
+      \draw[->, >=stealth] (\xfo, 0) -- (\xx-\xfo, 0);    
+      \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\xx}{0}{$f$}
+
+      \pgfmathsetmacro\dxl{\zunit/4}
+      \pgfmathsetmacro\xas{(2*\dxl+\zunit)/\zunit}
+
+      \kftext[polar=false]{\xx+\xx*\xas/2}{0.8}{$\frac{df}{dt}$}
+      \draw[->, >=stealth] (\xx, 0) -- ({\xx*(1+\xas)-\xfo}, 0);
+    }
+
+
+  \end{scope}
+}
