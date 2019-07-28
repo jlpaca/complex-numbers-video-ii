@@ -1,7 +1,8 @@
 \kfframes{8}{
   \newcommand\ta{0} % fade out the 7-gon
   \newcommand\tb{4}
-  \newcommand\tc{6}
+  \newcommand\tc{5}
+  \newcommand\td{7}
 
   
   \zgrid[unit=3]{
@@ -17,11 +18,29 @@
       \zngon[in=-\dt, out=\tend+\dt]{7}
     \end{scope}
 
-    \zin[in=\tb, arg visible=false]{1}{2*pi/7}
-    \kftextin[in=\tb, duration=\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+    \zin[in=\tb, out=\tc, arg visible=false]{1}{2*pi/7}
+    \zout[in=\tc, out=\tc+\dt, arg visible=false]{1}{2*pi/7}
 
-    \zin[in=\tc, arg visible=false]{1}{-2*pi/7}
-    \kftextin[in=\tc, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{-2*pi/7}{$\bar{z}$}
+    \kftextin[in=\tb, out=\tc, duration=\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+    \kftextout[in=\tc, out=\tc+\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+
+    \pgfmathsetmacro\xzx{\zunit*cos(2*pi/7 r)}
+    \pgfmathsetmacro\xzy{\zunit*sin(2*pi/7 r)}
+
+    \kftween[in=\tc, duration=\dt]{\xzy}{-\xzy}
+    \pgfmathsetmacro\xzya\pgfmathresult
+
+    \kftween[in=\tc+\dt, duration=\dt]{\xzy}{-\xzy}
+    \pgfmathsetmacro\xzyb\pgfmathresult
+    
+    \kftween[in=\tc+\dt, duration=\dt]{0}{0.12}
+    \pgfmathsetmacro\xzr\pgfmathresult
+
+    \draw[dashed] (\xzx, \xzya) -- (\xzx, \xzyb);
+    \fill (\xzx, -\xzy) circle (\xzr);
+
+    \zin[in=\td, arg visible=false]{1}{-2*pi/7}
+    \kftextin[in=\tc+\dt, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{-2*pi/7}{$\bar{z}$}
 
   }
 

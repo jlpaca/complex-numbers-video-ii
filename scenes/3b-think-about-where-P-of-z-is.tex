@@ -1,0 +1,98 @@
+\kfframes{11}{
+  
+  \pgfmathsetmacro\za{1.3}
+  \pgfmathsetmacro\zr{1.3}
+
+  \newcommand{\ta}{1}
+  \newcommand{\tdelay}{0.5}
+  \newcommand{\targdelay}{0.5}
+  \newcommand{\tshdelay}{(\dt/2)}
+  \newcommand{\taa}{0} % pan
+  \newcommand{\tb}{4} % scaling
+  \newcommand{\tc}{7} % shifting
+  \newcommand{\td}{8} % polynomial text
+  \newcommand{\te}{10} % P (z)
+
+  % pan camera
+  
+  \zgrid[out=\tend+1, origin y=\halfheight-1.5, unit=1]{
+    % 1
+    \kftextin[in=\ta, out=\tb, duration=\dt, offset fst=0.6, offset snd=-pi/4]{1}{0}{$1$}
+    \kftextout[in=\tb, out=(\tb+\dt), duration=\dt, offset fst=0.6, offset snd=-pi/4]{1}{0}{$1$} 
+    \kftextin[in=\tb+\dt, out=\td, duration=\dt, offset fst=0.8, offset snd=5*pi/6]{-2*\zunit}{0}{$-2$}
+    \kftextout[in=\td, out=\td+\dt, duration=\dt, offset fst=0.8, offset snd=5*pi/6]{-2*\zunit}{0}{$-2$}
+
+    \zin[in=\ta, out=\tb, arg visible=false]{1}{0}
+    \ztween[in=\tb, out=\tend+1, arg visible=false, stagger=false]{1}{0}{-2}{0}
+
+    \kftween[in=\tc, duration=\dt]{0}{1} \pgfmathsetmacro\xpsa\pgfmathresult
+    \begin{polarshift}{-2*\xpsa}{0}
+      % z
+      
+      \kftextin[in=\ta+\tdelay, out=\tb+\tdelay, duration=\dt, offset fst=0.5, offset snd=pi/6]{\zunit*\zr}{\za}{$z$}
+      \kftextout[in=\tb+\tdelay, out=(\tb+\tdelay+\dt), duration=\dt, offset fst=0.5, offset snd=pi/6]{\zunit*\zr}{\za}{$z$} 
+      \kftextin[in=\tb+\tdelay+\dt, out=\td, duration=\dt, offset fst=0.7, offset snd=pi/6]{\zunit*4*\zr}{\za}{\colorbox{bg-a}{$4z$}}
+      \kftextout[in=\td, duration=\dt, out=(\td+\dt), offset fst=0.7, offset snd=pi/6]{\zunit*4*\zr}{\za}{\colorbox{bg-a}{$4z$}}
+
+      \ztween[in=\ta+\tdelay, out=\tb+\tdelay, arg visible=false, stagger=false]{1}{0}{\zr}{\za}
+      \ztween[in=\tb+\tdelay, out=\tend+1, arg visible=false, stagger=false]{\zr}{\za}{4*\zr}{\za}
+
+      \zargin[in=\ta+\tdelay, out=\ta+\targdelay]{\za}
+      \zargout[in=\ta+\tdelay+\targdelay, out=\ta+\tdelay+\targdelay+\dt]{\za}
+
+    \end{polarshift}
+
+    \kftween[in=\tc+\tshdelay, duration=\dt]{0}{1} \pgfmathsetmacro\xpsb\pgfmathresult
+    \begin{polarshift}{-2*\xpsb}{0}
+      \begin{polarshift}{\xpsb*4*\zr}{\xpsb*\za}
+        % z^2
+        
+        \kftextin[in=\ta+2*\tdelay, out=\tb+2*\tdelay, duration=\dt, offset fst=0.6, offset snd=pi/2]{\zunit*\zr^2}{2*\za}{$z^2$}
+        \kftextout[in=\tb+2*\tdelay, out=(\tb+2*\tdelay+\dt), duration=\dt, offset fst=0.6, offset snd=pi/2]{\zunit*\zr^2}{2*\za}{$z^2$}
+        \kftextin[in=\tb+2*\tdelay+\dt, out=\td, duration=\dt, offset fst=0.8, offset snd=(pi/4-pi*\xpsb/2)]{-3*\zunit*\zr^2}{2*\za}{$-3z^2$}
+        \kftextout[in=\td, out=\td+\dt, duration=\dt, offset fst=0.8, offset snd=(pi/4-pi*\xpsb/2)]{-3*\zunit*\zr^2}{2*\za}{$-3z^2$}
+
+        \ztween[in=\ta+2*\tdelay, out=\tb+2*\tdelay, arg visible=false, stagger=false]{\zr}{\za}{\zr^2}{2*\za}
+        \ztween[in=\tb+2*\tdelay, out=\tend+1, arg visible=false, stagger=false]{\zr^2}{2*\za}{-3*\zr^2}{2*\za}
+
+        \zargin[in=\ta+2*\tdelay, arg origin=\za,  out=\ta+2*\tdelay+\targdelay]{2*\za}
+        \zargout[in=\ta+2*\tdelay+\targdelay, arg origin=\za, out=\ta+2*\tdelay+\targdelay+\dt]{2*\za}
+
+      \end{polarshift}
+    \end{polarshift}
+
+    % z^3
+    \kftween[in=\tc+2*\tshdelay, duration=\dt]{0}{1} \pgfmathsetmacro\xpsc\pgfmathresult
+    \begin{polarshift}{-2*\xpsc}{0}
+      \begin{polarshift}{\xpsc*4*\zr}{\xpsc*\za}
+        \begin{polarshift}{\xpsc*-3*\zr^2}{\xpsc*2*\za}
+
+          \kftextin[in=\ta+3*\tdelay+\dt/2, out=\td, duration=\dt, offset fst=0.6, offset snd=5*pi/6]{\zunit*\zr^3}{3*\za}{$z^3$}
+          \kftextout[in=\td, duration=\dt, out=\td+\dt, offset fst=0.6, offset snd=5*pi/6]{\zunit*\zr^3}{3*\za}{$z^3$}
+
+          \kftextin[in=\td, duration=\dt, out=\te+\dt, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}
+          \kftextin[in=\td+\dt, duration=\dt, out=\te, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}
+
+          \kftexttween[in=\te+\dt, duration=\dt, out=\tend+1, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
+
+          
+          \kftexttween[in=\te, duration=\dt, out=\tend+1, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}{\zunit*\zr^3}{3*\za}{$P(z)$}
+
+          
+          \ztween[in=\ta+3*\tdelay, out=\tb+3*\tdelay, arg visible=false, stagger=false]{\zr^2}{2*\za}{\zr^3}{3*\za}
+          \ztween[in=\tb+3*\tdelay, out=\tend+1, arg visible=false, stagger=false]{\zr^3}{3*\za}{\zr^3}{3*\za}
+
+          \zargin[in=\ta+3*\tdelay, arg origin=2*\za, out=\ta+3*\tdelay+\targdelay]{3*\za}
+          \zargout[in=\ta+3*\tdelay+\targdelay, arg origin=2*\za, out=\ta+3*\tdelay+\targdelay+\dt]{3*\za}
+
+
+        \end{polarshift}
+      \end{polarshift}
+    \end{polarshift}
+
+  }
+
+  \kftextout[out=2*\dt, duration=\dt, polar=false]{\halfwidth}{\halfheight+2}{\colorbox{bg-a}{\phantom{$P(z) = z^3 - 3z^2 + 4z - 2$}}}
+  \kftextout[out=\dt, duration=\dt, polar=false]{\halfwidth}{\halfheight+2}{$P(z) = z^3 - 3z^2 + 4z - 2$}
+
+}
