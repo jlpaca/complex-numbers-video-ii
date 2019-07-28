@@ -26,7 +26,7 @@
     \kftextin[in=\tb, duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{\colorbox{bg-a}{\phantom{$\beta$}}}
     \kftextout[in=(\tb+\tdelay), duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{\colorbox{bg-a}{\phantom{$\beta$}}}
     \kftextin[in=(\te+\tdelay-\dt), duration=\dt, out=\tend, offset fst=0.6, offset snd=pi/3]
-             {\zunit}{\zat}{\colorbox{bg-a}{\phantom{$e^{i\alpha} \cdot e^{i\beta} = e^{i\alpha + \beta}$}}}
+             {\zunit}{\zat}{\colorbox{bg-a}{\phantom{$e^{i\alpha} \cdot e^{i\beta} = e^{i(\alpha + \beta)}$}}}
 
     % ghost circle
     \kfclip{(\tb+\tdelay)}{\te+\tdelay+\dt}{
@@ -52,7 +52,7 @@
     \kftextout[in=(\tb+\tdelay), duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{$\beta$}
 
     \kftextin[in=(\tb+\tdelay), duration=\dt, out=\te+\tdelay, offset fst=0.6, offset snd=pi/3]
-             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i\alpha + \beta}}$}
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i(\alpha + \beta)}}$}
 
     \zout[in=\tb, out=\tb+\tdelay+\dt, arg visible=false]{1}{\zat}
 
@@ -72,8 +72,8 @@
     \kftextout[in=(\te+\tdelay), duration=\dt, out=(\te+\tdelay+\dt)]{2}{(\za+\zb)/3}{$\alpha+\beta$}
 
     \kftexttween[in=(\te+\tdelay), duration=\dt, out=\tend+1, offset fst=0.6, offset snd=pi/3]
-             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i\alpha + \beta}}$}
-             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} = e^{i\alpha + \beta}$}
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} \;\phantom{ = e^{i(\alpha + \beta)}}$}
+             {\zunit}{\zat}{$e^{i\alpha} \cdot e^{i\beta} = e^{i(\alpha + \beta)}$}
 
     
     %% \zargout[in=\te, arg visible=false, out=\te+\tdelay]{1}{\zat}
