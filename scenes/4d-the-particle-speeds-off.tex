@@ -49,12 +49,12 @@
       \fill (\xx, 0) circle (0.12);
       
       \draw[->, >=stealth] (\xfo, 0) -- (\xx-\xfo, 0);    
-      \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\xx}{0}{$f$}
+      \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\xx}{0}{$e^{ct}$}
 
       \pgfmathsetmacro\dxl{\zunit/4}
       \pgfmathsetmacro\xas{(2*\dxl+\zunit)/\zunit}
 
-      \kftext[polar=false]{\xx+\xx*\xas/2}{0.8}{$\frac{df}{dt}$}
+      \kftext[polar=false]{\xx+\xx*\xas/2}{0.8}{$\frac{d}{dt}e^{ct}$}
       \draw[->, >=stealth] (\xx, 0) -- ({\xx*(1+\xas)-\xfo}, 0);
     }
 

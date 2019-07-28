@@ -1,8 +1,10 @@
-\kfframes{5}{
+\kfframes{6}{
 
   \newcommand\ta{0} % lift arrow
   \newcommand\tb{2} % scale arrow
-  \newcommand\tc{4} % drop arrow
+%  \newcommand\tbb{2} % change text
+
+\newcommand\tc{4} % drop arrow
   
   % phantom spaghetti
   \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
@@ -27,7 +29,7 @@
     \fill (\zunit, 0) circle (0.12);
     \draw[->,>=stealth] (\xfo, 0) -- (\zunit-\xfo, 0);
 
-    \kftext[polar=false]{\zunit/2}{-0.6}{$f$}
+    \kftext[polar=false]{\zunit/2}{-0.6}{$e^{ct}$}
 
     % actual animation. gosh, i hope i never need to come back and
     % change this because this will be illegible within two days.
@@ -57,10 +59,12 @@
       }
       
       \draw[->,>=stealth] (\xll, +\xay) -- (\xlr, +\xay);
-      \kftextin[in=\ta+\dt, duration=\dt, out=\tb, polar=false]{\zunit/2}{\xay-0.6}{$f$}
-      \kftextout[in=\tb, duration=\dt, out=\tb+\dt, polar=false]{\zunit/2}{\xay-0.6}{$f$}
+      \kftextin[in=\ta+\dt, duration=\dt, out=\tb, polar=false]{\zunit/2}{\xay-0.6}{$e^{ct}$}
+      \kftextout[in=\tb, duration=\dt, out=\tb+\dt, polar=false]{\zunit/2}{\xay-0.6}{$e^{ct}$}
 
-      \kftextin[in=\tb+\dt, duration=\dt, out=\tend+1, polar=false]{\xax+\zunit/2}{\xay+0.7}{$\frac{df}{dt}$}
+      \kftextin[in=\tb+\dt, duration=\dt, out=\tc+\dt, polar=false]{\xax+\zunit/2}{\xay+0.7}{$ce^{ct}$}
+      \kftexttween[in=\tc+\dt, duration=\dt, out=\tend+1, polar=false]{\xax+\zunit/2}{\xay+0.7}{$ce^{ct}$}
+      {\xax+\zunit/2}{\xay+0.7}{$\frac{d}{dt}e^{ct}$}
       
     }
        

@@ -1,0 +1,73 @@
+\kfframes{7}{
+\pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+\newcommand\ta{0} % start moving
+\newcommand\tb{3.5} % start switching
+\newcommand\tdelay{0.75}
+
+% fill in background
+\fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight); \color{white!10!black}
+
+% flag
+\begin{scope}[shift={(\halfwidth, \halfheight)}]
+
+%    \pgfmathsetmacro\ctho{140}
+\pgfmathsetmacro\ctd{3.2}
+\pgfmathsetmacro\ctoa{5}
+\pgfmathsetmacro\cto{1}
+\pgfmathsetmacro\cte{\ctd+0.5}
+
+%draw the flag
+\draw[thick] (0, 0) -- (0, 1); \fill (0, 0.7) rectangle (0.4, 1);
+
+\kftween[in=\ta, duration=(6*\dt)]{160}{340}
+\pgfmathsetmacro\cth{\pgfmathresult}
+
+\kfclip{0}{\tb}{
+\pgfkeys{/pgf/fpu=false}
+\draw[dashed, bg-b] ({\cte*cos(-20+\ctoa)}, {\cte*sin(-20+\ctoa)}) arc (-20+\ctoa:\cth+\ctoa:\cte);
+\pgfkeys{/pgf/fpu=true}
+}
+
+\kfclip{\tb}{\tb+\tdelay}{
+% ellipse
+\pgfkeys{/pgf/fpu=false}
+\begin{scope}[rotate=25]
+\draw[bg-b, dashed, domain=-pi:pi, samples=80, variable=\tt]
+plot ({1.4*\cte*cos(\tt r)}, {0.9*\cte*sin(\tt r)});
+\end{scope}
+\pgfkeys{/pgf/fpu=true}
+}
+
+\kfclip{\tb+\tdelay}{\tb+2*\tdelay}{
+% wobblu
+\draw [bg-b, dashed, smooth, domain=-pi:pi, samples=80, variable=\tt] 
+plot ({(\ctd+0.3-0.4*cos(7*\tt r))*cos(\tt r)}, {(\ctd+0.3-0.4*cos(7*\tt r))*sin(\tt r)});
+}
+
+\kfclip{\tb+2*\tdelay}{\tb+3*\tdelay}{
+% hyperbolae
+\draw [bg-b, dashed, smooth, domain=1.1:\halfwidth, samples=40, variable=\tt] plot ({\tt}, {-\cte/(\tt-1)});
+\draw [bg-b, dashed, smooth, domain=-\halfwidth:-1.1, samples=40, variable=\tt] plot ({\tt}, {-\cte/(\tt+1)});
+}
+
+\kfclip{\tb+3*\tdelay}{\tb+4*\tdelay}{
+\draw [bg-b, dashed, smooth, domain=-pi:pi, samples=80, variable=\tt] 
+plot ({0.7*cos(6*\tt r)+\ctd*cos((\tt-0.1) r)}, {0.7*sin(6*\tt r)+\ctd*sin((\tt-0.1) r)});
+}
+
+\kfclip{\tb+4*\tdelay}{\tend}{
+\pgfkeys{/pgf/fpu=false}
+\draw[dashed, bg-b] ({\cte*cos(-20+\ctoa)}, {\cte*sin(-20+\ctoa)}) arc (-20+\ctoa:\cth+\ctoa:\cte);
+\pgfkeys{/pgf/fpu=true}
+}
+
+\crab{1}{\ctd*cos(\cth)}{\ctd*sin(\cth)}{90+\cth}
+
+\draw[dashed] ({(\ctd-\cto)*cos(\cth)}, {(\ctd-\cto)*sin(\cth)}) -- ({\cto*cos(\cth)/3}, {\cto*sin(\cth)/3});
+
+\kfclip{\tb}{\tb+4*\tdelay}{
+\kftext{\cte}{9/4}{\colorbox{fg-a}{\Large {\textbf{?}}}}
+}
+\end{scope}
+}

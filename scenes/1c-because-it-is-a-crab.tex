@@ -1,0 +1,45 @@
+\kfframes{1}{
+\fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+}
+\kfframes{7}{
+  % fill in background
+  \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+  \color{white!10!black}
+  
+  \newcommand\ta{3}
+  \newcommand\tdelay{0.4}
+  \newcommand\tb{5}
+
+  \pgfmathsetmacro\cy{-0.5}
+  \pgfmathsetmacro\cx{1.5}
+
+  \kftext[polar=false]{4.5}{\halfheight+\cy}{Crab Anatomy:}
+
+  
+  \begin{scope}[shift={(\halfwidth+\cx, \halfheight+\cy)}]
+
+    \pgfmathsetmacro\al{2}
+    
+    \crab{2}{0}{0}{0}
+
+    \kfclip{\ta}{\tend+1}{
+      \draw[->, >=stealth] (2, 0) -- ({2+\al}, 0);
+    }
+    \kfclip{\ta+\tdelay}{\tend+1}{
+      \node at (2+\al/2, 1) {\scriptsize direction};
+      \node at (2+\al/2, 0.5) {\scriptsize of travel};
+    }
+
+    \kfclip{\tb}{\tend+1}{
+      \draw[->, >=stealth] (0, 2) -- (0, 2 + \al);
+    }
+    \kfclip{\tb+\tdelay}{\tend+1}{
+      \node at (-1, 2+\al/2) {\rotatebox{90}{\scriptsize line}};
+      \node at (-0.5, 2+\al/2) {\rotatebox{90}{\scriptsize of sight}};
+    }
+
+  \end{scope}
+}
+\kfframes{0.5}{
+\fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+}

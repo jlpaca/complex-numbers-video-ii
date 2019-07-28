@@ -1,0 +1,15 @@
+\kfframes{4}{
+  \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+  \pgfmathsetmacro\vth{10}
+  \pgfmathsetmacro\vx{4*cos(\vth)}
+  \pgfmathsetmacro\vy{4*sin(\vth)}
+  \pgfmathsetmacro\vox{-1}
+  \pgfmathsetmacro\voy{2}
+  
+   % fill in background
+   \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+   \color{white!10!black}
+
+   \crab{1}{\vox+\vx*\t}{\voy+\vy*\t}{\vth+10*sin(10*\t r)}
+   \draw[dashed, bg-b] (\vox, \voy-0.5) -- ({\vox+\vx*(\t+0.1)}, {\voy+\vy*(\t+0.1)-0.5});
+}

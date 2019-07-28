@@ -1,0 +1,40 @@
+\kfframes{9}{ \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+\newcommand\ta{1} % flag in
+\newcommand\tb{3} % begin rotation to face flag
+\newcommand\tc{4} % line in
+\newcommand\td{6} % walk around
+
+% fill in background
+\fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight); \color{white!10!black}
+
+% flag
+\begin{scope}[shift={(\halfwidth, \halfheight)}]
+
+\pgfmathsetmacro\cth{-20} \pgfmathsetmacro\ctd{3.2}
+\pgfmathsetmacro\cto{1}
+
+% extend line
+\kfclip{\ta}{\tend+1}{
+
+
+%draw the flag
+\draw[thick] (0, 0) -- (0, 1);
+\fill (0, 0.7) rectangle (0.4, 1);
+
+\kftween[in=\td, duration=(6*\dt)]{0}{180}
+\pgfmathsetmacro\cth{\pgfmathresult+\cth}
+
+\kftween[in=\tb, duration=\dt]{0}{90+\cth}
+\pgfmathsetmacro\cthc\pgfmathresult
+
+\crab{1}{\ctd*cos(\cth)}{\ctd*sin(\cth)}{\cthc}
+
+\kftween[in=\tc, duration=\dt]{\ctd-\cto-0.1}{\cto/3}
+\pgfmathsetmacro\ls\pgfmathresult
+
+\kfclip{\tc}{\tend+1}{ \draw[dashed, ->, >=stealth]
+({(\ctd-\cto)*cos(\cth)}, {(\ctd-\cto)*sin(\cth)}) --
+({\ls*cos(\cth)}, {\ls*sin(\cth)}); } }
+\end{scope}
+}

@@ -1,24 +1,21 @@
-% polarshift tool
-\newenvironment{polarshift}[2]{
-  \begin{scope}[shift={({\zunit*(#1)*cos(#2 r)}, {\zunit*(#1)*sin(#2 r)})}]
-}{
-  \end{scope}
-}
-
-\kfframes{12}{
+\kfframes{10}{
   \newcommand{\ta}{1}
   \newcommand{\tb}{2} % grid in
   \newcommand{\tc}{4} % z in
-  \newcommand{\td}{8} % where is P(z) ?
-  \newcommand{\te}{11}
+  \newcommand{\td}{7} % where is P(z) ?
+  \newcommand{\tda}{(10-\dt)} % z out
+  \newcommand{\te}{10}
   
-  \pgfmathsetmacro\za{1.2}
+  \pgfmathsetmacro\za{1.3}
   \pgfmathsetmacro\zr{1.3}
   
-  \zgrid[in=\tb, origin y=\halfheight-2.5, unit=1.5]{
+  \zgrid[in=\tb, out=\tend+1, origin y=\halfheight-1.5, unit=1]{
 
-    \zin[in=\tc, arg visible=false]{\zr}{\za}
-    \kftextin[in=\tc, duration=\dt, offset fst=0.55, offset snd=pi/8]{\zunit*\zr}{\za}{$z$}
+    \zin[in=\tc, out=\tda, arg visible=false]{\zr}{\za}
+    \zout[in=\tda, duration=\dt, out=\tda+\dt, arg visible=false]{\zr}{\za}
+
+\kftextin[in=\tc, out=\tda, duration=\dt, offset fst=0.55, offset snd=pi/8]{\zunit*\zr}{\za}{$z$}
+\kftextout[in=\tda, out=\tda+\dt, duration=\dt, offset fst=0.55, offset snd=pi/8]{\zunit*\zr}{\za}{$z$}
 
     % \z[arg visible=false]{\zr^3}{3*\za}
     \begin{polarshift}{\zr^3}{3*\za}
@@ -45,7 +42,7 @@
   \kftween[in=\ta, duration=\dt]{11}{\halfwidth}
   \pgfmathsetmacro\xw\pgfmathresult
  
-  \kftextin[duration=\dt, polar=false]{\xw}{\halfheight+1}{\colorbox{bg-a}{$P(z) \phantom{= z^3 - 3z^2 + 4z - 2}$}}
-  \kftextin[in=(\ta+\dt/2), duration=\dt, polar=false]{\halfwidth}{\halfheight+1}{$\phantom{P(z)} = z^3 - 3z^2 + 4z - 2$}
+  \kftextin[duration=\dt, out=\tend+1, polar=false]{\xw}{\halfheight+2}{\colorbox{bg-a}{$P(z) \;\phantom{= z^3 - 3z^2 + 4z - 2}$}}
+  \kftextin[in=(\ta+\dt/2), out=\tend+1, duration=\dt, polar=false]{\halfwidth}{\halfheight+2}{$\phantom{P(z)} = z^3 - 3z^2 + 4z - 2$}
 
 }

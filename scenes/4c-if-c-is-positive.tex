@@ -25,7 +25,7 @@
     
     \pgfmathsetmacro\xfo{0.16}
     \draw[->, >=stealth] (\xfo, 0) -- (\zunit-\xfo, 0);    
-    \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{$f$}
+    \kftext[offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0.05}{$e^{ct}$}
 
     % actual animation
     \kfclip{\tb}{\tend+1}{
@@ -46,12 +46,12 @@
       
       
       \draw[->, >=stealth] (\xax+\xfo-\dxh, \xay) -- (\xax+\zunit+\dxh-\xfo, \xay);
-      \kftextin[in=\tb+\dt, duration=\dt, out=\tc, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$f$}
-      \kftextout[in=\tc, out=\tc+\dt, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$f$}
+      \kftextin[in=\tb+\dt, duration=\dt, out=\tc, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$e^{ct}$}
+      \kftextout[in=\tc, out=\tc+\dt, polar=false]{\zunit/2+\xax}{-0.6+\xay}{$e^{ct}$}
       
-      \kftextin[in=\tc+\dt, out=\td, duration=\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c f$}
-      \kftextout[in=\td, duration=\dt, out=\td+2*\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c f$}
-      \kftextin[in=\td+\dt, out=\tend+1, duration=\dt, polar=false]{\zunit/2+\xax}{0.8+\xay}{$\frac{df}{dt}$}
+      \kftextin[in=\tc+\dt, out=\td, duration=\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c e^{ct}$}
+      \kftextout[in=\td, duration=\dt, out=\td+2*\dt, polar=false]{\zunit/2+\xax}{0.6+\xay}{$c e^{c}$}
+      \kftextin[in=\td+\dt, out=\tend+1, duration=\dt, polar=false]{\zunit/2+\xax}{0.8+\xay}{$\frac{d}{dt}e^{ct}$}
     }
 
     

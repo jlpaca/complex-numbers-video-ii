@@ -1,10 +1,12 @@
-\kfframes{14}{
+\kfframes{15}{
   \newcommand\ta{0} % line in
   \newcommand\tb{2} % 1 in
   \newcommand\tc{5} % displacement
   \newcommand\td{8} % velocity
   \newcommand\tdelay{1.5}
-  \newcommand\te{12} % disappear
+  \newcommand\ts{12} % disappear
+
+\newcommand\te{14} % disappear
 
   
   \kftextout[polar=false, duration=\dt, out=(\te+\dt)]{\halfwidth}{6}{$\begin{aligned}\frac{df}{dt} &= c f\\f(0) &= 1\end{aligned}$}
@@ -51,14 +53,18 @@
     }
 
     \kftextin[in=\tc, duration=\dt, out=(\tc+\tdelay), offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}
-    \kftexttween[in=(\tc+\tdelay), duration=\dt, out=\tend+1, offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}{0.5*\zunit}{0}{$f$}
+    \kftexttween[in=(\tc+\tdelay), duration=\dt, out=\ts, offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}{0.5*\zunit}{0}{$f$}
+    \kftexttween[in=\ts, duration=\dt, out=\tend+1, offset fst=0.7, offset snd=-pi/2]{0.5*\zunit}{0}{$f$}{0.5*\zunit}{0.05}{$e^{ct}$}
+
 
     % \kftexttween[in=(\tc+\tdelay), duration=\dt, out=\te, offset fst=0.8, offset snd=-pi/2]{0.5*\zunit}{0}{\scriptsize displacement}{0.5*\zunit}{0}{$f$}
     %\kftextout[in=\te, out=(\te+\dt), offset fst=0.6, offset snd=pi/2]{0.5*\zunit}{0}{$f$}
 
     \kftextin[in=\td, duration=\dt, out=(\td+\tdelay), offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{\scriptsize velocity}
-    \kftexttween[in=(\td+\tdelay), duration=\dt, out=\te,  offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{\scriptsize velocity}{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}
-    \kftextout[in=\te, out=(\te+\dt), offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}
+    \kftexttween[in=(\td+\tdelay), duration=\dt, out=\ts+\dt,  offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{\scriptsize velocity}{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}
+    \kftexttween[in=\ts+\dt, duration=\dt, out=\te+\dt,  offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{$\frac{df}{dt}$}{\zunit+\xvc/2}{0}{$\phantom{e^{ct}}\frac{d}{dt}e^{ct}$}
+
+\kftextout[in=\te+\dt, out=(\te+2*\dt), offset fst=0.8, offset snd=pi/2]{\zunit+\xvc/2}{0}{$\phantom{e^{ct}}\frac{d}{dt}e^{ct}$}
 
 
     

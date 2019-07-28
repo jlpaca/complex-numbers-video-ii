@@ -45,8 +45,12 @@
     \pgfmathsetmacro\xd\pgfmathresult
     \fill (\xx, 0) circle (\xd);
     
-    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx/2}{-0.6}{$f$}
-    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx+\xx*\xas/2}{+0.7}{$\frac{df}{dt}$}
+    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx/2}{-0.6}{$e^{ct}$}
+    % ad-hoc af buffer
+    \kftween[in=\tb, out=\tc-1]{0}{1}
+    \pgfmathsetmacro\tbuf\pgfmathresult
+    
+    \kftextout[duration=\dt, out=\tc+\dt, polar=false]{\xx+\xx*\xas/2+\tbuf}{+0.7}{$\frac{d}{dt}e^{ct}$}
 
     % zero on top layer
     \fill (0, 0) circle (0.12);

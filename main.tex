@@ -4,6 +4,7 @@
 \usepackage{mathtools}
 \usepackage{contour}
 \usepackage{kf-complex}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -11,118 +12,142 @@
 % debug:
 \kfsetfps{4}
 
-%% 0.2 ROOTS OF UNITY
-%\kfframes{4}{\ztitle{Roots of Unity}}
-%\input{scenes/2}
+%% 0.1 PARABLE OF THE CRAB
+\newcommand{\crab}[4]{
+  \pgfkeys{/pgf/fpu=false}
+  \node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {\includegraphics[width=1cm]{resources/crab.png}};
+  \pgfkeys{/pgf/fpu=true}
 
+}
+\newcommand\altfps{0.1}
+
+%% \input{scenes/1a-a-crab-travels}          % 00:00
+%% \input{scenes/1b-as-it-moves}             % 00:04
+%% \input{scenes/1c-because-it-is-a-crab}    % 00:13
+%% \input{scenes/1d-questions}               % 00:21+12
+%% \input{scenes/1e-what-is-the-shape-of-the-curve} % 00:23
+% 00:30
+%% \input{scenes/1f-and-most-importantly}
+
+
+% \kfframes{4}{\ztitle{This Is A(nother) Video About Complex Numbers.}}
+
+
+%% 0.2 ROOTS OF UNITY
+% \kfframes{4}{\ztitle{Roots of Unity}}
+% \input{scenes/2a-in-the-real-numbers}
+% \input{scenes/2c-therefore-we-are-looking-for}
+% \input{scenes/2d-we-can-find-two-more}
+% \input{scenes/2e-remember-that-two}
+% \input{scenes/2f-we-call-these-solutions}
+% \input{scenes/2g-it-is-not-a-coincidence}
+% \input{scenes/2h-there-are-exactly-four}
+% \input{scenes/2i-in-general-the-nth}
+% \input{scenes/2j-a-nice-thing-we-notice}
 
 %% 0.3 WE ARE GOING TO PROVE A THEOREM
 % \kfframes{4}{\ztitle{We Are Going to Prove a Theorem}
+
+% polarshift tool
+\newenvironment{polarshift}[2]{
+  \begin{scope}[shift={({\zunit*(#1)*cos(#2 r)}, {\zunit*(#1)*sin(#2 r)})}]
+}{
+  \end{scope}
+}
 % \input{scenes/3a-given-P-a-polynomial}
+\kfframes{11}{
+  
+  \pgfmathsetmacro\za{1.3}
+  \pgfmathsetmacro\zr{1.3}
+
+  \newcommand{\ta}{1}
+  \newcommand{\tdelay}{1}
+  \newcommand{\argdelay}{0.5}
+  \newcommand{\taa}{0} % pan
+  \newcommand{\tb}{5} % scaling
+  \newcommand{\tc}{8} % shifting
+
+  % pan camera
+  
+  \zgrid[out=\tend+1, origin y=\halfheight-1.5, unit=1]{
+    % 1
+    \kftextin[in=\ta, out=\tb, duration=\dt, offset fst=0.6, offset snd=-pi/4]{1}{0}{$1$}
+    \kftextout[in=\tb, out=(\tb+\dt), duration=\dt, offset fst=0.6, offset snd=-pi/4]{1}{0}{$1$} 
+    \kftextin[in=\tb+\dt, duration=\dt, offset fst=0.8, offset snd=5*pi/6]{-2*\zunit}{0}{$-2$}
+
+    \zin[in=\ta, out=\tb, arg visible=false]{1}{0}
+    \ztween[in=\tb, arg visible=false, stagger=false]{1}{0}{-2}{0}
+
+    \kftween[in=\tc, duration=\dt]{0}{1} \pgfmathsetmacro\xpsa\pgfmathresult
+    \begin{polarshift}{-2*\xpsa}{0}
+      % z
+      
+      \kftextin[in=\ta+\tdelay, out=\tb+\tdelay, duration=\dt, offset fst=0.5, offset snd=pi/6]{\zunit*\zr}{\za}{$z$}
+      \kftextout[in=\tb+\tdelay, out=(\tb+\tdelay+\dt), duration=\dt, offset fst=0.5, offset snd=pi/6]{\zunit*\zr}{\za}{$z$} 
+      \kftextin[in=\tb+\tdelay+\dt, duration=\dt, offset fst=0.7, offset snd=pi/6]{\zunit*4*\zr}{\za}{\colorbox{bg-a}{$4z$}}
+
+      \ztween[in=\ta+\tdelay, out=\tb+\tdelay, arg visible=false, stagger=false]{1}{0}{\zr}{\za}
+      \ztween[in=\tb+\tdelay, arg visible=false, stagger=false]{\zr}{\za}{4*\zr}{\za}
+
+      \zargin[in=\ta+\tdelay, out=\ta+\argdelay]{\za}
+      \zargout[in=\ta+\tdelay+\argdelay, out=\ta+\tdelay+\argdelay+\dt]{\za}
+
+    \end{polarshift}
+
+    \kftween[in=\tc+\dt/2, duration=\dt]{0}{1} \pgfmathsetmacro\xpsb\pgfmathresult
+    \begin{polarshift}{-2*\xpsb}{0}
+      \begin{polarshift}{\xpsb*4*\zr}{\xpsb*\za}
+        % z^2
+        
+        \kftextin[in=\ta+2*\tdelay, out=\tb+2*\tdelay, duration=\dt, offset fst=0.6, offset snd=pi/2]{\zunit*\zr^2}{2*\za}{$z^2$}
+        \kftextout[in=\tb+2*\tdelay, out=(\tb+2*\tdelay+\dt), duration=\dt, offset fst=0.6, offset snd=pi/2]{\zunit*\zr^2}{2*\za}{$z^2$}
+        \kftextin[in=\tb+2*\tdelay+\dt, duration=\dt, offset fst=0.8, offset snd=(pi/4-pi*\xpsb/2)]{-3*\zunit*\zr^2}{2*\za}{$-3z^2$}
+
+        \ztween[in=\ta+2*\tdelay, out=\tb+2*\tdelay, arg visible=false, stagger=false]{\zr}{\za}{\zr^2}{2*\za}
+        \ztween[in=\tb+2*\tdelay, arg visible=false, stagger=false]{\zr^2}{2*\za}{-3*\zr^2}{2*\za}
+
+        \zargin[in=\ta+2*\tdelay, arg origin=\za,  out=\ta+2*\tdelay+\argdelay]{2*\za}
+        \zargout[in=\ta+2*\tdelay+\argdelay, arg origin=\za, out=\ta+2*\tdelay+\argdelay+\dt]{2*\za}
+
+      \end{polarshift}
+    \end{polarshift}
+
+    % z^3
+    \kftween[in=\tc+\dt, duration=\dt]{0}{1} \pgfmathsetmacro\xpsc\pgfmathresult
+    \begin{polarshift}{-2*\xpsc}{0}
+      \begin{polarshift}{\xpsc*4*\zr}{\xpsc*\za}
+        \begin{polarshift}{\xpsc*-3*\zr^2}{\xpsc*2*\za}
+
+          \kftextin[in=\ta+3*\tdelay+\dt/2, duration=\dt, offset fst=0.6, offset snd=5*pi/6]{\zunit*\zr^3}{3*\za}{$z^3$}
+
+          \ztween[in=\ta+3*\tdelay, out=\tb+3*\tdelay, arg visible=false, stagger=false]{\zr^2}{2*\za}{\zr^3}{3*\za}
+          \ztween[in=\tb+3*\tdelay, arg visible=false, stagger=false]{\zr^3}{3*\za}{\zr^3}{3*\za}
+
+          \zargin[in=\ta+3*\tdelay, arg origin=2*\za,  out=\ta+3*\tdelay+\argdelay]{3*\za}
+          \zargout[in=\ta+3*\tdelay+\argdelay, arg origin=2*\za, out=\ta+3*\tdelay+\argdelay+\dt]{3*\za}
 
 
-%% 0.4 BUT WHAT ABOUT THE CRAB, THOUGH?
-% \kfframes{4}{\ztitle{But What About the Crab, Though?}}
+        \end{polarshift}
+      \end{polarshift}
+    \end{polarshift}
+
+  }
+
+  \kftextout[out=2*\dt, duration=\dt, polar=false]{\halfwidth}{\halfheight+2}{\colorbox{bg-a}{\phantom{$P(z) = z^3 - 3z^2 + 4z - 2$}}}
+  \kftextout[out=\dt, duration=\dt, polar=false]{\halfwidth}{\halfheight+2}{$P(z) = z^3 - 3z^2 + 4z - 2$}
+
+}
+
+% 0.4 BUT WHAT ABOUT THE CRAB, THOUGH?
+% \kfframes{4}{\ztitle{Okay, But What About the Crab, Though?}}
 % \input{scenes/4b-consider-the-ivp}
-\input{scenes/4c-if-c-is-positive}
+% \input{scenes/4c-if-c-is-positive}
 % \input{scenes/4d-the-particle-speeds-off}
 % \input{scenes/4e-if-c-is-negative}
 % \input{scenes/4f-if-c-is-negative-cont}
 % \input{scenes/4g-the-particle-moves-slower}
 % \input{scenes/4h-what-if-c-is-imaginary}
-
-
-%% \kfframes{11}{
-
-%%   \newcommand\ta{0} % rescale axes
-%%   \newcommand\tb{2} % imaginary!
-%%   \newcommand\tc{0} % fill f
-
-%%   \newcommand\td{4} % copy f
-%%   \newcommand\te{6} % arg in
-%%   \newcommand\tf{7.5} % arg out
-%%   \newcommand\tg{9} % df/dt
-
-  
-%%   % phantom spaghetti
-%%   \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
-%%   \kftextout[in=0, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
-%%   \kftextin[in=\tb, duration=\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} = i$}
-
-%% %  \kftextin[in=\tb+\dt, duration=\dt, polar=false]{\halfwidth+2}{6.4}{$(?)$}
-
-  
-%%   \kftween[in=\ta, duration=\dt]{6}{0}
-%%   \pgfmathsetmacro\sxh\pgfmathresult
-%%   \kftween[in=\ta, duration=\dt]{pi/4}{-pi/4}
-%%   \pgfmathsetmacro\ola\pgfmathresult
- 
-  
-%%   \begin{scope}[shift={({\halfwidth-\sxh}, {\halfheight-2})}]
-
-%%       \kftween[in=\ta, duration=\dt]{12}{3}
-%%     \pgfmathsetmacro\zunit\pgfmathresult
-
-%%     % axis & leftovers
-%%     \draw[bg-b] (-\halfwidth+\sxh, 0) -- ({\halfwidth+\sxh}, 0);
-
-    
-%%     \fill[bg-b] (\zunit, 0) circle (0.12);
-%%     \fill (0, 0) circle (0.12);
-    
-%%     \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
-%%     \kftext[offset fst=0.6, offset snd=\ola]{\zunit}{0}{$1$}
-
-%%     % displacement arrow
-%%     \kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
-%%     \pgfmathsetmacro\xl\pgfmathresult
-    
-%%     \kftween[in=\tc, duration=\dt]{0}{0.12}
-%%     \pgfmathsetmacro\xd\pgfmathresult
-    
-%%     \pgfmathsetmacro\xfo{0.16}
-
-%%     \draw[->, >=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
-%%     \fill (\zunit, 0) circle (\xd);
-
-%%     \kftextin[in=\tc+\dt, duration=\dt, polar=false]{\zunit/2}{-0.6}{$f$}
-
-%%     % copy of displacement arrow
-%%     \kfclip{\td}{\tend+1}{
-%%       \kftween[in=\td, duration=\dt]{pi}{0}
-%%       \pgfmathsetmacro\fadth\pgfmathresult
-%%       \pgfmathsetmacro\fadx{\zunit*cos(\fadth r)/2}
-%%       \pgfmathsetmacro\fady{\zunit*sin(\fadth r)/2}
-
-%%       \kftween[in=\te, duration=\dt]{0}{pi/2}
-%%       \pgfmathsetmacro\faeth\pgfmathresult
-%%       \pgfmathsetmacro\faex{\zunit*cos(\faeth r)}
-%%       \pgfmathsetmacro\faey{\zunit*sin(\faeth r)}
-      
-%%       \draw[->, >=stealth] (\zunit/2+\fadx, \fady) -- (\zunit/2+\fadx+\faex, \fady+\faey);
-
-%%       \kftextin[in=\td+\dt, duration=\dt, out=\te-\dt, polar=false]{\zunit*1.5}{-0.6}{$f$}
-%%       \kftextout[in=\te-\dt, duration=\dt, out=\te, polar=false]{\zunit*1.5}{-0.6}{$f$}
-
-%%       % stealth
-%%       \begin{scope}[shift={(\zunit, 0)}]
-%%         \zargin[in=\te, out=\tf]{pi/2}
-%%         \zargout[in=\tf, out=\tf+\dt]{pi/2}
-%%         \kftextin[in=\te, duration=\dt, out=\tf]{1.6}{pi/5}{$\frac{\pi}{2}$}
-%%         \kftextout[in=\tf, out=\tf+\dt]{1.6}{pi/5}{$\frac{\pi}{2}$}
-
-%%         \kftextin[in=\tf+\dt, duration=\dt, out=\tg, polar=false]{-0.6}{\zunit/2}{$if$}
-%%         \kftextout[in=\tg, out=\tg+\dt, polar=false]{-0.6}{\zunit/2}{$if$}
-
-%%         \kftextin[in=\tg+\dt, duration=\dt, polar=false]{0.6}{\zunit/2}{$\frac{df}{dt}$}
-
-        
-%%       \end{scope}
-
-%%    }
-    
-%%   \end{scope}
-%% }
+% \input{scenes/4i-this-takes-us-off-the-line}
 
 %% 0.5 RETURN OF THE EXPONENTIAL
 % \kfframes{4}{\ztitle{The Return of the Exponential}}
@@ -130,5 +155,6 @@
 % \input{scenes/5c-let-us-rewrite}
 % \input{scenes/5d-equating-the-real-parts}
 % \input{scenes/5f-rotation-in-the-complex-plane-by-n-theta}
+
 
 \end{document}

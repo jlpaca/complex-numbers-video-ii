@@ -1,8 +1,8 @@
-\kfframes{13}{
+\kfframes{14}{
 \newcommand\ta{4} % ONE CUBED ...
 \newcommand\tb{11} % OVER THE COMPLEX ...
 \newcommand\tc{13} % fadeout
-\newcommand\tz{14} % end
+\newcommand\tz{15} % end
 
 \begin{scope}[shift={(\halfwidth, \halfheight)}]
 
@@ -18,6 +18,17 @@
 \kftextin[in=0, duration=\dt, out=\tb]{0.6}{-pi/4}{$0$};
 \kftextout[in=\tb, out=\tb+\dt]{0.6}{-pi/4}{$0$};
 
+\kftween[in=\tc, duration=\dt]{100}{0}
+\pgfmathsetmacro\o\pgfmathresult
+
+% axes to back
+\kftween[in=0,duration=\dt]{-\halfwidth}{\halfwidth}
+\pgfmathsetmacro\l\pgfmathresult
+\draw[fg-a!\o!bg-b] (-\halfwidth, 0) -- (\l, 0);
+
+\kftween[in=\tb,duration=\dt]{0}{\halfheight}
+\pgfmathsetmacro\l\pgfmathresult
+\draw[fg-a!\o!bg-b] (0, -\l) -- (0, \l);
 
 % 1 - this should look as if it was drawn by a \zin, but we're not in
 % a \zgrid yet, so fake it
@@ -27,40 +38,31 @@
 \pgfmathsetmacro\r\pgfmathresult
 \draw (0, 0) -- (\l, 0);
 \fill (2, 0) circle (\r);
-\kftextin[in=\ta+\dt, duration=\dt, offset fst=0.6, offset snd=-pi/4]{2}{0}{$1$};
-
-%% % opacity tween to fake the grey 0.5
-\kftween[in=\tc, duration=\dt]{1}{0.5}
-\pgfmathsetmacro\o\pgfmathresult
+\kftextin[in=\ta+\dt, duration=\dt, out=\tz, offset fst=0.6, offset snd=-pi/4]{2}{0}{$1$};
 
 \kftextin   [polar=false, in=\dt, duration=\dt, out=\tb+\dt]{\halfwidth-0.5}{0.5}{$\mathbb{R}$}
 \kftexttween[polar=false, in=(\tb+\dt), duration=\dt, out=\tz]
  {\halfwidth-0.5}{+0.5}{$\mathbb{R}$}
- {\halfwidth-0.6}{+0.5}{$\operatorname{Re}$}
-\kftextin   [polar=false, in=\tb+\dt, duration=\dt, out=\tz]{+0.6}{\halfheight-0.4}{$\operatorname{Im}$}
+ {\halfwidth-0.6}{+0.5}{\textcolor{fg-a!\o!bg-b}{$\operatorname{Re}$}}
+\kftextin   [polar=false, in=\tb+\dt, duration=\dt, out=\tz]{+0.6}{\halfheight-0.4}{\textcolor{fg-a!\o!bg-b}{$\operatorname{Im}$}}
 
-
-\kftween[in=0,duration=\dt]{-\halfwidth}{\halfwidth}
-\pgfmathsetmacro\l\pgfmathresult
-\draw[opacity=\o] (-\halfwidth, 0) -- (\l, 0);
-
-\kftween[in=\tb,duration=\dt]{0}{\halfheight}
-\pgfmathsetmacro\l\pgfmathresult
-\draw[opacity=\o] (0, -\l) -- (0, \l);
 
 %% % x^3 - 1 = 0 -> z^3 - 1 = 0
-\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{\colorbox{black}{\Large $\phantom{x^3 - 1 = 0}$}}
-\kftextout[polar=false, in=\tc, out=\tc+2*\dt]{0}{+2}{\colorbox{black}{\Large $\phantom{x^3 - 1 = 0}$}}
+\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{\colorbox{black}{$\phantom{x^3 - 1 = 0}$}}
+\kftextout[polar=false, in=\tc, out=\tc+2*\dt]{0}{+2}{\colorbox{black}{$\phantom{x^3 - 1 = 0}$}}
 
-\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{\Large $\phantom{x}^3 - 1 = 0$}
-\kftextout[polar=false, in=\tc, out=\tc+\dt]{0}{+2}{\Large $\phantom{x}^3 - 1 = 0$}
+\kftextin [polar=false, in=2.0, duration=\dt, out=\tc]{0}{+2}{$\phantom{x}^3 - 1 = 0$}
+\kftextout[polar=false, in=\tc, out=\tc+\dt]{0}{+2}{$\phantom{x}^3 - 1 = 0$}
 
 
-\kftextin[polar=false, in=2.0, duration=\dt, out=\tb]{0}{+2}{\Large $x\phantom{^3 - 1 = 0}$}
+\kftextin[polar=false, in=2.0, duration=\dt, out=\tb]{0}{+2}{$x\phantom{^3 - 1 = 0}$}
 %  \kftextout[polar=false, in=\tb, duration=\dt]{\halfwidth}{\halfheight+2}{\Large $x\phantom{^3 - 1 = 0}$}
 %  \kftextin[polar=false, in=\tb, duration=\dt, out=\tc]{\halfwidth}{\halfheight+2}{\Large $z\phantom{^3 - 1 = 0}$}
 \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]
-{0}{+2}{\Large $x\phantom{^3 - 1 = 0}$}
-{0}{+2}{\Large $z\phantom{^3 - 1 = 0}$}
+{0}{+2}{$x\phantom{^3 - 1 = 0}$}
+{0}{+2}{$z\phantom{^3 - 1 = 0}$}
+\kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]
+{0}{+2}{$z\phantom{^3 - 1 = 0}$}
+
 \end{scope}
 }
