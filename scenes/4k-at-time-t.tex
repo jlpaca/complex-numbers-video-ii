@@ -22,25 +22,36 @@
     
     
     % labels
-    \kftween[in=\ta, duration=\dt]{0}{1}
+    \kftween[in=\tb, duration=\dt]{1/(\zunit+0.9)}{1}
+    \pgfmathsetmacro\dch{0.05/pi*180*\pgfmathresult}
+    \kftween[in=\ta, duration=\dt]{0}{\cthm-\dch}
     \pgfmathsetmacro\tla\pgfmathresult
-    
-    \pgfmathsetmacro\tld{0.9}
 
-    \kftween[in=\ta+\tdelay, duration=\dt]{0}{0.99}
+    \kftween[in=\tb, duration=\dt]{\zunit+0.9}{1}
+    \pgfmathsetmacro\tld\pgfmathresult
+
+    \kftween[in=\tb, duration=\dt]{0}{0.99}
     \pgfmathsetmacro\tlc\pgfmathresult
 
+    \pgfmathsetmacro\xsta{\zunit+0.5}
+    \kftween[in=\ta, duration=\dt]{\zunit+0.5}{\zunit+1.3}
+    \pgfmathsetmacro\xstb\pgfmathresult
+    \kftween[in=\tb, duration=\dt]{0}{-0.8}
+    \pgfmathsetmacro\xstb{\xstb+\pgfmathresult}
+
+
     % length arc
-    \kfclip{\ta}{\ta+\tdelay+\dt}{
-      \draw[->, >=stealth] ({(\zunit+\tld)*cos(\tlc*\cthm)}, {(\zunit+\tld)*sin(\tlc*\cthm)}) arc (\tlc*\cthm:\tla*\cthm:{(\zunit+\tld)});
-      \draw ({(\zunit+1.5*\tld*\tlc)*cos(\cthm)}, {(\zunit+1.5*\tld*\tlc)*sin(\cthm)}) -- ({(\zunit+1.5*\tld*\tla)*cos(\cthm)}, {(\zunit+1.5*\tld*\tla)*sin(\cthm)});
+    \kfclip{\ta}{\tend+1}{
+      \draw[->, >=stealth] ({\tld*cos(\dch)}, {\tld*sin(\dch)}) arc (\dch:\tla:\tld);
+      \draw ({\xsta*cos(\cthm)}, {\xsta*sin(\cthm)}) -- ({\xstb*cos(\cthm)}, {\xstb*sin(\cthm)});
+      %\draw ({(\zunit+1.5*\tld*\tlc)*cos(\cthm)}, {(\zunit+1.5*\tld*\tlc)*sin(\cthm)}) -- ({(\zunit+1.5*\tld*\tla)*cos(\cthm)}, {(\zunit+1.5*\tld*\tla)*sin(\cthm)});
     }
     
     \kftextin[in=\ta+\dt, out=\tb, duration=\dt, polar=false]{4}{2}{$t$}
     \kftextout[in=\tb, out=\tb+\dt, duration=\dt, polar=false]{4}{2}{$t$}
 
     \kftextin[in=\tb+2*\dt, out=\tend+1, duration=\dt, polar=false]{1.4}{0.7}{$t$}
-    \zargin[in=\tb+\dt, out=\tend+1]{\cthm*pi/180}
+    %\zargin[in=\tb+\dt, out=\tend+1]{\cthm*pi/180}
     
     % axes
     \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);

@@ -1,0 +1,55 @@
+\kfframes{13}{
+
+  \newcommand\ta{0} % z in
+  \newcommand\tb{0} % text change
+  \newcommand\tc{2} % e^it
+  \newcommand\td{4} % rotate
+  \newcommand\te{5} % e^i pi
+  \newcommand\tdelay{1}
+  \newcommand\tf{8}
+  \newcommand\tg{10} %outro
+  \newcommand\ti{12} %outro euler
+
+  
+  \zgrid[unit=3, out=\tg+\dt]{
+
+    \kftween[in=\td, duration=\dt]{pi/3}{pi}
+    \pgfmathsetmacro\za\pgfmathresult
+    \kftween[in=\td, duration=\dt]{0.4}{2*pi/3}
+    \pgfmathsetmacro\ztg\pgfmathresult
+
+
+    \kftween[in=\tg-\dt, duration=\dt]{360}{0}
+    \pgfmathsetmacro\arcorig\pgfmathresult
+    \pgfkeys{/pgf/fpu=false}
+    \draw[bg-b, dashed] (\zunit, 0) arc (0:\arcorig:\zunit);    
+    \pgfkeys{/pgf/fpu=true}
+    
+    \kfclip{0}{\ta+\dt}{
+      \fill ({\zunit*cos(\za r)}, {\zunit*sin(\za r)}) circle (0.12);
+    }
+
+    \zin[in=\ta, out=\td+\dt, arg origin=pi/3]{1}{\za}
+    \zout[in=\td+\dt, out=\tg+\dt, arg visible=false]{1}{pi}
+    \zargout[in=\td+\dt, arg origin=pi/3, out=\td+2*\dt]{pi}
+
+    
+    \kftextout[duration=\dt, out=\tb+\dt, offset fst=2.1]{\zunit}{\za}{\colorbox{bg-a}{$(\cos t, \sin t)$}}
+    \kftextin[in=\tb+\dt, duration=\dt, out=\tc, offset fst=2.2, offset snd=0.1]{\zunit}{\za}{$\cos t + i \sin t$}
+    \kftextout[in=\tc, duration=\dt, out=\tc+\dt, offset fst=2.2, offset snd=0.1]{\zunit}{\za}{$\cos t + i \sin t$}
+
+    \kftextin[in=\tc+\dt, duration=\dt, out=\ti, offset fst=0.8, offset snd=\ztg]{\zunit}{\za}{\colorbox{bg-a}{$e^{i\phantom{t}}$}}
+
+    \kftextin[in=\tc+\dt, duration=\dt, out=\te, offset fst=0.8, offset snd=\ztg]{\zunit}{\za}{$\phantom{e^i}^t$}
+    \kftexttween[in=\te, duration=\dt, out=\ti, offset fst=0.8, offset snd=\ztg]{\zunit}{\za}{$\phantom{e^i}^t$}{\zunit}{\za}{$\phantom{e^i}^\pi$}
+
+    \kftextin[in=\te+\tdelay, duration=\dt, out=\tf, polar=false]{-\zunit+1}{0.58}{$= -1$}
+    \kftexttween[in=\tf, duration=\dt, out=\ti, polar=false]{-\zunit+1}{0.58}{$= -1$}{-\zunit+1.35}{0.58}{$+\;1 = 0$}
+
+    \kftextout[in=\ti, duration=\dt, out=\ti+\dt, offset fst=0.8, offset snd=\ztg]{\zunit}{\za}{$e^{i\phantom{t}}$}
+    \kftextout[in=\ti, duration=\dt, out=\ti+\dt, offset fst=0.8, offset snd=\ztg]{\zunit}{\za}{$\phantom{e^i}^\pi$}
+    \kftextout[in=\ti, duration=\dt, out=\ti+\dt, polar=false]{-\zunit+1.35}{0.58}{$+\;1 = 0$}
+
+
+  }
+}
