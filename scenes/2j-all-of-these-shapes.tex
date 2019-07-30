@@ -1,0 +1,55 @@
+\kfframes{10}{
+\newcommand\ta{0} % fade out the 7-gon
+\newcommand\tb{4}
+\newcommand\tc{5}
+\newcommand\td{7}
+\newcommand\te{9}
+
+
+\zgrid[unit=3, out=\te+2*\dt]{
+\kftween[in=\ta, duration=\dt]{100}{0}
+\colorlet{xc}{fg-a!\pgfmathresult!bg-b}
+
+\kftween[in=\te, duration=\dt]{0.12}{0}
+\pgfmathsetmacro\xvd\pgfmathresult
+\begin{scope}[color=xc]
+\foreach \j in {0,..., 6}{ % feckit, hardcode this.
+\fill ({\zunit*cos(\j*2*pi/7 r)}, {\zunit*sin(\j*2*pi/7 r)}) circle (\xvd);
+\zout[out=\ta, arg visible=false]{1}{\j*2*pi/7}
+}
+
+\zngon[in=-\dt, out=\te]{7}
+\end{scope}
+
+\zin[in=\tb, out=\tc, arg visible=false]{1}{2*pi/7}
+\zout[in=\tc, out=\tc+\dt, arg visible=false]{1}{2*pi/7}
+
+\kftextin[in=\tb, out=\tc, duration=\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+\kftextout[in=\tc, out=\tc+\dt, offset fst=0.6, offset snd=pi/4]{\zunit}{2*pi/7}{$z$}
+
+\pgfmathsetmacro\xzx{\zunit*cos(2*pi/7 r)}
+\pgfmathsetmacro\xzy{\zunit*sin(2*pi/7 r)}
+
+\kftween[in=\tc, duration=\dt]{\xzy}{-\xzy}
+\pgfmathsetmacro\xzya\pgfmathresult
+
+\kftween[in=\tc+\dt, duration=\dt]{\xzy}{-\xzy}
+\pgfmathsetmacro\xzyb\pgfmathresult
+
+\kftween[in=\tc+\dt, duration=\dt]{0}{0.12}
+\pgfmathsetmacro\xzr\pgfmathresult
+
+\draw[dashed] (\xzx, \xzya) -- (\xzx, \xzyb);
+\kfclip{0}{\td+\dt}{
+\fill (\xzx, -\xzy) circle (\xzr);
+}
+
+\zin[in=\td, out=\te, arg visible=false]{1}{-2*pi/7}
+\zout[in=\te, out=\te+\dt, arg visible=false]{1}{-2*pi/7}
+
+\kftextin[in=\tc+\dt, duration=\dt, out=\te, offset fst=0.6, offset snd=-pi/4]{\zunit}{-2*pi/7}{$\bar{z}$}
+\kftextout[in=\te, duration=\dt, out=\te+\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{-2*pi/7}{$\bar{z}$}
+
+}
+
+}

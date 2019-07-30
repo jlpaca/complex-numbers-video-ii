@@ -1,0 +1,52 @@
+\kfframes{6}{
+
+  \newcommand\ta{0} % text out
+  \newcommand\tb{2} % crab moves
+  \newcommand\tc{3} % pan
+  \newcommand\td{6} % circle
+  
+  % drop fps
+  % \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+  \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+
+  % pan camera
+  \kftween[in=\tc, duration=\dt]{2}{0}
+  \pgfmathsetmacro\xoy\pgfmathresult
+  
+  \colorlet{fgc}{white!10!black}
+  \begin{scope}[shift={(\halfwidth, \halfheight-\xoy)}, color=fgc]
+
+    \pgfmathsetmacro\zunit{3}
+
+    % axes
+    \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);
+    \draw[bg-b] (0, -\halfheight+\xoy) -- (0, \halfheight+\xoy);
+
+    % rotate
+    \pgfmathsetmacro\cth{max(\t-\tb, 0)*360/(\td-\tb)}
+    
+    \pgfkeys{/pgf/fpu=false}
+
+    \draw[bg-b, dashed] (\zunit, 0) arc (0:{min(360, \cth)}:\zunit);
+    
+    \begin{scope}[rotate=\cth]
+      % \draw (0, 0) -- (\zunit-0.8, 0);
+      \draw[dashed] (0, 0) -- (\zunit-0.8, 0);
+
+      \kftextout[in=\ta, duration=\dt, out=\ta+\dt, polar=false]{\zunit/2-0.4}{-0.6}{$f$}
+
+      \begin{scope}[shift={(\zunit, 0)}]
+        \draw[->, >=stealth] (0, 0.8) -- (0, \zunit);
+        \kftextout[in=\ta, duration=\dt, out=\ta+\dt, polar=false]{0.6}{\zunit/2+0.4}{$\frac{df}{dt}$}
+      \end{scope}
+
+      \crab{1}{\zunit}{0}{90}
+      
+    \end{scope}
+    \pgfkeys{/pgf/fpu=true}
+
+  \end{scope}
+
+  
+}

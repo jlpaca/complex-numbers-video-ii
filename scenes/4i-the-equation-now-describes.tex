@@ -1,0 +1,97 @@
+\kfframes{7}{
+  
+  \newcommand\ta{2}
+  \newcommand\tb{5} % invert colours
+
+  \kftween[in=\tb, duration=\dt]{0}{100}
+  \pgfmathsetmacro\xcg\pgfmathresult
+
+  \fill[color=fg-a!\xcg!bg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+  
+  % phantom spaghetti
+  \kftextout[in=0, duration=\dt, out=\ta+\dt, polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+  \kftextout[in=0, duration=\dt, out=\ta+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} = i$}
+
+  \colorlet{fgc}{white!10!black}
+  \begin{scope}[shift={(\halfwidth, {\halfheight-2})}, color=fgc!\xcg!fg-a]
+
+    \pgfmathsetmacro\zunit{3}
+
+    % axis & leftovers
+    \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);
+
+    % grow y axis
+    %% \kftween[in=\ta, duration=\dt]{0}{1}
+    %% \pgfmathsetmacro\xys\pgfmathresult
+    %% \pgfmathsetmacro\xyc{100*\xys}
+
+    %% \draw[bg-b] (0, {-\xys*(\halfheight+2)}) -- (0, {\xys*(\halfheight+2)});
+    
+    %% \fill[bg-b] (\zunit, 0) circle (0.12);
+    %% \fill[bg-b!\xyc!fg-a] (0, 0) circle ({0.12*(1-\xys)});
+
+    \fill (0, 0) circle (0.12);
+
+    \kftextout[duration=\dt, out=\tb+\dt, offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+    \kftextout[duration=\dt, out=\tb+\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
+
+    \pgfmathsetmacro\xfo{0.16}
+
+    \draw[->, >=stealth] (0, 0) -- (\zunit-\xfo, 0);
+    \fill (\zunit, 0) circle (0.12);
+
+    \kftext[polar=false]{\zunit/2}{-0.6}{$f$}
+
+    \begin{scope}[shift={(\zunit, 0)}]
+    \draw[->, >=stealth] (0, 0) -- (0, \zunit);
+    \kftext[polar=false]{0.6}{\zunit/2}{$\frac{df}{dt}$}
+    \end{scope}
+
+  \end{scope}
+}
+% the part with the crab
+\kfframes{8}{
+  
+  % drop fps
+  % \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+  \newcommand\ta{6} % grow axis
+
+  \kftween[in=\ta, duration=\dt]{0}{1}
+  \pgfmathsetmacro\xgac\pgfmathresult
+  \kftween[in=\ta+\dt, duration=\dt]{0}{1}
+  \pgfmathsetmacro\xgad\pgfmathresult
+  \pgfmathsetmacro\xccd{\xgad*100}
+
+
+  \fill[color=fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+  
+  \colorlet{fgc}{white!10!black}
+  \begin{scope}[shift={(\halfwidth, {\halfheight-2})}, color=fgc]
+
+    \pgfmathsetmacro\zunit{3}
+
+    % axes
+    \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);
+    \draw[bg-b] (0, {-\xgad*(\halfheight+2)}) -- (0, {\xgad*(\halfheight+2)});
+    \fill[color=bg-b!\xccd!fgc] (0, 0) circle ({(1-\xgad)*0.12});
+
+    \kftween[in=0, duration=\dt]{0}{0.4}
+    \pgfmathsetmacro\xfh\pgfmathresult
+
+    \draw (0, 0) -- ({(1-\xgac)*(\zunit-0.8)}, 0);
+    \draw[dashed] ({(1-\xgac)*(\zunit-0.8)}, 0) -- (\zunit-0.8, 0);
+
+    \kftext[polar=false]{\zunit/2-\xfh}{-0.6}{$f$}
+
+    \begin{scope}[shift={(\zunit, 0)}]
+    \draw[->, >=stealth] (0, 0.8) -- (0, \zunit);
+    \kftext[polar=false]{0.6}{\zunit/2+\xfh}{$\frac{df}{dt}$}
+    \end{scope}
+
+
+    \crab{1}{\zunit}{0}{90}
+  \end{scope}
+
+  
+}

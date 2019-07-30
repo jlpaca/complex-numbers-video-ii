@@ -1,0 +1,88 @@
+\kfframes{13}{
+
+  % drop fps
+  % \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+  \newcommand\ta{1} % turn back into point
+  \newcommand\tb{3} % cartesian coords
+  \newcommand\tc{3} % triangle in
+  \newcommand\tdelay{1}
+  \newcommand\td{6} % co-ords
+  \newcommand\te{8} % move again
+
+  \kftween[in=\te, duration=2]{0}{120}
+  \pgfmathsetmacro\cthm{60+\pgfmathresult}
+  \pgfmathsetmacro\cthm{\t > \te+1 ? 120 + (\t - \te - 1) * 90 : \cthm}
+ 
+%  \pgfmathsetmacro\cthm{60}
+  
+  \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+
+  % pan camera
+
+  \colorlet{fgc}{white!10!black}
+  \pgfkeys{/pgf/fpu=false}
+
+  \begin{scope}[shift={(\halfwidth, \halfheight)}, color=fgc]
+
+    \pgfmathsetmacro\zunit{3}
+    
+    \kftextout[duration=\dt, out=\tb, polar=false]{1.4}{0.7}{$t$}
+    \zargout[out=\tb+\dt]{\cthm*pi/180}
+    
+    % axes
+    \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);
+    \draw[bg-b] (0, -\halfheight) -- (0, \halfheight);
+
+    \draw[bg-b, dashed] (\zunit, 0) arc (0:{min(360, \cthm)}:\zunit);
+
+    \kftween[in=\ta, duration=\dt]{0.8}{0}
+    \pgfmathsetmacro\xlof\pgfmathresult
+    \kftween[in=\tb, duration=\dt]{0}{\zunit}
+    \pgfmathsetmacro\xlpf\pgfmathresult
+    
+    \begin{scope}[rotate=\cthm]
+      \draw[dashed] (\xlpf, 0) -- (\zunit-\xlof, 0);
+      \kfclip{0}{\ta}{
+        \crab{1}{\zunit}{0}{90}
+      }
+      \kfclip{\ta}{\tend+1}{
+        \fill (\zunit, 0) circle (0.12);
+      }
+    \end{scope}
+    
+    \pgfkeys{/pgf/fpu=true}
+
+    % cartesian arrows in
+    \pgfmathsetmacro\xaoa{(cos(\cthm) < 0 ? -1 : 1) * 0.05}
+    \pgfmathsetmacro\yaoa{(sin(\cthm) < 0 ? -1 : 1) * 0.17}
+
+    \kftween[in=\tc, duration=\dt]{0}{1}
+    \pgfmathsetmacro\xapga\pgfmathresult
+    \kftween[in=\tc+\tdelay, duration=\dt]{0}{1}
+    \pgfmathsetmacro\yapga\pgfmathresult
+
+    % horizontal arrow
+    \kftextin[in=\tc, duration=\dt, out=\td, polar=false, offset fst=0, offset snd=-0.6]{0.8*\zunit*cos(\cthm)}{0}{$\cos t$}
+    \kftextout[in=\td, duration=\dt, out=\td+\dt, polar=false, offset fst=0, offset snd=-0.6]{0.8*\zunit*cos(\cthm)}{0}{$\cos t$}
+    \kfclip{\tc}{\tend+1}{
+      \draw[->, >=stealth] (0, 0) -- ({(\zunit*cos(\cthm)-\xaoa)*\xapga}, 0);
+    }
+
+    % vertical arrow
+    \kftextin[in=\tc+\tdelay-\dt, out=\td+\dt, duration=\dt, polar=false, offset fst=1, offset snd=0]{\zunit*cos(\cthm)}{0.3*\zunit*sin(\cthm)}{\colorbox{fg-a}{\phantom{$\sin t$}}}
+    \kftextin[in=\tc+\tdelay, out=\td, duration=\dt, polar=false, offset fst=1, offset snd=0]{\zunit*cos(\cthm)}{0.3*\zunit*sin(\cthm)}{$\sin t$}
+
+    \kftextout[in=\td+\dt, duration=\dt, out=\td+2*\dt,  polar=false, offset fst=1, offset snd=0]{\zunit*cos(\cthm)}{0.3*\zunit*sin(\cthm)}{\colorbox{fg-a}{\phantom{$\sin t$}}}
+    \kftextout[in=\td, duration=\dt, out=\td+\dt, polar=false, offset fst=1, offset snd=0]{\zunit*cos(\cthm)}{0.3*\zunit*sin(\cthm)}{$\sin t$}
+
+    % co-ords
+    \kftextin[in=\td, duration=\dt, out=\tend+1, offset fst=2.1]{\zunit}{\cthm*pi/180}{
+      \colorbox{fg-a}{\textcolor{fgc}{$(\cos t, \sin t)$}}}
+    
+    \kfclip{\tc+\tdelay}{\tend+1}{
+      \draw[->, >=stealth] ({\zunit*cos(\cthm)}, 0) -- ({\zunit*cos(\cthm)}, {(\zunit*sin(\cthm)-\yaoa)*\yapga});
+    }
+  \end{scope}
+  
+}

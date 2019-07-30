@@ -1,0 +1,137 @@
+\kfframes{16}{
+
+  
+  \newcommand\ta{0} % fade back in
+  \newcommand\tb{0} % zoom
+  \newcommand\tc{2} % move
+
+  \newcommand\td{3} % eq 0
+  \newcommand\te{5} % eq 0 out
+
+  \newcommand\tf{6} % zoom
+  \newcommand\tg{7} % move
+  \newcommand\ti{7+\dt} % fade back in
+
+  \newcommand\tj{8} % fade labels back in
+
+  \newcommand\tk{10} % move back in
+  \newcommand\tl{12} % eq 0
+
+  \newcommand\tm{14}
+
+
+  
+  \kftween[in=\tc, duration=\dt]{1.3}{pi/4}
+  \pgfmathsetmacro\za\pgfmathresult
+  \kftween[in=\ti, duration=\dt]{0}{-pi/4+1.5}
+  \pgfmathsetmacro\za{\za+\pgfmathresult}
+  \kftween[in=\tk, duration=\dt]{0}{-1.5+pi/4}
+  \pgfmathsetmacro\za{\za+\pgfmathresult}
+  
+  \pgfmathsetmacro\zc{-\za}
+
+  \kftween[in=\tc, duration=\dt]{1.3}{sqrt(2)}
+  \pgfmathsetmacro\zr\pgfmathresult
+  \kftween[in=\ti, duration=\dt]{0}{-sqrt(2)+1.3}
+  \pgfmathsetmacro\zr{\zr+\pgfmathresult}
+  \kftween[in=\tk, duration=\dt]{0}{+sqrt(2)-1.3}
+  \pgfmathsetmacro\zr{\zr+\pgfmathresult}
+
+  
+  
+  \kftween[in=\ta, duration=\dt]{100}{0}
+  \pgfmathsetmacro\xcc\pgfmathresult
+  \kftween[in=\td, duration=\dt]{0}{100}
+  \pgfmathsetmacro\xcc{\xcc+\pgfmathresult}
+  \kftween[in=\te, duration=\dt]{0}{-100}
+  \pgfmathsetmacro\xcc{\xcc+\pgfmathresult}
+  \kftween[in=\tl, duration=\dt]{0}{100}
+  \pgfmathsetmacro\xcc{\xcc+\pgfmathresult}
+  
+  \kftween[in=\tb, duration=\dt]{1}{-1}
+  \pgfmathsetmacro\xcy\pgfmathresult
+  \kftween[in=\tf, duration=\dt]{0}{1}
+  \pgfmathsetmacro\xcy{\xcy+\pgfmathresult}
+
+  
+  \kftween[in=\tf, duration=\dt]{1}{0.7}
+  \pgfmathsetmacro\xcs\pgfmathresult
+
+  
+  \zgrid[out=\tend, origin y=\halfheight+\xcy, unit=\xcs]{
+
+    \kftween[in=\tm+2*\dt, duration=\dt]{1}{0}
+    \pgfmathsetmacro\xsopac\pgfmathresult
+    
+    % leftovers
+    \begin{scope}[color=bg-b!\xcc!fg-a, opacity=\xsopac]
+      \z[out=\tend+1, arg visible=false]{-2}{0}
+      \begin{polarshift}{-2}{0}
+        \z[out=\tend+1, arg visible=false]{4*\zr}{\za}
+        \begin{polarshift}{4*\zr}{\za}
+          \z[out=\tend+1, arg visible=false]{-3*\zr^2}{2*\za}
+          \begin{polarshift}{-3*\zr^2}{2*\za}          
+            \kftween[in=\tc, duration=\dt]{-pi/6}{pi/6}
+            \pgfmathsetmacro\lpxa\pgfmathresult
+
+            \z[out=\tend+1, arg visible=false]{\zr^3}{3*\za}
+            \kftextout[out=\te+2*\dt, duration=\dt, offset fst=1.3, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
+            \kftextout[out=\te+\dt, duration=\dt, offset fst=1.3, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{$P(z)$}}
+            \kftextin[in=\td, out=\te, duration=\dt, offset fst=1.3, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
+
+            \kftextout[in=\te, out=\te+\dt, duration=\dt, offset fst=1.3, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
+
+            \kftextin[in=\tj, out=\tk, duration=\dt, offset fst=1.1, offset snd=-0.2]{\zunit*\zr^3}{3*\za}{$P(z)$}
+            \kftextout[in=\tk, out=\tk+\dt, duration=\dt, offset fst=1.1, offset snd=-0.2]{\zunit*\zr^3}{3*\za}{$P(z)$}
+
+          \end{polarshift}
+        \end{polarshift}
+      \end{polarshift}
+    \end{scope}
+
+    \kftween[in=\ta, duration=\dt]{1}{0}
+    \pgfmathsetmacro\xco\pgfmathresult
+    \kftween[in=\ti, duration=\dt]{0}{1}
+    \pgfmathsetmacro\xco{\pgfmathresult+\xco}
+
+    \kftween[in=\tl, duration=\dt]{0}{100}
+    \pgfmathsetmacro\ycc\pgfmathresult
+    
+    \begin{scope}[opacity=\xco*\xsopac, color=bg-b!\ycc!fg-a]
+      \z[out=\tend+1, arg visible=false]{-2}{0}
+      \begin{polarshift}{-2}{0}
+        \z[out=\tend+1, arg visible=false]{4*\zr}{\zc}
+        \begin{polarshift}{4*\zr}{\zc}
+          \z[out=\tend+1, arg visible=false]{-3*\zr^2}{2*\zc}
+          \begin{polarshift}{-3*\zr^2}{2*\zc}
+            \kfclip{0}{\ta+\dt}{
+              \kftext[offset fst=1.1, offset snd=-5*pi/6]{\zunit*\zr^3}{3*\zc}{\colorbox{bg-a}{$P(\bar{z})$}}
+            }
+            \kftextin[in=\tj, out=\tk, duration=\dt, offset fst=1.1, offset snd=0.2]{\zunit*\zr^3}{3*\zc}{$P(\bar{z})$}
+            \kftextout[in=\tk, out=\tk+\dt, duration=\dt, offset fst=1.1, offset snd=0.2]{\zunit*\zr^3}{3*\zc}{$P(\bar{z})$}
+            \z[out=\tend+1, arg visible=false]{\zr^3}{3*\zc}
+            
+          \end{polarshift}
+        \end{polarshift}
+      \end{polarshift}
+    \end{scope}
+
+
+    \kfclip{\td}{\te+\dt}{
+    \fill[fg-a] (0, 0) circle (0.12);
+    }
+    \kftween[in=\tm, duration=\dt]{100}{0}
+    \pgfmathsetmacro\xcocc\pgfmathresult
+    \kfclip{\tl}{\tm+\dt}{
+    \fill[fg-a!\xcocc!bg-b] (0, 0) circle (0.12);
+    }
+    
+    \kftextin[in=\tl-\dt, duration=\dt, out=\tm, offset fst=3.4]{0}{0}{\colorbox{bg-a}{\phantom{$P(z) = P(\bar{z}) = 0$}}}
+    \kftextin[in=\tl, duration=\dt, out=\tm, offset fst=3.4]{0}{0}{\textcolor{fg-a}{$P(z) = P(\bar{z}) = 0$}}
+    \kftextout[in=\tm, duration=\dt, out=\tm+2*\dt, offset fst=3.4]{0}{0}{\colorbox{bg-a}{\phantom{$P(z) = P(\bar{z}) = 0$}}}
+    \kftextout[in=\tm, duration=\dt, out=\tm+\dt,  offset fst=3.4]{0}{0}{\textcolor{fg-a}{$P(z) = P(\bar{z}) = 0$}}
+
+  }
+
+
+}

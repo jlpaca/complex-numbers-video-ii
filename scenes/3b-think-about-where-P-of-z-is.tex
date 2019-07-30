@@ -70,13 +70,13 @@
           \kftextin[in=\ta+3*\tdelay+\dt/2, out=\td, duration=\dt, offset fst=0.6, offset snd=5*pi/6]{\zunit*\zr^3}{3*\za}{$z^3$}
           \kftextout[in=\td, duration=\dt, out=\td+\dt, offset fst=0.6, offset snd=5*pi/6]{\zunit*\zr^3}{3*\za}{$z^3$}
 
-          \kftextin[in=\td, duration=\dt, out=\te+\dt, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}
-          \kftextin[in=\td+\dt, duration=\dt, out=\te, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}
+          \kftextin[in=\td, duration=\dt, out=\te+\dt, offset fst=1.3, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}
+          \kftextin[in=\td+\dt, duration=\dt, out=\te, offset fst=1.3, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}
 
-          \kftexttween[in=\te+\dt, duration=\dt, out=\tend+1, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
+          \kftexttween[in=\te+\dt, duration=\dt, out=\tend+1, offset fst=1.3, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$z^3-3z^2+4z-2$}}}{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
 
           
-          \kftexttween[in=\te, duration=\dt, out=\tend+1, offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}{\zunit*\zr^3}{3*\za}{$P(z)$}
+          \kftexttween[in=\te, duration=\dt, out=\tend+1, offset fst=1.3, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{$z^3-3z^2+4z-2$}{\zunit*\zr^3}{3*\za}{$P(z)$}
 
           
           \ztween[in=\ta+3*\tdelay, out=\tb+3*\tdelay, arg visible=false, stagger=false]{\zr^2}{2*\za}{\zr^3}{3*\za}

@@ -1,0 +1,76 @@
+\kfframes{7}{
+
+  % drop fps
+  % \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+
+  \newcommand\ta{3} % t in
+  \newcommand\tdelay{2}
+  \pgfmathsetmacro\tb{\ta+\tdelay}
+  
+  \pgfmathsetmacro\cthm{60}
+  
+  \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight);
+
+  % pan camera
+
+  \colorlet{fgc}{white!10!black}
+  \pgfkeys{/pgf/fpu=false}
+
+  \begin{scope}[shift={(\halfwidth, \halfheight)}, color=fgc]
+
+    \pgfmathsetmacro\zunit{3}
+    
+    
+    % labels
+    \kftween[in=\ta, duration=\dt]{0}{1}
+    \pgfmathsetmacro\tla\pgfmathresult
+    
+    \pgfmathsetmacro\tld{0.9}
+
+    \kftween[in=\ta+\tdelay, duration=\dt]{0}{0.99}
+    \pgfmathsetmacro\tlc\pgfmathresult
+
+    % length arc
+    \kfclip{\ta}{\ta+\tdelay+\dt}{
+      \draw[->, >=stealth] ({(\zunit+\tld)*cos(\tlc*\cthm)}, {(\zunit+\tld)*sin(\tlc*\cthm)}) arc (\tlc*\cthm:\tla*\cthm:{(\zunit+\tld)});
+      \draw ({(\zunit+1.5*\tld*\tlc)*cos(\cthm)}, {(\zunit+1.5*\tld*\tlc)*sin(\cthm)}) -- ({(\zunit+1.5*\tld*\tla)*cos(\cthm)}, {(\zunit+1.5*\tld*\tla)*sin(\cthm)});
+    }
+    
+    \kftextin[in=\ta+\dt, out=\tb, duration=\dt, polar=false]{4}{2}{$t$}
+    \kftextout[in=\tb, out=\tb+\dt, duration=\dt, polar=false]{4}{2}{$t$}
+
+    \kftextin[in=\tb+2*\dt, out=\tend+1, duration=\dt, polar=false]{1.4}{0.7}{$t$}
+    \zargin[in=\tb+\dt, out=\tend+1]{\cthm*pi/180}
+    
+    % axes
+    \draw[bg-b] (-\halfwidth, 0) -- (\halfwidth, 0);
+    \draw[bg-b] (0, -\halfheight) -- (0, \halfheight);
+
+    % slow the rotation down (is this smooth?)
+    \kftween[in=-1, duration=2]{-1}{1}
+    \pgfmathsetmacro\ctx\pgfmathresult
+    \pgfmathsetmacro\cth{\ctx*\cthm}
+    
+    
+    \draw[bg-b, dashed] (\zunit, 0) arc (0:{min(360, \cth)}:\zunit);
+    
+    \begin{scope}[rotate=\cth]
+      % \draw (0, 0) -- (\zunit-0.8, 0);
+      \draw[dashed] (0, 0) -- (\zunit-0.8, 0);
+
+      \kfclip{0}{2}{
+        \begin{scope}[shift={(\zunit, 0)}]
+          \draw[->, >=stealth] (0, 0.8) -- (0, {(1-\ctx)*\zunit});
+        \end{scope}
+      }
+
+      \crab{1}{\zunit}{0}{90}
+      
+    \end{scope}
+
+    
+    \pgfkeys{/pgf/fpu=true}
+    
+  \end{scope}
+  
+}
