@@ -1,5 +1,5 @@
 \kfframes{5}{
-  \newcommand\ta{2} % replace circle with triangle
+  \newcommand\ta{1} % replace circle with triangle
   \newcommand\tdelay{0.5}
   \newcommand\tb{4} % triangle goes.
   \zgrid[unit=3]{
@@ -15,30 +15,16 @@
     \draw[dashed] ({\zunit*cos(\th r)}, {\zunit*sin(\th r)}) arc (\th r:2*pi r:\zunit);
     \pgfkeys{/pgf/fpu=true}
 
+    \kftextin[in=\ta+2*\dt, duration=\dt, out=\tb, polar=false]{\halfwidth-4}{-\halfheight+2}{
+    \scriptsize \begin{tabular}{r} *perhaps better known\\as an \emph{equilateral} triangle.\end{tabular}
+    }
+    \kftextout[in=\tb, duration=\dt, out=\tb+\dt, polar=false]{\halfwidth-4
+    }{-\halfheight+2}{
+    \scriptsize \begin{tabular}{r} *perhaps better known\\as an \emph{equilateral} triangle.\end{tabular}
+    }
+
     \pgfmathsetmacro\ta{\ta+\tdelay}
 
     \zngon[in=\ta, out=(\tb+\dt)]{3}
-    %% \foreach \i in {0,...,2}{
-    %%   \pgfmathsetmacro\xa{\zunit*cos(2*\i*pi/3 r)}
-    %%   \pgfmathsetmacro\xb{\zunit*cos(2*(\i+1)*pi/3 r)}
-
-    %%   \pgfmathsetmacro\ya{\zunit*sin(2*\i*pi/3 r)}
-    %%   \pgfmathsetmacro\yb{\zunit*sin(2*(\i+1)*pi/3 r)}
-
-    %%   \kftween[in=(\ta+\i*\dt/3), duration=(\dt/3)]{\xa}{\xb}
-    %%   \pgfmathsetmacro\xx\pgfmathresult
-
-    %%   \kftween[in=(\ta+\i*\dt/3), duration=(\dt/3)]{\ya}{\yb}
-    %%   \pgfmathsetmacro\yx\pgfmathresult
-
-      
-    %%   \kftween[in=(\tb+\i*\dt/3), duration=(\dt/3)]{\xa}{\xb}
-    %%   \pgfmathsetmacro\xy\pgfmathresult
-
-    %%   \kftween[in=(\tb+\i*\dt/3), duration=(\dt/3)]{\ya}{\yb}
-    %%   \pgfmathsetmacro\yy\pgfmathresult
-
-    %%   \draw[dashed] (\xx, \yx) -- (\xy, \yy);      
-    %% }
   }
 }

@@ -1,0 +1,9 @@
+\kfframes{3}{
+  \newcommand\ta{1}
+  \kftween[in=\ta, duration=\dt]{2}{1.2}
+  \pgfmathsetmacro\xu\pgfmathresult
+  \zgrid[unit=\xu]{
+    \z[out=\tend+1]{1}{0}
+    \kftext[out=\tend+1, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$};
+  }
+}

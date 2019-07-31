@@ -1,8 +1,8 @@
 \kfframes{10}{
 \newcommand\ta{0} % fade out the 7-gon
-\newcommand\tb{4}
-\newcommand\tc{5}
-\newcommand\td{7}
+\newcommand\tb{4} % z in
+\newcommand\tc{6}
+\newcommand\td{7} % z bar in
 \newcommand\te{9}
 
 
@@ -15,7 +15,7 @@
 \begin{scope}[color=xc]
 \foreach \j in {0,..., 6}{ % feckit, hardcode this.
 \fill ({\zunit*cos(\j*2*pi/7 r)}, {\zunit*sin(\j*2*pi/7 r)}) circle (\xvd);
-\zout[out=\ta, arg visible=false]{1}{\j*2*pi/7}
+\zout[out=\ta+\dt, arg visible=false]{1}{\j*2*pi/7}
 }
 
 \zngon[in=-\dt, out=\te]{7}

@@ -1,9 +1,10 @@
-\kfframes{11}{
+\kfframes{20}{
   \newcommand\ta{0} % fourth roots in
-  \newcommand\tb{3} % quadrilateral in
-  \newcommand\tc{5} % labels in
+  \newcommand\tb{4} % quadrilateral in
+  \newcommand\tbb{5}
+  \newcommand\tc{9} % labels in
   \newcommand\tdelay{1}
-  \newcommand\td{10} % everything out
+  \newcommand\td{18} % everything out
   
   \zgrid[unit=3]{
     \zin[out=\td, arg visible=false]{1}{0}
@@ -11,7 +12,7 @@
     \zin[in=(\dt/2),   out=\td, arg visible=false]{1}{pi}
     \zin[in=(3*\dt/4), out=\td, arg visible=false]{1}{3*pi/2}
 
-    \kftween[in=(\tb-2*\dt), duration=\dt]{0}{2*pi}
+    \kftween[in=(\ta+\dt), duration=\dt]{0}{2*pi}
     \pgfmathsetmacro\tha\pgfmathresult
     
     \kftween[in=(\tb-\dt), duration=\dt]{0}{2*pi}
@@ -20,6 +21,13 @@
     \pgfkeys{/pgf/fpu=false}
     \draw[dashed] ({\zunit*cos(\thb r)}, {\zunit*sin(\thb r)}) arc (\thb r:\tha r:\zunit);
     \pgfkeys{/pgf/fpu=true}
+
+    \kftextin[in=\tbb, duration=\dt, out=\td, polar=false]{\halfwidth-3}{-\halfheight+2}{
+    \scriptsize \begin{tabular}{r} *better known\\as a \emph{square.}\end{tabular}
+    }
+    \kftextout[in=\td, duration=\dt, out=\td+\dt, polar=false]{\halfwidth-3}{-\halfheight+2}{
+    \scriptsize \begin{tabular}{r} *better known\\as a \emph{square.}\end{tabular}
+    }
 
     % labels
     \kftextin[in=\tc,             out=\td, duration=\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}

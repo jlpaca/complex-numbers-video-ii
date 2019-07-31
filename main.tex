@@ -10,42 +10,45 @@
 
 \pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{8}
+\kfsetfps{24}
 
 %% 0.1 PARABLE OF THE CRAB
 \newcommand{\crab}[4]{
   \pgfkeys{/pgf/fpu=false}
   \node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {\includegraphics[width=1cm]{resources/crab.png}};
+  %\node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {CRAB.};
   \pgfkeys{/pgf/fpu=true}
 
 }
 \newcommand\altfps{0.1}
 
-% \input{scenes/1a-a-crab-travels}                 % 00:00
-% \input{scenes/1b-as-it-moves}                    % 00:04
-% \input{scenes/1c-because-it-is-a-crab}           % 00:13
-% \input{scenes/1d-questions}                      % 00:22
-% \input{scenes/1e-what-is-the-shape-of-the-curve} % 00:23
-% \input{scenes/1f-considering-the-crab}
-% \input{scenes/1g-and-most-importantly}
+%% \input{scenes/1a-a-crab-travels}                 % 03 - 00:03
+%% \input{scenes/1b-as-it-moves}                    % 09 - 00:12
+%% \input{scenes/1c-because-it-is-a-crab}           % 09 - 00:21
+%% \input{scenes/1d-questions}                      % 02 - 00:23
+%% \input{scenes/1e-what-is-the-shape-of-the-curve} % 07 - 00:30
+%% \input{scenes/1f-considering-the-crab}           % 09 - 00:39
+%% \input{scenes/1g-and-most-importantly}           % 07 - 00:46
 
-% \kfframes{4}{\ztitle{This Is A(nother) Video About Complex Numbers.}}
+%% \kfframes{3}{\ztitle{This Is A(nother) Video About Complex Numbers.}} % 03 - 00:49
 
+% (insert live footage here.) %
 
 %% 0.2 ROOTS OF UNITY
-% \kfframes{4}{\ztitle{Roots of Unity}}
-% \input{scenes/2a-in-the-real-numbers}
-% \input{scenes/2c-therefore-we-are-looking-for}
-% \input{scenes/2d-we-can-find-two-more}
-% \input{scenes/2e-remember-that-two}
-% \input{scenes/2f-we-call-these-solutions}
-% \input{scenes/2g-it-is-not-a-coincidence}
-% \input{scenes/2h-there-are-exactly-four}
-% \input{scenes/2i-in-general-the-nth}
-% \input{scenes/2j-all-of-these-shapes}
+%% \kfframes{3}{\ztitle{Roots of Unity}}          % 03 - 00:52
+%% \input{scenes/2a-in-the-real-numbers}          % 18 - 01:10
+%% \input{scenes/2b-recall-that-multiplication}   % 03 - 01:13
+%% \input{scenes/2c-therefore-we-are-looking-for} % 13 - 01:26
+%% \input{scenes/2d-we-can-find-two-more}         % 17 - 01:43
+%% \input{scenes/2e-remember-that-two}            % 15 - 01:58
+%% \input{scenes/2f-we-call-these-solutions}      % 13 - 02:11
+%% \input{scenes/2g-it-is-not-a-coincidence}      % 05 - 02:16
+%% \input{scenes/2h-there-are-exactly-four}       % 20 - 02:36
+%% \input{scenes/2i-in-general-the-nth}           % 07 - 02:43
+%% \input{scenes/2j-all-of-these-shapes}          % 10 - 02:53
 
 %% 0.3 WE ARE GOING TO PROVE A THEOREM
-% \kfframes{4}{\ztitle{We Are Going to Prove a Theorem}
+%% \kfframes{4}{\ztitle{We Are Going to Prove a Theorem} % 03 - 02:56
 
 % polarshift tool
 \newenvironment{polarshift}[2]{
@@ -54,12 +57,12 @@
   \end{scope}
 }
 
-% \input{scenes/3a-given-P-a-polynomial}
-% \input{scenes/3b-think-about-where-P-of-z-is}
-% \input{scenes/3c-is-the-conjugate-of-z}
-% \input{scenes/3d-is-the-conjugate-of-z-cont}
-% \input{scenes/3e-what-does-it-mean-for-z}
-% \input{scenes/3f-but-using-an-algebraic}
+%% \input{scenes/3a-given-P-a-polynomial}
+%% \input{scenes/3b-think-about-where-P-of-z-is}
+%% \input{scenes/3c-is-the-conjugate-of-z}
+%% \input{scenes/3d-is-the-conjugate-of-z-cont}
+%% \input{scenes/3e-what-does-it-mean-for-z}
+%% \input{scenes/3f-but-using-an-algebraic}
 
 % 0.4 OKAY, BUT WHAT ABOUT THE CRAB, THOUGH?
 % \kfframes{4}{\ztitle{Okay, But What About the Crab, Though?}}
