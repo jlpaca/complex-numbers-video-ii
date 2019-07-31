@@ -1,0 +1,57 @@
+\kfframes{6}{
+  \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+  
+  \newcommand\ta{1} % point
+  \newcommand\tb{2} % plane
+  \newcommand\tc{3} % position
+  \newcommand\td{5} % position
+  
+  \pgfmathsetmacro\ctd{3.2}
+  \pgfmathsetmacro\cth{-20}
+  \pgfmathsetmacro\cte{\ctd+0.5}
+
+  \pgfmathsetmacro\cto{1}
+
+  
+  % fill in background
+  \fill[fg-a] (0, 0) rectangle (2*\halfwidth, 2*\halfheight); \color{white!10!black}
+  
+  \begin{scope}[shift={(\halfwidth, \halfheight)}]
+
+    \kfclip{0}{\tb}{
+      \draw[thick] (0, 0) -- (0, 1); \fill (0, 0.7) rectangle (0.4, 1);
+    }
+    \kfclip{\tb}{\tend+1}{
+      \kftween[in=\tb, duration=\dt]{0}{1}
+      \pgfmathsetmacro\ls\pgfmathresult
+      \draw[bg-b] (-\ls*\halfwidth, 0) -- (\ls*\halfwidth, 0);
+      \draw[bg-b] (0, -\ls*\halfheight) -- (0, \ls*\halfheight);
+      \kfclip{\tb+\dt}{\tend+1}{
+        \kftext[polar=false]{\halfwidth-0.8}{\halfheight-0.6}{\textcolor{bg-b}{$\mathbb{R}^2$}}
+      }
+    }
+
+    %% \pgfkeys{/pgf/fpu=false}
+    %% \draw[dashed, bg-b] ({\cte*cos(-15)}, {\cte*sin(-15)}) arc (-15:340:\cte);
+    %% \pgfkeys{/pgf/fpu=true}
+
+    \kfclip{0}{\ta}{
+      \crab{1}{\ctd*cos(\cth)}{\ctd*sin(\cth)}{90+\cth}
+      \kftween[in=\ta-2*\dt, duration=\dt]{\cto/3}{\ctd-\cto}
+      \pgfmathsetmacro\ls\pgfmathresult
+      \draw[dashed] ({(\ctd-\cto)*cos(\cth)}, {(\ctd-\cto)*sin(\cth)}) -- ({\ls*cos(\cth)}, {\ls*sin(\cth)});
+    }
+    \kfclip{\ta}{\tend+1}{
+      \fill ({\cte*cos(\cth)}, {\cte*sin(\cth)}) circle (0.12);
+    }
+    \kfclip{\tc}{\tend+1}{
+      \kftween[in=\tc, duration=\dt]{0.01}{\cte-0.2}
+      \pgfmathsetmacro\lls\pgfmathresult
+      \draw[->, >=stealth] (0, 0) -- ({\lls*cos(\cth)}, {\lls*sin(\cth)});
+    }
+
+    \kftextin[in=\td, duration=0, offset fst=1.5]{\cte}{\cth*pi/180}{$f(t)$ ?}
+
+
+  \end{scope}
+}

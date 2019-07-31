@@ -56,7 +56,7 @@ plot ({(\ctd+0.3-0.4*cos(7*\tt r))*cos(\tt r)}, {(\ctd+0.3-0.4*cos(7*\tt r))*sin
 plot ({0.7*cos(6*\tt r)+\ctd*cos((\tt-0.1) r)}, {0.7*sin(6*\tt r)+\ctd*sin((\tt-0.1) r)});
 }
 
-\kfclip{\tb+4*\tdelay}{\tend}{
+\kfclip{\tb+4*\tdelay}{\tend+1}{
 \pgfkeys{/pgf/fpu=false}
 \draw[dashed, bg-b] ({\cte*cos(-20+\ctoa)}, {\cte*sin(-20+\ctoa)}) arc (-20+\ctoa:\cth+\ctoa:\cte);
 \pgfkeys{/pgf/fpu=true}
