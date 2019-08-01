@@ -1,15 +1,16 @@
-\kfframes{15}{
+\kfframes{17}{
   \pgfmathsetmacro\za{1}
   \pgfmathsetmacro\zb{1.2}
-  
-  \newcommand\ta{2} % begin first rotation
+
+  \newcommand\taa{2} % begin first rotation
+  \newcommand\ta{5} % begin first rotation
   \newcommand\tdelay{1.5}
-  \newcommand\tb{5}
+  \newcommand\tb{8}
 %  \newcommand\tc{8} % a-followed-by-b end
-  \newcommand\td{9} % a + b start - 1 appears
-  \newcommand\te{10} % a + b rotation start
-  \newcommand\tf{14} % a + b z out
-  \newcommand\tg{15} % grid out
+  \newcommand\td{11} % a + b start - 1 appears
+  \newcommand\te{12} % a + b rotation start
+  \newcommand\tf{16} % a + b z out
+  \newcommand\tg{17} % grid out
 
   
   
@@ -20,7 +21,7 @@
   \pgfmathsetmacro\zat{\zat+\zad}
   
   
-  \zgrid[origin y=2, unit=3, out=\tg]{
+  \zgrid[in=0, origin y=2, unit=3, out=\tg]{
 
     % for beta label
     \kftextin[in=\tb, duration=\dt, out=(\tb+\tdelay+\dt)]{1.6}{(\za+\zb/2)}{\colorbox{bg-a}{\phantom{$\beta$}}}
@@ -34,7 +35,7 @@
     }
 
     % stuff.
-    \zin[arg visible=false, out=\tb+\tdelay]{1}{\zat}
+    \zin[in=\taa, arg visible=false, out=\tb+\tdelay]{1}{\zat}
 
     \kftextin[duration=\dt, out=\ta-\dt, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}
     \kftextout[in=(\ta-\dt), out=\ta, offset fst=0.6, offset snd=-pi/4]{\zunit}{0}{$1$}

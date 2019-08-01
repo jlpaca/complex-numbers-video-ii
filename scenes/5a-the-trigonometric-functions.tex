@@ -1,0 +1,82 @@
+\kfframes{14}{                                                       % 14 - 06:36
+  \begin{scope}[shift={(\halfwidth, \halfheight)}]
+
+    \newcommand\ta{0} % text in
+    \newcommand\tb{2} % arrow in
+    \newcommand\tdelay{1.5} % arrow persist
+    \newcommand\tc{4} % cos + i sin
+    \newcommand\td{7} % arrow, other way
+    \newcommand\te{9} % trig identities!
+    \newcommand\tf{11}
+
+
+    \kftextin[in=\te, duration=\dt, out=\tf,  polar=false]{-4}{2}{
+      \scriptsize \begin{tabular}{c}
+        (nice ways to\\
+        derive \& interpret) \\
+        trigonometric\\ identities
+      \end{tabular}
+    }
+  
+    \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{-4}{2}{
+      \scriptsize \begin{tabular}{c}
+        (nice ways to\\
+        derive \& interpret) \\
+        trigonometric\\ identities
+      \end{tabular}
+    }
+
+    \pgfmathsetmacro\tf{\tf+\dt}
+    
+    \kftextin[in=\tc, duration=\dt, out=\tf, polar=false]{4}{0}{$\phantom{e^{it}} = \cos t + i \sin t$}
+    \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{4}{0}{$\phantom{e^{it}} = \cos t + i \sin t$}
+
+    \pgfmathsetmacro\tf{\tf+\dt}
+
+    \kftextin[in=\ta+\dt, duration=\dt, out=\tf, polar=false]{4}{0}{$e^{it} \phantom{= \cos t + i \sin t}$}
+    \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{4}{0}{$e^{it} \phantom{= \cos t + i \sin t}$}
+    
+    \pgfmathsetmacro\tf{\tf+\dt}
+    
+    \kftextin[in=\ta, duration=\dt, out=\tf, polar=false]{-4}{0}{geometry of $\mathbb{R}^2$}
+    \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{-4}{0}{geometry of $\mathbb{R}^2$}
+    
+
+
+    
+    \newcommand\arcx{-1}
+    \newcommand\arcy{-0.8}
+    \newcommand\arcr{3}
+    \newcommand\arth{30}
+    \newcommand\arto{0.01}
+
+
+    \kfclip{\tb}{\tb+\tdelay+\dt}{
+      \kftween[in=\tb, duration=\dt]{180-\arth-\arto}{\arth}
+      \pgfmathsetmacro\thua\pgfmathresult
+
+      \kftween[in=\tb+\tdelay, duration=\dt]{180-\arth}{\arth+\arto}
+      \pgfmathsetmacro\thub\pgfmathresult
+
+      \pgfkeys{/pgf/fpu=false}
+      \draw[->, >=stealth] ({\arcx+\arcr*cos(\thub)}, {\arcy+\arcr*sin(\thub)}) arc (\thub:\thua:\arcr);
+      \pgfkeys{/pgf/fpu=true}
+    }
+
+    \kfclip{\td}{\td+\tdelay+\dt}{      
+      \kftween[in=\td, duration=\dt]{-\arth-\arto}{-180+\arth}
+      \pgfmathsetmacro\thda\pgfmathresult
+
+      \kftween[in=\td+\tdelay, duration=\dt]{-\arth}{-180+\arth+\arto}
+      \pgfmathsetmacro\thdb\pgfmathresult    
+
+      \pgfkeys{/pgf/fpu=false}
+      \draw[->, >=stealth] ({\arcx+\arcr*cos(\thdb)}, {-\arcy+\arcr*sin(\thdb)}) arc (\thdb:\thda:\arcr);
+      \pgfkeys{/pgf/fpu=true}
+    }
+
+    
+
+
+  \end{scope}
+}

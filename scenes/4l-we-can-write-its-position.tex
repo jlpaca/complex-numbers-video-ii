@@ -10,7 +10,7 @@
   \newcommand\td{5.5} % co-ords
   \newcommand\te{7} % move again
 
-  \newcommand\tinv{10} % invert
+  \newcommand\tinv{9} % invert
 
   \pgfmathsetmacro\tf{(\te+1+8/3)} % stop
 
@@ -107,7 +107,7 @@
       \colorbox{fg-a!\ccc!bg-a}{\textcolor{fgc!\ccc!fg-a}{$(\cos t, \sin t)$}}}
     
     \kfclip{\tc+\tdelay}{\tg+\dt}{
-      \pgfmathsetmacro\yyyy{\zunit*sin(\cthm)}
+      \pgfmathsetmacro\yyyy{\zunit*sin(\cthm)-\yaoa}
       \draw[->, >=stealth] ({\zunit*cos(\cthm)}, \yyyy*\yapgb) -- ({\zunit*cos(\cthm)}, \yyyy*\yapga);
     }
   \end{scope}

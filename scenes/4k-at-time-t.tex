@@ -41,7 +41,7 @@
 
 
     % length arc
-    \kfclip{\ta}{\tend+1}{
+    \kfclip{\ta+0.01}{\tend+1}{ % + 0.01 to hide artifact.
       \draw[->, >=stealth] ({\tld*cos(\dch)}, {\tld*sin(\dch)}) arc (\dch:\tla:\tld);
       \draw ({\xsta*cos(\cthm)}, {\xsta*sin(\cthm)}) -- ({\xstb*cos(\cthm)}, {\xstb*sin(\cthm)});
       %\draw ({(\zunit+1.5*\tld*\tlc)*cos(\cthm)}, {(\zunit+1.5*\tld*\tlc)*sin(\cthm)}) -- ({(\zunit+1.5*\tld*\tla)*cos(\cthm)}, {(\zunit+1.5*\tld*\tla)*sin(\cthm)});

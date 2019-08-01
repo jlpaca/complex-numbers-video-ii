@@ -4,7 +4,7 @@
   \newcommand\tb{0} % text change
   \newcommand\tc{2} % e^it
   \newcommand\td{5} % rotate
-  \newcommand\te{7} % e^i pi
+  \newcommand\te{6} % e^i pi
   \newcommand\tdelay{1}
   \newcommand\tf{10}
   \newcommand\tg{12} %outro
@@ -30,8 +30,8 @@
     }
 
     \zin[in=\ta, out=\td+2*\dt, arg origin=pi/3]{1}{\za}
-    \zout[in=\td+\dt, out=\tg+2*\dt, arg visible=false]{1}{\za}
-    \zargout[in=\td+2*\dt, arg origin=pi/3, out=\td+2*\dt]{\za}
+    \zout[in=\td+2*\dt, out=\tg+2*\dt, arg visible=false]{1}{\za}
+    \zargout[in=\td+2*\dt, arg origin=pi/3, out=\td+3*\dt]{\za}
 
     
     \kftextout[duration=\dt, out=\tb+\dt, offset fst=2.1]{\zunit}{\za}{\colorbox{bg-a}{$(\cos t, \sin t)$}}
