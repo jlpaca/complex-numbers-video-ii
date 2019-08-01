@@ -1,4 +1,4 @@
-\kfframes{16}{
+\kfframes{12}{
 
   % drop fps
   % \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
@@ -7,15 +7,15 @@
   \newcommand\tb{3} % cartesian coords
   \newcommand\tc{3} % triangle in
   \newcommand\tdelay{1}
-  \newcommand\td{6} % co-ords
-  \newcommand\te{8} % move again
+  \newcommand\td{5.5} % co-ords
+  \newcommand\te{7} % move again
 
-  \newcommand\tinv{11} % invert
+  \newcommand\tinv{10} % invert
 
-  \pgfmathsetmacro\tf{(9+8/3)} % stop
+  \pgfmathsetmacro\tf{(\te+1+8/3)} % stop
 
-  \newcommand\tg{15} % arrows out
-  \newcommand\ti{15} % complex axes in
+  \newcommand\tg{11.5} % arrows out
+  \newcommand\ti{11} % complex axes in
 
   \kftween[in=\te, duration=2]{0}{120}
   \pgfmathsetmacro\cthm{60+\pgfmathresult}

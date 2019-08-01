@@ -1,23 +1,23 @@
-\kfframes{16}{
+\kfframes{13}{
 
   
   \newcommand\ta{0} % fade back in
   \newcommand\tb{0} % zoom
-  \newcommand\tc{2} % move
+  \newcommand\tc{1} % move
 
-  \newcommand\td{3} % eq 0
-  \newcommand\te{5} % eq 0 out
+  \newcommand\td{2} % eq 0
+  \newcommand\te{4} % eq 0 out
 
-  \newcommand\tf{6} % zoom
-  \newcommand\tg{7} % move
-  \newcommand\ti{7+\dt} % fade back in
+  \newcommand\tf{4} % zoom
+  \newcommand\tg{5} % move
+  \newcommand\ti{5+\dt} % fade back in
 
-  \newcommand\tj{8} % fade labels back in
+  \newcommand\tj{6} % fade labels back in
 
-  \newcommand\tk{10} % move back in
-  \newcommand\tl{12} % eq 0
+  \newcommand\tk{7.5} % move back in
+  \newcommand\tl{9} % eq 0
 
-  \newcommand\tm{14}
+  \newcommand\tm{11}
 
 
   
@@ -58,9 +58,9 @@
   \pgfmathsetmacro\xcs\pgfmathresult
 
   
-  \zgrid[out=\tend, origin y=\halfheight+\xcy, unit=\xcs]{
+  \zgrid[out=\tend-2*\dt, origin y=\halfheight+\xcy, unit=\xcs]{
 
-    \kftween[in=\tm+2*\dt, duration=\dt]{1}{0}
+    \kftween[in=\tm+\dt, duration=\dt]{1}{0}
     \pgfmathsetmacro\xsopac\pgfmathresult
     
     % leftovers

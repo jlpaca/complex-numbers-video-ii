@@ -1,18 +1,18 @@
-\kfframes{12}{
+\kfframes{8}{
   
   \pgfmathsetmacro\za{1.3}
   \pgfmathsetmacro\zr{1.3}
 
-  \newcommand{\ta}{1}
+  \newcommand{\ta}{0}
   \newcommand{\tdelay}{0.5}
   \newcommand{\tscdelay}{0}
   \newcommand{\targdelay}{0.5}
   \newcommand{\tshdelay}{0}
   \newcommand{\taa}{0} % pan
-  \newcommand{\tb}{4} % scaling
-  \newcommand{\tc}{5} % shifting
-  \newcommand{\td}{6} % polynomial text
-  \newcommand{\te}{8} % P (z)
+  \newcommand{\tb}{3} % scaling
+  \newcommand{\tc}{4} % shifting
+  \newcommand{\td}{5} % polynomial text
+%  \newcommand{\te}{7} % P (z)
   
   \zgrid[out=\tend+1, origin y=\halfheight+1, unit=1]{
 
@@ -47,7 +47,7 @@
     \kftween[in=\tc, duration=\dt]{0}{1} \pgfmathsetmacro\xpsa\pgfmathresult
     \begin{polarshift}{-2*\xpsa}{0}
       % z
-      \kftween[in=\ta, duration=\dt]{pi/6}{-pi/3}
+      \kftween[in=\ta, duration=\dt]{0}{-pi/3}
       \pgfmathsetmacro\zlos\pgfmathresult
       \kftextout[out=(\tb+\tscdelay+\dt), duration=\dt, offset fst=0.5, offset snd=\zlos]{\zunit*\zr}{\za}{$\bar{z}$} 
 

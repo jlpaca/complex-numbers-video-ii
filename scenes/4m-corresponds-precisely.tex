@@ -1,21 +1,21 @@
-\kfframes{13}{
+\kfframes{15}{
 
   \newcommand\ta{0} % z in
   \newcommand\tb{0} % text change
   \newcommand\tc{2} % e^it
-  \newcommand\td{4} % rotate
-  \newcommand\te{5} % e^i pi
+  \newcommand\td{5} % rotate
+  \newcommand\te{7} % e^i pi
   \newcommand\tdelay{1}
-  \newcommand\tf{8}
-  \newcommand\tg{10} %outro
-  \newcommand\ti{12} %outro euler
+  \newcommand\tf{10}
+  \newcommand\tg{12} %outro
+  \newcommand\ti{14} %outro euler
 
   
   \zgrid[unit=3, out=\tg+\dt]{
 
-    \kftween[in=\td, duration=\dt]{pi/3}{pi}
+    \kftween[in=\td, duration=(2*\dt)]{pi/3}{pi}
     \pgfmathsetmacro\za\pgfmathresult
-    \kftween[in=\td, duration=\dt]{0.4}{2*pi/3}
+    \kftween[in=\td, duration=(2*\dt)]{0.4}{2*pi/3}
     \pgfmathsetmacro\ztg\pgfmathresult
 
 
@@ -29,9 +29,9 @@
       \fill ({\zunit*cos(\za r)}, {\zunit*sin(\za r)}) circle (0.12);
     }
 
-    \zin[in=\ta, out=\td+\dt, arg origin=pi/3]{1}{\za}
-    \zout[in=\td+\dt, out=\tg+\dt, arg visible=false]{1}{pi}
-    \zargout[in=\td+\dt, arg origin=pi/3, out=\td+2*\dt]{pi}
+    \zin[in=\ta, out=\td+2*\dt, arg origin=pi/3]{1}{\za}
+    \zout[in=\td+\dt, out=\tg+2*\dt, arg visible=false]{1}{\za}
+    \zargout[in=\td+2*\dt, arg origin=pi/3, out=\td+2*\dt]{\za}
 
     
     \kftextout[duration=\dt, out=\tb+\dt, offset fst=2.1]{\zunit}{\za}{\colorbox{bg-a}{$(\cos t, \sin t)$}}

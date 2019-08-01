@@ -1,6 +1,7 @@
-\kfframes{9}{
+\kfframes{8}{
 
   \newcommand\ta{0}
+  \newcommand\taa{1}
   \newcommand\tb{2} % lift arrow
   \newcommand\tc{4}
   \newcommand\td{6}
@@ -10,7 +11,7 @@
 
   % phantom spaghetti
   \kftext[polar=false]{\xh}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
-  \kftextin[in=(\ta+\dt/2), out=\tend+1, duration=\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} > 0$}
+  \kftextin[in=\taa, out=\tend+1, duration=\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} > 0$}
 
   \begin{scope}[shift={({\halfwidth-3}, {\halfheight-2})}]
     \pgfmathsetmacro\zunit{3}

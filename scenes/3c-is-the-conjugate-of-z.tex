@@ -1,8 +1,8 @@
-\kfframes{4}{
+\kfframes{5}{
 
-  \newcommand\ta{1} % z in
-  \newcommand\tb{2} % z bar
-  \newcommand\tc{2.5} % pan
+  \newcommand\ta{2} % z in
+  \newcommand\tb{3} % z bar
+  \newcommand\tc{3.5} % pan
   
   \pgfmathsetmacro\za{1.3}
   \pgfmathsetmacro\zr{1.3}
@@ -28,7 +28,7 @@
         \z[out=\tend+1, arg visible=false]{-3*\zr^2}{2*\za}
         \begin{polarshift}{-3*\zr^2}{2*\za}          
           % z^3
-          \kftext[offset fst=1.3, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{$P(z)$}}
+          \kftext[offset fst=1.1, offset snd=-pi/6]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{$P(z)$}}
 
           \z[out=\tend+1, arg visible=false]{\zr^3}{3*\za}
           
@@ -56,6 +56,6 @@
     \fill (\zcx, -\zcy) circle (\zcd);
 
     \zin[in=\tb+2*\dt, out=\tend+1, arg visible=false]{\zr}{-\za}
-    \kftextin[in=\tb+2*\dt, duration=\dt, offset fst=0.5]{\zr*\zunit}{-\za}{$\bar{z}$}
+    \kftextin[in=\tb+2*\dt, duration=\dt, out=\tend+\dt, offset fst=0.5]{\zr*\zunit}{-\za}{$\bar{z}$}
   }
 }
