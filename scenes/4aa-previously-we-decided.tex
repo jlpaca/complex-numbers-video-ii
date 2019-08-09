@@ -1,0 +1,21 @@
+\kfframes{8}{
+  \newcommand\ta{1}
+  \newcommand\tb{4} % move
+  \newcommand\tc{7} % out
+  \begin{scope}[shift={(\halfwidth, \halfheight)}]
+    \kftween[in=\tb, duration=\dt]{2.4}{0}
+    \pgfmathsetmacro\lx\pgfmathresult
+    \kftextin[polar=false, in=\ta, out=\tc, duration=\dt]{\lx}{1}{$e^{it} \phantom{= \cos t + i \sin t}$}
+    \kftextin[polar=false, in=\tb+\dt/3, out=\tc, duration=\dt]{0}{1}{$\phantom{e^{it}} = \cos t + i \sin t$}
+
+    \kftextin[polar=false, in=\tb+1, duration=\dt, out=\tc]{4}{-2}{
+    \scriptsize \begin{tabular}{r}*see the first video on\\ complex numbers.\end{tabular}}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{4}{-2}{
+    \scriptsize \begin{tabular}{r}*see the first video on\\ complex numbers.\end{tabular}}
+
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{\lx}{1}{$e^{it} \phantom{= \cos t + i \sin t}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{1}{$\phantom{e^{it}} = \cos t + i \sin t$}
+
+
+  \end{scope}
+}

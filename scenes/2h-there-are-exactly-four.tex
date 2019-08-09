@@ -1,10 +1,11 @@
-\kfframes{20}{
+\kfframes{19}{
   \newcommand\ta{0} % fourth roots in
-  \newcommand\tb{4} % quadrilateral in
-  \newcommand\tbb{5}
-  \newcommand\tc{9} % labels in
+  \newcommand\tb{3} % quadrilateral in
+  \newcommand\tbb{4}
+  \newcommand\tstay{3}
+  \newcommand\tc{8} % labels in
   \newcommand\tdelay{1}
-  \newcommand\td{18} % everything out
+  \newcommand\td{17} % everything out
   
   \zgrid[unit=3]{
     \zin[out=\td, arg visible=false]{1}{0}
@@ -22,10 +23,10 @@
     \draw[dashed] ({\zunit*cos(\thb r)}, {\zunit*sin(\thb r)}) arc (\thb r:\tha r:\zunit);
     \pgfkeys{/pgf/fpu=true}
 
-    \kftextin[in=\tbb, duration=\dt, out=\td, polar=false]{\halfwidth-3}{-\halfheight+2}{
+    \kftextin[in=\tbb, duration=\dt, out=\tbb+\tstay, polar=false]{\halfwidth-3}{-\halfheight+2}{
     \scriptsize \begin{tabular}{r} *better known\\as a \emph{square.}\end{tabular}
     }
-    \kftextout[in=\td, duration=\dt, out=\td+\dt, polar=false]{\halfwidth-3}{-\halfheight+2}{
+    \kftextout[in=\tbb+\tstay, duration=\dt, out=\tbb+\tstay+\dt, polar=false]{\halfwidth-3}{-\halfheight+2}{
     \scriptsize \begin{tabular}{r} *better known\\as a \emph{square.}\end{tabular}
     }
 

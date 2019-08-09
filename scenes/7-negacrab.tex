@@ -1,0 +1,24 @@
+\newcommand{\negacrab}[4]{
+  \pgfkeys{/pgf/fpu=false}
+  \node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {\includegraphics[width=1cm]{resources/negacrab.png}};
+  %\node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {CRAB.};
+  \pgfkeys{/pgf/fpu=true}
+
+}
+
+\kfframes{8}{
+  \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
+  \pgfmathsetmacro\vth{8}
+  \pgfmathsetmacro\vx{8*cos(\vth)}
+  \pgfmathsetmacro\vy{8*sin(\vth)}
+  \pgfmathsetmacro\vox{-3}
+  \pgfmathsetmacro\voy{2}
+
+  \pgfmathsetmacro\tout{7}
+
+   \negacrab{1}{\vox+\vx*\t}{\voy+\vy*\t}{\vth+10*sin(10*\t r)}
+
+   \kftween[in=\tout, duration=\dt]{1}{0}
+   \pgfmathsetmacro\xo\pgfmathresult
+   \draw[dashed, bg-b, opacity=\xo] (\vox, \voy-0.5) -- ({\vox+\vx*(\t+0.1)}, {\voy+\vy*(\t+0.1)-0.5});
+}

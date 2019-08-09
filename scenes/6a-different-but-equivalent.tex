@@ -1,0 +1,24 @@
+\kfframes{10}{
+  \pgfmathsetmacro\ta{2}
+  \pgfmathsetmacro\tb{\tend-2}
+
+  \newcommand\tdelay{1}
+  
+  \begin{scope}[shift={(4, \halfheight)}]
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{1}{$\begin{aligned}\sum_{k=0}^\infty \frac{x^k}{k!}\end{aligned}$}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{1}{$\begin{aligned}\sum_{k=0}^\infty \frac{x^k}{k!}\end{aligned}$}
+
+    \pgfmathsetmacro\ta{\ta+\tdelay}
+    \pgfmathsetmacro\tb{\tb+\dt/3}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{2.5}{-1}{$\begin{aligned}\lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n\end{aligned}$}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{2.5}{-1}{$\begin{aligned}\lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n\end{aligned}$}
+
+    \pgfmathsetmacro\ta{\ta+\tdelay}
+    \pgfmathsetmacro\tb{\tb+\dt/3}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{-3}{$\begin{aligned}\frac{df}{dt} = f;\; f(0) = 1\end{aligned}$}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{-3}{$\begin{aligned}\frac{df}{dt} = f;\; f(0) = 1\end{aligned}$}
+    
+  \end{scope}
+}

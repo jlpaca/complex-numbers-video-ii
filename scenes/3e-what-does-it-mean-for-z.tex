@@ -75,14 +75,21 @@
             \pgfmathsetmacro\lpxa\pgfmathresult
 
             \z[out=\tend+1, arg visible=false]{\zr^3}{3*\za}
-            \kftextout[out=\te+2*\dt, duration=\dt, offset fst=1.3, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
-            \kftextout[out=\te+\dt, duration=\dt, offset fst=1.3, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{$P(z)$}}
-            \kftextin[in=\td, out=\te, duration=\dt, offset fst=1.3, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
 
-            \kftextout[in=\te, out=\te+\dt, duration=\dt, offset fst=1.3, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
+            \kftween[in=\tc, duration=\dt]{1.1}{1.3}
+            \pgfmathsetmacro\lblo\pgfmathresult
+            \kftextout[out=\te+2*\dt, duration=\dt, offset fst=\lblo, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{\phantom{$P(z)$}}}
+            \kftextout[out=\te+\dt, duration=\dt, offset fst=\lblo, offset snd=\lpxa]{\zunit*\zr^3}{3*\za}{\colorbox{bg-a}{$P(z)$}}
+            \kftextin[in=\td, out=\te, duration=\dt, offset fst=\lblo, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
+
+            \kftextout[in=\te, out=\te+\dt, duration=\dt, offset fst=\lblo, offset snd=pi/6]{\zunit*\zr^3}{3*\za}{\textcolor{fg-a}{$\phantom{0 = P(z)} = 0$}}
 
             \kftextin[in=\tj, out=\tk, duration=\dt, offset fst=1.1, offset snd=-0.2]{\zunit*\zr^3}{3*\za}{$P(z)$}
             \kftextout[in=\tk, out=\tk+\dt, duration=\dt, offset fst=1.1, offset snd=-0.2]{\zunit*\zr^3}{3*\za}{$P(z)$}
+
+            \begin{polarshift}{\zr^3}{3*\za}
+            \fill (0, 0) circle (0.12);
+            \end{polarshift}
 
           \end{polarshift}
         \end{polarshift}

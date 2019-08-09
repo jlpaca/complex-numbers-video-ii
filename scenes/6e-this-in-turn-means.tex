@@ -1,0 +1,78 @@
+\kfframes{8}{
+  \pgfmathsetmacro\ta{1}
+  \pgfmathsetmacro\tb{3}
+  \newcommand\tc{7}
+  \begin{scope}[shift={(4, \halfheight+1)}]
+    \large
+
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tb]{0}{0}{$\phantom{\sin :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{0}{$\phantom{\sin :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}{0}{0}{$\phantom{\sin :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{\sin :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{-1}{$\phantom{\cos :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{-1}{$\phantom{\cos :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}{0}{-1}{$\phantom{\cos :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\phantom{\cos :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+
+    
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tb]{0}{0}{$\phantom{\sin : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{0}{$\phantom{\sin : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}{0}{0}{$\phantom{\sin : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{\sin : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{-1}{$\phantom{\cos : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{-1}{$\phantom{\cos : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}{0}{-1}{$\phantom{\cos : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\phantom{\cos : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tc]{0}{0}{$\sin : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0}{-1}{$\cos : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\sin : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\cos : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+
+    
+  \end{scope}
+
+  \pgfmathsetmacro\ta{2}
+  \pgfmathsetmacro\tb{3.5}
+
+  \begin{scope}[shift={(3.82, \halfheight-1.5)}]
+    \large
+
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tb]{0}{0}{$\phantom{\sinh :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{0}{$\phantom{\sinh :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}{0}{0}{$\phantom{\sinh :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{\sinh :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{-1}{$\phantom{\cosh :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{-1}{$\phantom{\cosh :}\; \mathbb{R} \;\phantom{\to \mathbb{R}}$}{0}{-1}{$\phantom{\cosh :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\phantom{\cosh :}\; \mathbb{C} \;\phantom{\to \mathbb{C}}$}
+
+    
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tb]{0}{0}{$\phantom{\sinh : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{0}{$\phantom{\sinh : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}{0}{0}{$\phantom{\sinh : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{\sinh : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    
+    \pgfmathsetmacro\tb{\tb+\dt/4}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{-1}{$\phantom{\cosh : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0}{-1}{$\phantom{\cosh : \mathbb{R}} \;\phantom{\to}\; \mathbb{R}$}{0}{-1}{$\phantom{\cosh : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\phantom{\cosh : \mathbb{C}} \;\phantom{\to}\; \mathbb{C}$}
+    
+    \kftextin[polar=false, in=\ta-\dt, duration=\dt, out=\tc]{0}{0}{$\sinh : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0}{-1}{$\cosh : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\sinh : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{-1}{$\cosh : \phantom{\mathbb{R}} \to \phantom{\mathbb{R}}$}
+
+    
+  \end{scope}
+
+}

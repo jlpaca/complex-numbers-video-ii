@@ -3,6 +3,8 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{contour}
+\contourlength{0.9px}
+\contournumber{64}
 \usepackage{kf-complex}
 \usepackage{graphicx}
 
@@ -10,7 +12,7 @@
 
 \pgfmathsetmacro\dt{0.5}
 % debug:
-\kfsetfps{24}
+\kfsetfps{4}
 
 %% 0.1 PARABLE OF THE CRAB
 \newcommand{\crab}[4]{
@@ -18,7 +20,6 @@
   \node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {\includegraphics[width=1cm]{resources/crab.png}};
   %\node[transform shape, rotate=(#4), scale={#1}] at ({#2}, {#3}) {CRAB.};
   \pgfkeys{/pgf/fpu=true}
-
 }
 \newcommand\altfps{0.1}
 
@@ -48,9 +49,9 @@
 %% \input{scenes/2j-all-of-these-shapes}          % 10 - 02:53
 
 %% 0.3 WE ARE GOING TO PROVE A THEOREM
-%% \kfframes{3}{\ztitle{Proof:}} % 03 - 02:56
+%% \kfframes{3}{\ztitle{We Are Going to Prove a Theorem.}} % 03 - 02:56
 
-% polarshift tool
+%% polarshift tool
 \newenvironment{polarshift}[2]{
   \begin{scope}[shift={({\zunit*(#1)*cos(#2 r)}, {\zunit*(#1)*sin(#2 r)})}]
 }{
@@ -67,9 +68,9 @@
 % 0.4 OKAY, BUT WHAT ABOUT THE CRAB, THOUGH?
 %% \kfframes{3}{\ztitle{Okay, But What About the Crab, Though?}} % 03 - 03:50
 
-%% (PREVIOUSLY ...)
-%% \kfframes{24}{}
-
+%% \input{scenes/4aa-previously-we-decided}
+%% \kfframes{8}{}
+%% \input{scenes/4ac-what-we-shall-now-discover}
 %% \input{scenes/4b-consider-the-ivp}
 %% \input{scenes/4c-if-c-is-positive}
 %% \input{scenes/4d-the-particle-speeds-off}
@@ -84,13 +85,23 @@
 %% \input{scenes/4m-corresponds-precisely}
 
 %% 0.5 THE RETURN OF THE EXPONENTIAL (06:19)
-\kfframes{3}{\ztitle{Trigonometry II: The Return of the Exponential}} % 03 - 06:22
-\input{scenes/5a-the-trigonometric-functions}                         % 14 - 06:38
-\input{scenes/5b-the-geometric-statement}                             % 17 - 06:53
-\input{scenes/5c-let-us-rewrite}                                      % 06 - 06:59
-\input{scenes/5d-equating-the-real-parts}                             % 13 - 07:12
-\input{scenes/5e-de-moivres-formula}                                  % 13 - 07:25
-\input{scenes/5f-rotation-in-the-complex-plane-by-n-theta}            % 17 - 07:42
+%% \kfframes{3}{\ztitle{Trigonometry II: The Return of the Exponential}} % 03 - 06:22
+%% \input{scenes/5a-the-trigonometric-functions}                         % 14 - 06:38
+%% \input{scenes/5b-the-geometric-statement}                             % 17 - 06:53
+%% \input{scenes/5c-let-us-rewrite}                                      % 06 - 06:59
+%% \input{scenes/5d-equating-the-real-parts}                             % 13 - 07:12
+%% \input{scenes/5e-de-moivres-formula}                                  % 13 - 07:25
+%% \input{scenes/5f-rotation-in-the-complex-plane-by-n-theta}            % 17 - 07:42
+%% \input{scenes/5g-for-example}
 
+%% \input{scenes/6a-different-but-equivalent}
+%% \input{scenes/6b-you-might-not-be-surprised}
+%% \input{scenes/6c-these-expressions-bear}
+%% \kfframes{1}{}
+%% \input{scenes/6d-another-thing}
+%% \input{scenes/6e-this-in-turn-means}
+
+%% POST-CREDITS
+%% \input{scenes/7-negacrab}
 
 \end{document}

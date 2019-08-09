@@ -7,7 +7,7 @@
     \newcommand\tc{4} % cos + i sin
     \newcommand\td{7} % arrow, other way
     \newcommand\te{9} % trig identities!
-    \newcommand\tf{11}
+    \newcommand\tf{13}
 
 
     \kftextin[in=\te, duration=\dt, out=\tf,  polar=false]{-4}{2}{
@@ -26,17 +26,17 @@
       \end{tabular}
     }
 
-    \pgfmathsetmacro\tf{\tf+\dt}
+    \pgfmathsetmacro\tf{\tf+\dt/3}
     
     \kftextin[in=\tc, duration=\dt, out=\tf, polar=false]{4}{0}{$\phantom{e^{it}} = \cos t + i \sin t$}
     \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{4}{0}{$\phantom{e^{it}} = \cos t + i \sin t$}
 
-    \pgfmathsetmacro\tf{\tf+\dt}
+    \pgfmathsetmacro\tf{\tf+\dt/3}
 
     \kftextin[in=\ta+\dt, duration=\dt, out=\tf, polar=false]{4}{0}{$e^{it} \phantom{= \cos t + i \sin t}$}
     \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{4}{0}{$e^{it} \phantom{= \cos t + i \sin t}$}
     
-    \pgfmathsetmacro\tf{\tf+\dt}
+    \pgfmathsetmacro\tf{\tf+\dt/3}
     
     \kftextin[in=\ta, duration=\dt, out=\tf, polar=false]{-4}{0}{geometry of $\mathbb{R}^2$}
     \kftextout[in=\tf, duration=\dt, out=\tf+\dt, polar=false]{-4}{0}{geometry of $\mathbb{R}^2$}

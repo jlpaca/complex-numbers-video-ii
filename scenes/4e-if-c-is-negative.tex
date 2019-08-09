@@ -1,45 +1,47 @@
 \kfframes{3}{
 
-  \newcommand\ta{0} % restore axes
-  \newcommand\tb{2} % change sign 
-  \newcommand\tc{0} % draw f
-  
-  % phantom spaghetti
-  \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
-  \kftext[polar=false]{\halfwidth}{6.5}{$\phantom{c >}\;0$}
-  \kftextout[in=0, duration=\dt, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} > \phantom{0}$}
-  \kftextin[in=\tb, duration=\dt, out=\tend+1, polar=false]{\halfwidth}{6.5}{$\phantom{c} < \phantom{0}$}
+\newcommand\ta{0} % restore axes
+\newcommand\tb{2} % change sign 
+\newcommand\tc{0} % draw f
 
-  \begin{scope}[shift={({\halfwidth-6}, {\halfheight-2})}]
+% phantom spaghetti
+\kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+\kftext[polar=false]{\halfwidth}{6.5}{$\phantom{c >}\;0$}
+\kftextout[in=0, duration=\dt, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} > \phantom{0}$}
+\kftextin[in=\tb, duration=\dt, out=\tend+1, polar=false]{\halfwidth}{6.5}{$\phantom{c} < \phantom{0}$}
 
-    \kftween[in=\ta, duration=\dt]{1}{12}
-    \pgfmathsetmacro\zunit{\pgfmathresult}
+\begin{scope}[shift={({\halfwidth-6}, {\halfheight-2})}]
 
-    % axis & leftovers
-    \draw[bg-b] (-\halfwidth+6, 0) -- ({\halfwidth+6}, 0);
+\kftween[in=\ta, duration=\dt]{1}{12}
+\pgfmathsetmacro\zunit{\pgfmathresult}
 
-    \pgfmathsetmacro\xfo{0.16}
-    
-    \fill (0, 0) circle (0.12);
-    \fill[bg-b] (\zunit, 0) circle (0.12);
+% axis & leftovers
+\draw[bg-b] (-\halfwidth+6, 0) -- ({\halfwidth+6}, 0);
 
-    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+\pgfmathsetmacro\xfo{0.16}
 
-    \kftween[in=\ta, duration=\dt]{3*pi/4}{pi/4}
-    \pgfmathsetmacro\lxth\pgfmathresult
-    \kftext[offset fst=0.6, offset snd=\lxth]{\zunit}{0}{$1$}
+\fill (0, 0) circle (0.12);
+\fill[bg-b] (\zunit, 0) circle (0.12);
 
-    % f
-    \kftween[in=\tc, duration=\dt]{0}{0.12}
-    \pgfmathsetmacro\xd\pgfmathresult
-    
-    \kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
-    \pgfmathsetmacro\xl\pgfmathresult
-    
-    \fill (\zunit, 0) circle (\xd);
-    \draw[->,>=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
+\kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
 
-    \kftextin[in=\tc+\dt, duration=\dt, polar=false]{\zunit/2}{-0.6}{$e^{ct}$}
-    
-  \end{scope}
+\kftween[in=\ta, duration=\dt]{3*pi/4}{pi/4}
+\pgfmathsetmacro\lxth\pgfmathresult
+\kftext[offset fst=0.6, offset snd=\lxth]{\zunit}{0}{$1$}
+
+% f
+\kftween[in=\tc, duration=\dt]{0}{0.12}
+\pgfmathsetmacro\xd\pgfmathresult
+
+\kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
+\pgfmathsetmacro\xl\pgfmathresult
+
+\fill (\zunit, 0) circle (\xd);
+\kfclip{\tc}{\tend+1}{
+\draw[->,>=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
+}
+
+\kftextin[in=\tc+\dt, duration=\dt, polar=false]{\zunit/2}{-0.6}{$e^{ct}$}
+
+\end{scope}
 }

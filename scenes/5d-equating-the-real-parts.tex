@@ -20,23 +20,37 @@
 
   \kftween[in=\tb, duration=\dt]{100}{0}
   \colorlet{xcc}{fg-a!\pgfmathresult!bg-b}
-
+  \colorlet{xcb}{fg-a!\pgfmathresult!bg-b}
+  
   \kftween[in=\tb, duration=\dt]{100}{0}
   \colorlet{xcs}{xc!\pgfmathresult!fg-a}
+  \colorlet{xcb}{fg-a!\pgfmathresult!bg-b}
 
   \kftween[in=\tc, duration=\dt]{100}{0}
   \colorlet{xcc}{xcc!\pgfmathresult!bg-b}
   \colorlet{xcs}{xcs!\pgfmathresult!bg-b}
+  \colorlet{xcb}{fg-a!\pgfmathresult!bg-b}
 
   % fadeout
   \kftween[in=\tc+\dt, duration=\dt]{100}{0}
   \colorlet{xcc}{xcc!\pgfmathresult!bg-a}
   \colorlet{xcs}{xcs!\pgfmathresult!bg-a}
-  \colorlet{xc}{xc!\pgfmathresult!bg-a}  
+  \colorlet{xc}{xc!\pgfmathresult!bg-a}
+  \colorlet{xcb}{xcb!\pgfmathresult!bg-a}
   
     \kftext[polar=false]{7.84}{6}{$\textcolor{xc}{(}\textcolor{xcc}{\cos \alpha \cos \beta - \sin \alpha \sin \beta}\textcolor{xc}{)}$}
     \kftext[polar=false]{9}{5}{$\textcolor{xc}{+\;i\:(}\textcolor{xcs}{\cos \alpha \sin \beta + \sin \alpha \cos \beta}\textcolor{xc}{)}$}
 
-    \kftext[polar=false]{8.2}{3.8}{$\textcolor{xc}{=}\textcolor{xcc}{\cos (\alpha + \beta)}\textcolor{xc}{+ i }\textcolor{xcs}{\sin (\alpha + \beta)}$}
+    %\kftext[polar=false]{8.2}{3.8}{$\textcolor{xc}{=}\textcolor{xcc}{\cos (\alpha + \beta)}\textcolor{xc}{+ i }\textcolor{xcs}{\sin (\alpha + \beta)}$}
+    \kftext[polar=false]{8.2}{3.8}{$\textcolor{xcb}{=}\textcolor{xcc}{ \cos (\alpha + \beta)}\textcolor{xc}{+ i }\textcolor{xcs}{\sin (\alpha + \beta)}$}
+
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{\halfwidth+1}{2}{\scriptsize \phantom{angle sum formula (}cosine)\phantom{sine)}}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{\halfwidth+1}{2}{\scriptsize \phantom{angle sum formula (}cosine)\phantom{sine)}}
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{\halfwidth+1}{2}{\scriptsize angle sum formula (\phantom{cosine)sine)}}
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{\halfwidth+1}{2}{\scriptsize angle sum formula (\phantom{cosine)sine)}}
+
+\kftextin[polar=false, in=\tb, duration=\dt, out=\tc]{\halfwidth+1}{2}{\scriptsize \phantom{angle sum formula (} sine) \phantom{cosine)}}
+\kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{\halfwidth+1}{2}{\scriptsize \phantom{angle sum formula (} sine) \phantom{cosine)}}
 
 }

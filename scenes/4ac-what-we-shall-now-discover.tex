@@ -1,0 +1,54 @@
+\kfframes{8}{
+  \pgfmathsetmacro\ta{0} % in
+  \pgfmathsetmacro\tb{2} % arrows
+  \pgfmathsetmacro\tc{\tend-\dt} % shift
+  \pgfmathsetmacro\td{7} % arrows go
+  
+  \kftween[in=\tc, duration=\dt]{2.5}{0}
+  \pgfmathsetmacro\xsh\pgfmathresult
+  \pgfmathsetmacro\xqh{-3}
+
+  \kftextin[polar=false, in=\ta, duration=\dt, out=\td-\dt]{\halfwidth+\xqh}{6}{$\cos t + i \sin t$}
+  \kftextout[polar=false, in=\td-\dt, duration=\dt, out=\td]{\halfwidth+\xqh}{6}{$\cos t + i \sin t$}
+
+\kftween[in=\tb, duration=\dt]{3.99}{3}
+  \pgfmathsetmacro\ayv\pgfmathresult
+  \kftween[in=\td, duration=\dt]{4}{3.01}
+  \pgfmathsetmacro\byv\pgfmathresult
+
+  \kfclip{\tb}{\td+\dt}{
+    \draw[->, >=stealth] (\halfwidth+\xqh, \byv) -- (\halfwidth+\xqh, \ayv);
+  } 
+
+  \kftextin[polar=false, in=\tb+\dt, duration=\dt, out=\td]{\halfwidth+\xqh}{2}{$e^{it}$}
+  \kftextout[polar=false, in=\td, duration=\dt, out=\td+\dt]{\halfwidth+\xqh}{2}{$e^{it}$}
+
+  % SECOND
+  \pgfmathsetmacro\too{\dt}
+  \pgfmathsetmacro\ta{\ta+\too} % in
+  \pgfmathsetmacro\tb{\tb+\too} % arrows
+  
+  
+  \kftextin[polar=false, in=\ta, duration=\dt, out=\td]{\halfwidth+\xsh}{6+2}{\scriptsize solution to}
+  \kftextout[polar=false, in=\td, duration=\dt, out=\td+\dt]{\halfwidth+\xsh}{6+2}{\scriptsize solution to}
+  
+  \kftextin[polar=false, in=\ta, duration=\dt, out=\tend+1]{\halfwidth+\xsh}{6}{$\begin{aligned}\frac{df}{dt} &= \phantom{c} f\\f(0) &= 1\end{aligned}$}
+  \kftextin[polar=false, in=\ta, duration=\dt, out=\tend+1]{\halfwidth+\xsh}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+
+  
+  \kftween[in=\tb, duration=\dt]{3.99}{3}
+  \pgfmathsetmacro\ayw\pgfmathresult
+  \kftween[in=\td, duration=\dt]{4}{3.01}
+  \pgfmathsetmacro\byw\pgfmathresult
+
+  \kfclip{\tb}{\td+\dt}{
+    \draw[->, >=stealth] (\halfwidth+\xsh, \byw) -- (\halfwidth+\xsh, \ayw);
+  }
+  
+  \kftextin[polar=false, in=\tb+\dt, duration=\dt, out=\td]{\halfwidth+\xsh}{2}{$e^{ct}$}
+  \kftextout[polar=false, in=\td, duration=\dt, out=\td+\dt]{\halfwidth+\xsh}{2}{$e^{ct}$}
+  
+  %  \kftext[polar=false]{\halfwidth}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+
+
+}

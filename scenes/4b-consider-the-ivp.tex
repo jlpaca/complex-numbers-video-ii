@@ -9,8 +9,8 @@
 \newcommand\te{14} % disappear
 
   
-  \kftextout[polar=false, duration=\dt, out=(\te+\dt)]{\halfwidth}{6}{$\begin{aligned}\frac{df}{dt} &= c f\\f(0) &= 1\end{aligned}$}
-  \kftext[in=(\te+\dt), polar=false]{\halfwidth}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+  \kftextout[polar=false, duration=\dt, out=(\te+\dt)]{\halfwidth}{6}{$\begin{aligned}\frac{df}{dt} &= \phantom{c} f\\f(0) &= 1\end{aligned}$}
+  \kftext[polar=false]{\halfwidth}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
 
   \begin{scope}[shift={({\halfwidth-3}, {\halfheight-2})}]
     \pgfmathsetmacro\zunit{3}

@@ -1,0 +1,60 @@
+\kfframes{23}{
+  \Large
+  
+  \newcommand\ta{2} % ... with real arguments
+  \newcommand\tb{4} % ... purely imaginary
+  \newcommand\tc{8} % ... said nothing
+
+  \newcommand\td{16} % shift
+  \newcommand\te{18} % shift
+
+  \newcommand\tf{22} % out
+  
+
+  \begin{scope}[shift={(4.5, \halfheight)}]
+    \kftween[in=\td, duration=\dt]{-1}{1.9} \pgfmathsetmacro\xoa\pgfmathresult
+    \kftween[in=\td, duration=\dt]{-1}{3.5} \pgfmathsetmacro\xob\pgfmathresult
+    \kftween[in=\td, duration=\dt]{-1}{-1}   \pgfmathsetmacro\xoc\pgfmathresult
+
+    \pgfmathsetmacro\yoo{-1.5}
+    \kftween[in=\te, duration=\dt]{0}{\yoo}  \pgfmathsetmacro\yoa\pgfmathresult
+    \kftween[in=\te, duration=\dt]{-1}{\yoo} \pgfmathsetmacro\yob\pgfmathresult
+    \kftween[in=\te, duration=\dt]{-2.5}{\yoo} \pgfmathsetmacro\yoc\pgfmathresult
+
+    
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\td]{\xoa}{\yoa}{$e^{t\phantom{i}}$}
+    \kftextin[polar=false, in=\tb, duration=\dt, out=\td]{\xob}{\yob}{$e^{it}$}
+    \kftextin[polar=false, in=\tc, duration=\dt, out=\td]{\xoc}{\yoc}{$e^{z\phantom{t}}$}
+
+    \kftexttween[polar=false, in=\td, duration=\dt, out=\tf]{\xoa}{\yoa}{$e^{t\phantom{i}}$}{\xoa}{\yoa}{$e^{x\phantom{i}}$}
+    \kftexttween[polar=false, in=\td, duration=\dt, out=\tf]{\xob}{\yob}{$e^{it}$}{\xob}{\yob}{$e^{iy}$}
+    \kftexttween[polar=false, in=\td, duration=\dt, out=\tf]{\xoc}{\yoc}{$e^{z\phantom{t}}$}{\xoc}{\yoc}{$e^{x+iy}$}
+
+    \kftextout[polar=false, in=\tf, duration=\dt, out=\tf+\dt]{\xoa}{\yoa}{$e^{x\phantom{i}}$}
+    \kftextout[polar=false, in=\tf, duration=\dt, out=\tf+\dt]{\xob}{\yob}{$e^{iy}$}
+    \kftextout[polar=false, in=\tf, duration=\dt, out=\tf+\dt]{\xoc}{\yoc}{$e^{x+iy}$}
+
+    
+
+    \begin{scope}[shift={(0, -0.2)}]
+      \pgfmathsetmacro\xos{1.5}
+      \kftextin[polar=false, in=\ta+\dt, duration=\dt, out=\td-\dt]{\xos}{\yoa}{\large $: \mathbb{R} \to \mathbb{R}$}
+      \kftextin[polar=false, in=\tb+\dt, duration=\dt, out=\td-\dt]{\xos}{\yob}{\large $: \mathbb{R} \to \mathbb{C}$}
+      \kftextin[polar=false, in=\tc+\dt, duration=\dt, out=\td-\dt]{\xos}{\yoc}{\large $: \mathbb{C} \to \mathbb{C}$}
+
+      \kftextout[polar=false, in=\td-\dt, duration=\dt, out=\td]{\xos}{\yoa}{\large $: \mathbb{R} \to \mathbb{R}$}
+      \kftextout[polar=false, in=\td-\dt, duration=\dt, out=\td]{\xos}{\yob}{\large $: \mathbb{R} \to \mathbb{C}$}
+      \kftextout[polar=false, in=\td-\dt, duration=\dt, out=\td]{\xos}{\yoc}{\large $: \mathbb{C} \to \mathbb{C}$}
+    \end{scope}
+
+    
+    \kftextin[polar=false, in=\te, duration=\dt, out=\tf]{1}{\yoo}{$\phantom{e^{x+iy}} = \phantom{e^x} \cdot \phantom{e^{iy}}$}
+    \kftextout[polar=false, in=\tf, duration=\dt, out=\tf+\dt]{1}{\yoo}{$\phantom{e^{x+iy}} = \phantom{e^x} \cdot \phantom{e^{iy}}$}
+
+    %    \kftext[polar=false, in=\te+\dt, duration=\dt]{1.4}{-1}{$e^{x+iy} = e^x \cdot e^{iy}$}
+
+
+  \end{scope}
+
+
+}

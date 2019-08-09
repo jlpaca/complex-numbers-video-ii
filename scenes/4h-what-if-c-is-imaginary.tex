@@ -1,100 +1,102 @@
 \kfframes{16}{
 
-  \newcommand\ta{0} % rescale axes
-  \newcommand\tb{2} % imaginary!
-  \newcommand\tc{0} % fill f
+\newcommand\ta{0} % rescale axes
+\newcommand\tb{2} % imaginary!
+\newcommand\tc{0} % fill f
 
-  \newcommand\thint{3} % hint e^it
-  \newcommand\tdelay{2}
-  
-  \newcommand\td{9} % copy f
-  \newcommand\te{11} % arg in
-  \newcommand\tf{12.5} % arg out
-  \newcommand\tg{14} % df/dt
+\newcommand\thint{3} % hint e^it
+\newcommand\tdelay{2}
 
-  
-  % phantom spaghetti
-  \kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
-  \kftextout[in=0, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
-  \kftextin[in=\tb, duration=\dt, out=\tend+1, polar=false]{\halfwidth}{6.5}{$\phantom{c} = i$}
+\newcommand\td{9} % copy f
+\newcommand\te{11} % arg in
+\newcommand\tf{12.5} % arg out
+\newcommand\tg{14} % df/dt
+
+
+% phantom spaghetti
+\kftext[polar=false]{\halfwidth-1.6}{6}{$\begin{aligned}\phantom{\frac{df}{dt}} &\phantom{=} \;\:c \phantom{f}\\\phantom{f(0) }&\phantom{= 1}\end{aligned}$}
+\kftextout[in=0, out=\tb+\dt, polar=false]{\halfwidth}{6.5}{$\phantom{c} < 0$}
+\kftextin[in=\tb, duration=\dt, out=\tend+1, polar=false]{\halfwidth}{6.5}{$\phantom{c} = i$}
 
 %  \kftextin[in=\tb+\dt, duration=\dt, polar=false]{\halfwidth+2}{6.4}{$(?)$}
 
-  
-  \kftween[in=\ta, duration=\dt]{6}{0}
-  \pgfmathsetmacro\sxh\pgfmathresult
-  \kftween[in=\ta, duration=\dt]{pi/4}{-pi/4}
-  \pgfmathsetmacro\ola\pgfmathresult
- 
-  
-  \begin{scope}[shift={({\halfwidth-\sxh}, {\halfheight-2})}]
 
-      \kftween[in=\ta, duration=\dt]{12}{3}
-    \pgfmathsetmacro\zunit\pgfmathresult
-
-    % axis & leftovers
-    \draw[bg-b] (-\halfwidth+\sxh, 0) -- ({\halfwidth+\sxh}, 0);
-
-    
-    \fill[bg-b] (\zunit, 0) circle (0.12);
-    \fill (0, 0) circle (0.12);
-    
-    \kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
-    \kftext[offset fst=0.6, offset snd=\ola]{\zunit}{0}{$1$}
-
-    % displacement arrow
-    \kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
-    \pgfmathsetmacro\xl\pgfmathresult
-    
-    \kftween[in=\tc, duration=\dt]{0}{0.12}
-    \pgfmathsetmacro\xd\pgfmathresult
-    
-    \pgfmathsetmacro\xfo{0.16}
-
-    \draw[->, >=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
-    \fill (\zunit, 0) circle (\xd);
-
-    \kftextin[in=\tc+\dt, duration=\dt, out=\thint, polar=false]{\zunit/2}{-0.6}{$f$}
-    \kftextout[in=\thint, duration=\dt, out=\thint+\dt, polar=false]{\zunit/2}{-0.6}{$f$}
-    \kftextin[in=\thint+\tdelay, duration=\dt, out=\tend+1, polar=false]{\zunit/2}{-0.6}{$f$}
-
-    \kftextin[in=\thint, out=\thint+\tdelay, duration=\dt, polar=false]{\zunit/2}{-1}{$f(t) \stackrel{?}{=} e^{it}$}
-    \kftextout[in=\thint+\tdelay, duration=\dt, out=(\thint+\tdelay+\dt), polar=false]{\zunit/2}{-1}{$f(t) \stackrel{?}{=} e^{it}$}
+\kftween[in=\ta, duration=\dt]{6}{0}
+\pgfmathsetmacro\sxh\pgfmathresult
+\kftween[in=\ta, duration=\dt]{pi/4}{-pi/4}
+\pgfmathsetmacro\ola\pgfmathresult
 
 
-    % copy of displacement arrow
-    \kfclip{\td}{\tend+1}{
-      \kftween[in=\td, duration=\dt]{pi}{0}
-      \pgfmathsetmacro\fadth\pgfmathresult
-      \pgfmathsetmacro\fadx{\zunit*cos(\fadth r)/2}
-      \pgfmathsetmacro\fady{\zunit*sin(\fadth r)/2}
+\begin{scope}[shift={({\halfwidth-\sxh}, {\halfheight-2})}]
 
-      \kftween[in=\te, duration=\dt]{0}{pi/2}
-      \pgfmathsetmacro\faeth\pgfmathresult
-      \pgfmathsetmacro\faex{\zunit*cos(\faeth r)}
-      \pgfmathsetmacro\faey{\zunit*sin(\faeth r)}
-      
-      \draw[->, >=stealth] (\zunit/2+\fadx, \fady) -- (\zunit/2+\fadx+\faex, \fady+\faey);
+\kftween[in=\ta, duration=\dt]{12}{3}
+\pgfmathsetmacro\zunit\pgfmathresult
 
-      \kftextin[in=\td+\dt, duration=\dt, out=\te-\dt, polar=false]{\zunit*1.5}{-0.6}{$f$}
-      \kftextout[in=\te-\dt, duration=\dt, out=\te, polar=false]{\zunit*1.5}{-0.6}{$f$}
+% axis & leftovers
+\draw[bg-b] (-\halfwidth+\sxh, 0) -- ({\halfwidth+\sxh}, 0);
 
-      % stealth
-      \begin{scope}[shift={(\zunit, 0)}]
-        \zargin[in=\te, out=\tf]{pi/2}
-        \zargout[in=\tf, out=\tf+\dt]{pi/2}
-        \kftextin[in=\te, duration=\dt, out=\tf]{1.6}{pi/5}{$\frac{\pi}{2}$}
-        \kftextout[in=\tf, out=\tf+\dt]{1.6}{pi/5}{$\frac{\pi}{2}$}
 
-        \kftextin[in=\tf+\dt, duration=\dt, out=\tg, polar=false]{-0.6}{\zunit/2}{$if$}
-        \kftextout[in=\tg, out=\tg+\dt, polar=false]{-0.6}{\zunit/2}{$if$}
+\fill[bg-b] (\zunit, 0) circle (0.12);
+\fill (0, 0) circle (0.12);
 
-        \kftextin[in=\tg+\dt, duration=\dt, out=\tend+1, polar=false]{0.6}{\zunit/2}{$\frac{df}{dt}$}
+\kftext[offset fst=0.6, offset snd=3*pi/4]{0}{0}{$0$}
+\kftext[offset fst=0.6, offset snd=\ola]{\zunit}{0}{$1$}
 
-        
-      \end{scope}
+% displacement arrow
+\kftween[in=\tc+\dt, duration=\dt]{0}{\zunit}
+\pgfmathsetmacro\xl\pgfmathresult
 
-   }
-    
-  \end{scope}
+\kftween[in=\tc, duration=\dt]{0}{0.12}
+\pgfmathsetmacro\xd\pgfmathresult
+
+\pgfmathsetmacro\xfo{0.16}
+
+\kfclip{\tc+\dt}{\tend+1}{
+\draw[->, >=stealth] (\xfo, 0) -- (\xl-\xfo, 0);
+\fill (\zunit, 0) circle (\xd);
+}
+
+\kftextin[in=\tc+\dt, duration=\dt, out=\thint, polar=false]{\zunit/2}{-0.6}{$f$}
+\kftextout[in=\thint, duration=\dt, out=\thint+\dt, polar=false]{\zunit/2}{-0.6}{$f$}
+\kftextin[in=\thint+\tdelay, duration=\dt, out=\tend+1, polar=false]{\zunit/2}{-0.6}{$f$}
+
+\kftextin[in=\thint, out=\thint+\tdelay, duration=\dt, polar=false]{\zunit/2}{-1}{$f(t) \stackrel{?}{=} e^{it}$}
+\kftextout[in=\thint+\tdelay, duration=\dt, out=(\thint+\tdelay+\dt), polar=false]{\zunit/2}{-1}{$f(t) \stackrel{?}{=} e^{it}$}
+
+
+% copy of displacement arrow
+\kfclip{\td}{\tend+1}{
+\kftween[in=\td, duration=\dt]{pi}{0}
+\pgfmathsetmacro\fadth\pgfmathresult
+\pgfmathsetmacro\fadx{\zunit*cos(\fadth r)/2}
+\pgfmathsetmacro\fady{\zunit*sin(\fadth r)/2}
+
+\kftween[in=\te, duration=\dt]{0}{pi/2}
+\pgfmathsetmacro\faeth\pgfmathresult
+\pgfmathsetmacro\faex{\zunit*cos(\faeth r)}
+\pgfmathsetmacro\faey{\zunit*sin(\faeth r)}
+
+\draw[->, >=stealth] (\zunit/2+\fadx, \fady) -- (\zunit/2+\fadx+\faex, \fady+\faey);
+
+\kftextin[in=\td+\dt, duration=\dt, out=\te-\dt, polar=false]{\zunit*1.5}{-0.6}{$f$}
+\kftextout[in=\te-\dt, duration=\dt, out=\te, polar=false]{\zunit*1.5}{-0.6}{$f$}
+
+% stealth
+\begin{scope}[shift={(\zunit, 0)}]
+\zargin[in=\te, out=\tf]{pi/2}
+\zargout[in=\tf, out=\tf+\dt]{pi/2}
+\kftextin[in=\te, duration=\dt, out=\tf]{1.6}{pi/5}{$\frac{\pi}{2}$}
+\kftextout[in=\tf, out=\tf+\dt]{1.6}{pi/5}{$\frac{\pi}{2}$}
+
+\kftextin[in=\tf+\dt, duration=\dt, out=\tg, polar=false]{-0.6}{\zunit/2}{$if$}
+\kftextout[in=\tg, out=\tg+\dt, polar=false]{-0.6}{\zunit/2}{$if$}
+
+\kftextin[in=\tg+\dt, duration=\dt, out=\tend+1, polar=false]{0.6}{\zunit/2}{$\frac{df}{dt}$}
+
+
+\end{scope}
+
+}
+
+\end{scope}
 }

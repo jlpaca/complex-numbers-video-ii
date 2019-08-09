@@ -1,0 +1,64 @@
+\kfframes{10}{
+  \newcommand\ta{0}
+  \newcommand\taa{1}
+  \newcommand\tb{3} % ! define
+  \newcommand\tc{3.5} % cross
+  \newcommand\tdelay{3}
+  \pgfmathsetmacro\td{\tb+\tdelay}
+  \newcommand\te{9}
+
+  \newcommand\tf{7}
+  \newcommand\tdelaw{2.5}
+  \pgfmathsetmacro\tg{\tf+\tdelaw}
+
+  
+  \begin{scope}[shift={(4.5, \halfheight)}]
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\te]{0}{2.5}{\huge $e^{it}$}
+    \kftextin[polar=false, in=\taa, duration=\dt, out=\te]{0}{-1}{\Large $\sin, \cos, \tan$}
+    \kftextin[polar=false, in=\taa+\dt, duration=\dt, out=\te]{0}{-2}{and friends}
+
+    \kftextout[polar=false, in=\te, duration=\dt, out=\te+\dt]{0}{2.5}{\huge $e^{it}$}
+    \kftextout[polar=false, in=\te, duration=\dt, out=\te+\dt]{0}{-1}{\Large $\sin, \cos, \tan$}
+    \kftextout[polar=false, in=\te, duration=\dt, out=\te+\dt]{0}{-2}{and friends}
+
+    % arrow up
+    \kftween[in=\tb, duration=\dt]{-0.199}{1.2}
+    \pgfmathsetmacro\awh\pgfmathresult
+    \kftween[in=\td, duration=\dt]{-0.2}{1.199}
+    \pgfmathsetmacro\awt\pgfmathresult
+
+    \kfclip{\tb}{\td+\dt}{
+      \draw[->, >=stealth] (-0.3, \awt) -- (-0.3, \awh);
+      \kftextin[polar=false, in=\tb+\dt, duration=\dt, out=\td]{1.2}{0.6}{define}
+      \kftextout[polar=false, in=\td, duration=\dt, out=\td+\dt]{1.2}{0.6}{define}
+
+    }
+
+    \pgfmathsetmacro\xw{0.2}
+    \kftween[in=\tc, duration=\dt]{\xw}{-\xw}
+    \pgfmathsetmacro\xwb\pgfmathresult
+    \kftween[in=\td, duration=\dt]{\xw}{-\xw}
+    \pgfmathsetmacro\xwa\pgfmathresult
+
+    \kfclip{\tc}{\td+\dt}{
+      \draw (-0.3+\xwa, 0.5+\xwa) -- (-0.3+\xwb, 0.5+\xwb);
+      \draw (-0.3-\xwa, 0.5+\xwa) -- (-0.3-\xwb, 0.5+\xwb);
+    }
+
+    % arrow down
+    \kftween[in=\tf, duration=\dt]{1.199}{-0.2}
+    \pgfmathsetmacro\awh\pgfmathresult
+    \kftween[in=\tg, duration=\dt]{1.2}{-0.199}
+    \pgfmathsetmacro\awt\pgfmathresult
+
+    \kfclip{\tf}{\tg+\dt}{
+      \draw[->, >=stealth] (-0.3, \awt) -- (-0.3, \awh);
+      \kftextin[polar=false, in=\tf, duration=\dt, out=\tg]{1.2}{0.6}{defines}
+      \kftextout[polar=false, in=\tg, duration=\dt, out=\tg+\dt]{1.2}{0.6}{defines}
+
+    }
+
+
+    
+  \end{scope}
+}

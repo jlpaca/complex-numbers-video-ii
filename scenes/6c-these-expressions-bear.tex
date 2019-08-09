@@ -1,0 +1,54 @@
+\kfframes{13}{
+  \newcommand\ta{0}
+  \newcommand\tb{3}
+  \newcommand\tc{\tend-1}
+
+  \pgfmathsetmacro\yh{-1.5}
+  
+  \begin{scope}[shift={(4, \halfheight)}]
+    % sin cos
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0.3}{\yh}{
+      $\begin{aligned}
+        \cos t \;&\phantom{=}\; \frac{e^{it} + e^{-it}}{2}\\
+        \sin t \;&\phantom{=}\; \frac{e^{it}-e^{-it}}{2i}
+      \end{aligned}$
+    }
+
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0.3}{\yh}{
+      $\begin{aligned}
+        \phantom{\cos t} &= \phantom{\frac{e^{it} + e^{-it}}{2}}\\
+        \phantom{\sin t} &= \phantom{\frac{e^{it}-e^{-it}}{2i}}
+      \end{aligned}$
+    }
+    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0.3}{\yh}{
+      $\begin{aligned}
+        \phantom{\cos t} &= \phantom{\frac{e^{it} + e^{-it}}{2}}\\
+        \phantom{\sin t} &= \phantom{\frac{e^{it}-e^{-it}}{2i}}
+      \end{aligned}$
+    }
+
+    
+    \kftexttween[polar=false, in=\tb, duration=\dt, out=\tc]{0.3}{\yh}{
+      $\begin{aligned}
+        \cos t \;&\phantom{=}\; \frac{e^{it} + e^{-it}}{2}\\
+        \sin t \;&\phantom{=}\; \frac{e^{it}-e^{-it}}{2i}
+      \end{aligned}$
+    }
+                {0.1}{\yh}{
+                  $\begin{aligned}
+                    \cosh t \;&\phantom{=}\; \frac{e^{t} \;+ \;e^{-t}}{2}\\
+                    \sinh t \;&\phantom{=}\; \frac{e^{t} \;- \;e^{-t}}{2}
+                  \end{aligned}$
+                }
+
+                \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0.1}{\yh}{
+                  $\begin{aligned}
+                    \cosh t \;&\phantom{=}\; \frac{e^{t} \;+ \;e^{-t}}{2}\\
+                    \sinh t \;&\phantom{=}\; \frac{e^{t} \;- \;e^{-t}}{2}
+                  \end{aligned}$
+                }
+
+
+  \end{scope}
+
+}
