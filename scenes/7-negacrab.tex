@@ -6,15 +6,15 @@
 
 }
 
-\kfframes{8}{
+\kfframes{12}{
   \pgfmathsetmacro\t{floor(\t/\altfps)*\altfps}
-  \pgfmathsetmacro\vth{8}
-  \pgfmathsetmacro\vx{8*cos(\vth)}
-  \pgfmathsetmacro\vy{8*sin(\vth)}
+  \pgfmathsetmacro\vth{10}
+  \pgfmathsetmacro\vx{2*cos(\vth)}
+  \pgfmathsetmacro\vy{2*sin(\vth)}
   \pgfmathsetmacro\vox{-3}
   \pgfmathsetmacro\voy{2}
 
-  \pgfmathsetmacro\tout{7}
+  \pgfmathsetmacro\tout{11}
 
    \negacrab{1}{\vox+\vx*\t}{\voy+\vy*\t}{\vth+10*sin(10*\t r)}
 
