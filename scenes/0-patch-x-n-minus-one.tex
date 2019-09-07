@@ -1,35 +1,9 @@
-\kfframes{5}{
-  \huge
+\kfframes{4}{
+  \Huge
   \pgfmathsetmacro\ta{0}
-  \newcommand\tdelay{1}
-  \pgfmathsetmacro\tb{4}
-  \begin{scope}[shift={(2*\halfwidth-4, \halfheight-1.5)}]
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$x\phantom{^n - 1 = 0}$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$x\phantom{^n - 1 = 0}$}
-
-    \pgfmathsetmacro\ta{\ta+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$\phantom{x}^n\:\:\phantom{ - 1 = 0}$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$\phantom{x}^n\:\:\phantom{ - 1 = 0}$}
-
-    \pgfmathsetmacro\ta{\ta+\tdelay}
-    \pgfmathsetmacro\tb{\tb+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$\phantom{x^n} - \phantom{1 = 0}$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$\phantom{x^n} - \phantom{1 = 0}$}
-
-    \pgfmathsetmacro\ta{\ta+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$\phantom{x^n -} \:1 \phantom{= 0}$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$\phantom{x^n -} \:1 \phantom{= 0}$}
-
-    
-    \pgfmathsetmacro\ta{\ta+\tdelay}
-    \pgfmathsetmacro\tb{\tb+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$\phantom{x^n - 1} = \phantom{0}$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$\phantom{x^n - 1} = \phantom{0}$}
-
-    \pgfmathsetmacro\ta{\ta+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$\phantom{x^n - 1 =}\; 0$}
-    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$\phantom{x^n - 1 =}\; 0$}
-    
-
+  \pgfmathsetmacro\tb{3.5}
+  \begin{scope}[shift={(\halfwidth, \halfheight-1.5)}]
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$x^n - 1 = 0$}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$x^n - 1 = 0$}
   \end{scope}
 }

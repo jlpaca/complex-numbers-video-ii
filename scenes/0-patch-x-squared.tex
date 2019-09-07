@@ -1,19 +1,9 @@
-\kfframes{7}{
+\kfframes{5}{
+  \Huge
   \pgfmathsetmacro\ta{0}
-  \pgfmathsetmacro\tdelay{\dt}
-  \pgfmathsetmacro\tc{5}
-  \huge
-  \begin{scope}[shift={(4, \halfheight-1.5)}]
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0}{0}{$x^2 \phantom{+ 1 = 0}$}
-    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$x^2 \phantom{+ 1 = 0}$}
-    \pgfmathsetmacro\ta{\ta+\tdelay}
-    \pgfmathsetmacro\tc{\tc+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0}{0}{$\phantom{x^2} + 1 \phantom{= 0}$}
-    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{x^2} + 1 \phantom{= 0}$}
-    \pgfmathsetmacro\ta{\ta+\tdelay}
-    \pgfmathsetmacro\tc{\tc+\dt/2}
-    \kftextin[polar=false, in=\ta, duration=\dt, out=\tc]{0}{0}{$\phantom{x^2 + 1} = 0$}
-    \kftextout[polar=false, in=\tc, duration=\dt, out=\tc+\dt]{0}{0}{$\phantom{x^2 + 1} = 0$}
-    
+  \pgfmathsetmacro\tb{4}
+  \begin{scope}[shift={(\halfwidth, \halfheight-1.5)}]
+    \kftextin[polar=false, in=\ta, duration=\dt, out=\tb]{0}{0}{$x^2 + 1 = 0$}
+    \kftextout[polar=false, in=\tb, duration=\dt, out=\tb+\dt]{0}{0}{$x^2 + 1 = 0$}
   \end{scope}
 }
