@@ -1,5 +1,7 @@
 # Complex Numbers II
 
+![excerpt from video](https://raw.githubusercontent.com/jlpaca/complex-numbers-video-ii/master/resources/preview.gif)
+
 This is the source code to some animations illustrating some numbers wiggling around on the complex plane.
 
 These animations were part of a [video](https://youtu.be/vF3Gw_eprZI) in a series circulated to first-year maths students at Imperial College London. Each video reviewed a topic in maths that the students were expected to be familiar with; this was the second video on complex numbers. They were part of a [StudentShapers project](https://www.imperial.ac.uk/students/studentshapers/).
