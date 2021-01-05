@@ -4,7 +4,7 @@
 
 This is the source code to some animations illustrating some numbers wiggling around on the complex plane.
 
-These animations were part of a [video](https://youtu.be/vF3Gw_eprZI) in a series circulated to first-year maths students at Imperial College London. Each video reviewed a topic in maths that the students were expected to be familiar with; this was the second video on complex numbers. They were part of a [StudentShapers project](https://www.imperial.ac.uk/students/studentshapers/).
+These animations were part of a video in a series circulated to first-year maths students at Imperial College London. Each video reviewed a topic in maths that the students were expected to be familiar with; this was the second video on complex numbers. They were part of a [StudentShapers project](https://www.imperial.ac.uk/students/studentshapers/).
 
 ## But why?
 At the time of the project (August 2019), I knew my way around a few ways of getting a computer to make pretty images that moved. These included:
